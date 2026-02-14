@@ -13,7 +13,6 @@
       --card: #ffffff;
       --text: #0b1220;
       --muted: #5b6676;
-      --border: rgba(15, 23, 42, .10);
       --border2: rgba(15, 23, 42, .06);
       --primary: #2563eb;
       --primary2: #1d4ed8;
@@ -65,7 +64,6 @@
       width: 360px; height: 360px;
       border-radius: 999px;
       background: rgba(255,255,255,.12);
-      filter: blur(0px);
       transform: rotate(10deg);
       pointer-events:none;
       animation: float 8s ease-in-out infinite;
@@ -76,16 +74,8 @@
       50% { transform: translate(-18px, 14px) rotate(10deg); }
     }
 
-    .hero-top{
-      position: relative;
-      display:flex;
-      align-items:flex-start;
-      justify-content:space-between;
-      gap: 16px;
-      flex-wrap: wrap;
-    }
-
     .kicker{
+      position: relative;
       font-size: .85rem;
       letter-spacing: .22em;
       text-transform: uppercase;
@@ -94,12 +84,14 @@
     }
 
     h1{
+      position: relative;
       font-size: 2.2rem;
       letter-spacing: -.02em;
       line-height: 1.12;
     }
 
     .sub{
+      position: relative;
       margin-top: 10px;
       font-size: 1.05rem;
       opacity: .92;
@@ -257,12 +249,8 @@
     }
 
     @media (min-width: 860px){
-      .two{
-        grid-template-columns: 1fr 1fr;
-      }
-      .span-2{
-        grid-column: 1 / -1;
-      }
+      .two{ grid-template-columns: 1fr 1fr; }
+      .span-2{ grid-column: 1 / -1; }
     }
 
     .field label{
@@ -356,7 +344,6 @@
     @media (max-width: 560px){
       h1{ font-size: 1.85rem; }
       .hero{ padding: 24px 18px; }
-      .card{ }
       .section{ padding: 20px 18px; }
       .footer{ padding: 14px 18px 18px; }
       .btn{ width: 100%; min-width: 0; }
@@ -373,21 +360,16 @@
 <body>
   <div class="container">
     <div class="hero">
-      <div class="hero-top">
-        <div>
-          <div class="kicker">INTERNSHIP</div>
-          <h1>AI Developers</h1>
-          <div class="sub">
-            6-month remote internship. Resume required. Short problem-solving answer.
-          </div>
+      <div class="kicker">INTERNSHIP</div>
+      <h1>AI Developers</h1>
+      <div class="sub">
+        6-month remote internship. Resume required. Short problem-solving answer.
+      </div>
 
-          <div class="chips">
-            <div class="chip">🌍 Remote</div>
-            <div class="chip">🗓️ 6 Months</div>
-            <div class="chip">📎 Resume</div>
-            <div class="chip">🧠 Problem Solving</div>
-          </div>
-        </div>
+      <div class="chips">
+        <div class="chip">🌍 Remote</div>
+        <div class="chip">🗓️ 6 Months</div>
+        <div class="chip">🧠 Problem Solving</div>
       </div>
     </div>
 
@@ -475,11 +457,6 @@
               <label>Graduation date *</label>
               <input type="month" name="graduation_date" required />
             </div>
-
-            <div class="field">
-              <label>GPA (optional)</label>
-              <input type="text" name="gpa" placeholder="e.g., 3.7 / 4.0" />
-            </div>
           </div>
         </div>
 
@@ -511,11 +488,6 @@
               <label>Upload resume (PDF/DOC) *</label>
               <input type="file" name="resume" accept=".pdf,.doc,.docx" required />
               <div class="help">Keep it under ~10MB.</div>
-            </div>
-
-            <div class="field span-2">
-              <label>Portfolio / GitHub (optional)</label>
-              <input type="url" name="portfolio" placeholder="https://github.com/username" />
             </div>
           </div>
         </div>
@@ -557,7 +529,7 @@
   </div>
 
   <script>
-    // Section reveal (clean animation)
+    // Section reveal
     const sections = document.querySelectorAll('.section');
     const io = new IntersectionObserver((entries) => {
       entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
