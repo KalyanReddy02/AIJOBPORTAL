@@ -8,10 +8,8 @@
         * { box-sizing: border-box; margin: 0; padding: 0; }
         :root {
             --primary: #2563eb;
-            --error: #ef4444;
             --border: #e2e8f0;
             --bg-gray: #f8fafc;
-            --success: #10b981;
         }
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
@@ -28,7 +26,7 @@
             margin-bottom: 40px;
         }
         h1 { font-size: 2rem; margin-bottom: 10px; }
-        .form-wrapper { background: white; padding: 40px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .form-wrapper { background: white; padding: 40px; border-radius: 8px; }
         .section { margin-bottom: 30px; padding-bottom: 20px; border-bottom: 2px solid var(--border); }
         .section:last-of-type { border-bottom: none; }
         .section h2 { font-size: 1.5rem; margin-bottom: 20px; color: var(--primary); }
@@ -40,11 +38,6 @@
             border: 2px solid var(--border);
             border-radius: 8px;
             font-size: 1rem;
-            transition: border-color 0.3s;
-        }
-        input:focus, select:focus, textarea:focus {
-            outline: none;
-            border-color: var(--primary);
         }
         .submit-btn {
             width: 100%;
@@ -56,23 +49,6 @@
             font-size: 1rem;
             font-weight: 600;
             cursor: pointer;
-            transition: background 0.3s;
-        }
-        .submit-btn:hover {
-            background: #1d4ed8;
-        }
-        .success-message {
-            text-align: center;
-            padding: 60px 40px;
-            background: white;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        }
-        .success-icon {
-            width: 80px;
-            height: 80px;
-            margin: 0 auto 24px;
-            color: var(--success);
         }
     </style>
 </head>
@@ -83,15 +59,14 @@
             <p>Join our mission to democratize AI education</p>
         </div>
         
-        <div class="form-wrapper" id="formContainer">
-            <form name="application" method="POST" data-netlify="true" action="/success.html">
-                <input type="hidden" name="form-name" value="application">
-                
+        <div class="form-wrapper">
+            <!-- IMPORTANT: The form tag MUST be exactly like this -->
+            <form name="contact" netlify>
                 <div class="section">
                     <h2>Personal Information</h2>
                     <div class="form-group">
                         <label>Full Name *</label>
-                        <input type="text" name="fullName" required>
+                        <input type="text" name="name" required>
                     </div>
                     <div class="form-group">
                         <label>Email *</label>
@@ -103,33 +78,28 @@
                     <h2>Education</h2>
                     <div class="form-group">
                         <label>Education Level *</label>
-                        <select name="educationLevel" required>
+                        <select name="education" required>
                             <option value="">Select...</option>
                             <option>High School</option>
                             <option>Undergraduate</option>
                             <option>Graduate</option>
-                            <option>Other</option>
                         </select>
                     </div>
                     <div class="form-group">
                         <label>University *</label>
                         <input type="text" name="university" required>
                     </div>
-                    <div class="form-group">
-                        <label>Graduation Year</label>
-                        <input type="text" name="graduationYear" placeholder="e.g., 2025">
-                    </div>
                 </div>
                 
                 <div class="section">
                     <h2>Additional Information</h2>
                     <div class="form-group">
-                        <label>Skills/Expertise</label>
-                        <textarea name="skills" rows="3" placeholder="e.g., Python, Machine Learning, Teaching..."></textarea>
+                        <label>Skills</label>
+                        <textarea name="skills" rows="3"></textarea>
                     </div>
                     <div class="form-group">
                         <label>Why are you interested?</label>
-                        <textarea name="interest" rows="4" placeholder="Tell us about your interest in AI education..."></textarea>
+                        <textarea name="message" rows="4"></textarea>
                     </div>
                 </div>
                 
