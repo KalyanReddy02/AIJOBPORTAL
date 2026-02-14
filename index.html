@@ -3,202 +3,219 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AI Developers - Internship Application</title>
+  <title>AI Developers — Internship Application</title>
 
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root{
-      --bg: #0b1220;
-      --bg2:#0f172a;
-      --card:#0b1220;
-      --card2:#0f172a;
-      --text:#e5e7eb;
-      --muted:#9ca3af;
-      --border: rgba(255,255,255,.08);
-      --primary:#2563eb;
-      --primary2:#1d4ed8;
-      --ring: rgba(37,99,235,.25);
-      --shadow: 0 20px 60px rgba(0,0,0,.45);
-      --shadow2: 0 10px 24px rgba(0,0,0,.35);
-      --radius: 18px;
+      --bg: #f5f5f7;
+      --card: #ffffff;
+      --text: #111827;
+      --muted: #6b7280;
+      --border: rgba(17,24,39,.12);
+      --border2: rgba(17,24,39,.08);
+      --primary: #2563eb;
+      --ring: rgba(37,99,235,.22);
+      --shadow: 0 18px 50px rgba(17,24,39,.08);
+      --shadow2: 0 10px 25px rgba(17,24,39,.06);
+      --radius: 20px;
     }
 
     body{
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      background:
-        radial-gradient(900px 520px at 20% 0%, rgba(37,99,235,.22), transparent 60%),
-        radial-gradient(900px 520px at 80% 10%, rgba(29,78,216,.18), transparent 55%),
-        linear-gradient(180deg, var(--bg2), var(--bg));
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      background: var(--bg);
       color: var(--text);
-      padding: 22px;
+      padding: 28px 18px;
     }
 
-    .container{ max-width: 980px; margin: 0 auto; }
+    .container{ max-width: 760px; margin: 0 auto; }
 
-    /* Hero (clean, premium) */
-    .hero{
-      border-radius: 22px;
-      padding: 34px 26px;
-      background:
-        linear-gradient(135deg, rgba(255,255,255,.06), rgba(255,255,255,.02)),
-        linear-gradient(135deg, rgba(37,99,235,.25), rgba(29,78,216,.18));
-      border: 1px solid var(--border);
-      box-shadow: var(--shadow);
-      backdrop-filter: blur(10px);
-      animation: fadeUp 700ms ease both;
+    /* Top header (quiet, premium) */
+    .top{
+      margin-bottom: 18px;
+      animation: fadeUp 520ms ease both;
     }
-    .hero h1{ font-size: 2.15rem; letter-spacing: .2px; }
-    .hero p{ margin-top: 8px; color: rgba(229,231,235,.88); font-size: 1.05rem; }
+    .kicker{
+      font-size: .9rem;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: rgba(17,24,39,.55);
+      margin-bottom: 10px;
+    }
+    h1{
+      font-size: 2.2rem;
+      line-height: 1.12;
+      letter-spacing: -.02em;
+    }
+    .sub{
+      margin-top: 8px;
+      font-size: 1.05rem;
+      color: rgba(17,24,39,.68);
+      line-height: 1.45;
+    }
 
-    .badges{ display:flex; flex-wrap:wrap; gap:10px; margin-top: 14px; }
-    .badge{
+    .meta{
+      display:flex;
+      gap: 10px;
+      flex-wrap:wrap;
+      margin-top: 14px;
+    }
+    .chip{
       padding: 8px 12px;
       border-radius: 999px;
-      border: 1px solid var(--border);
-      background: rgba(0,0,0,.18);
-      color: rgba(229,231,235,.92);
-      font-weight: 650;
+      background: rgba(255,255,255,.8);
+      border: 1px solid var(--border2);
+      box-shadow: 0 1px 0 rgba(17,24,39,.04);
+      font-weight: 600;
       font-size: .92rem;
+      color: rgba(17,24,39,.78);
     }
 
-    /* Card */
     .card{
-      margin-top: 16px;
-      background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
-      border: 1px solid var(--border);
+      background: var(--card);
+      border: 1px solid var(--border2);
       border-radius: var(--radius);
-      box-shadow: var(--shadow2);
-      padding: 22px;
-      animation: fadeUp 700ms ease both;
-      animation-delay: 90ms;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      animation: fadeUp 520ms ease both;
+      animation-delay: 80ms;
     }
 
-    /* Layout */
-    .grid{
-      display:grid;
-      grid-template-columns: 1fr;
-      gap: 16px;
-      margin-top: 10px;
-    }
-    @media (min-width: 920px){
-      .grid{ grid-template-columns: 1fr 1fr; }
-      .span-2{ grid-column: 1 / -1; }
-    }
-
-    /* Sections */
+    /* Section blocks */
     .section{
-      background: rgba(0,0,0,.18);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 18px;
+      padding: 26px 26px;
+      border-top: 1px solid rgba(17,24,39,.06);
       opacity: 0;
       transform: translateY(10px);
       transition: opacity 520ms ease, transform 520ms ease;
     }
+    .section:first-child{ border-top: none; }
     .section.in{ opacity: 1; transform: translateY(0); }
 
-    .section h2{
-      font-size: 1.05rem;
-      margin-bottom: 14px;
+    .section-title{
       display:flex;
-      align-items:center;
+      align-items:baseline;
       justify-content:space-between;
-      gap: 10px;
+      gap: 12px;
+      margin-bottom: 16px;
     }
-    .section h2 .left{
-      display:flex;
-      align-items:center;
-      gap:10px;
-      font-weight: 800;
+    .section-title h2{
+      font-size: 1.05rem;
+      letter-spacing: -.01em;
     }
-    .pill{
-      font-size: .85rem;
-      padding: 6px 10px;
-      border-radius: 999px;
-      border: 1px solid var(--border);
-      color: rgba(229,231,235,.86);
-      background: rgba(255,255,255,.03);
-    }
-    .divider{
-      height: 1px;
-      background: var(--border);
-      margin: 10px 0 16px;
+    .section-title .hint{
+      font-size: .92rem;
+      color: rgba(17,24,39,.55);
     }
 
-    .form-group{ margin-bottom: 14px; }
-    label{ display:block; font-weight: 700; margin-bottom: 7px; color: rgba(229,231,235,.95); }
+    /* Fields */
+    .grid{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap: 14px;
+    }
+
+    .field label{
+      display:block;
+      font-weight: 600;
+      font-size: .95rem;
+      margin-bottom: 8px;
+      color: rgba(17,24,39,.86);
+    }
 
     input, select, textarea{
-      width:100%;
+      width: 100%;
       padding: 12px 12px;
       border-radius: 14px;
-      border: 1.6px solid rgba(255,255,255,.10);
-      background: rgba(2,6,23,.45);
+      border: 1px solid rgba(17,24,39,.14);
+      background: #fff;
       color: var(--text);
       font-size: 1rem;
-      transition: border-color .16s ease, box-shadow .16s ease, transform .16s ease;
+      transition: box-shadow .16s ease, border-color .16s ease, transform .16s ease;
     }
-    input::placeholder, textarea::placeholder{ color: rgba(156,163,175,.75); }
+
+    input::placeholder, textarea::placeholder{ color: rgba(17,24,39,.38); }
 
     input:focus, select:focus, textarea:focus{
-      outline:none;
-      border-color: rgba(37,99,235,.60);
-      box-shadow: 0 0 0 5px var(--ring);
+      outline: none;
+      border-color: rgba(37,99,235,.55);
+      box-shadow: 0 0 0 6px var(--ring);
       transform: translateY(-1px);
     }
 
-    .hint{ font-size: .92rem; color: rgba(156,163,175,.95); margin-top: 6px; }
+    .small{
+      margin-top: 7px;
+      font-size: .92rem;
+      color: rgba(17,24,39,.55);
+      line-height: 1.35;
+    }
 
-    /* Button */
-    .actions{
-      margin-top: 16px;
+    /* Callout box for challenge */
+    .callout{
+      border-radius: 16px;
+      border: 1px solid rgba(37,99,235,.18);
+      background: rgba(37,99,235,.06);
+      padding: 14px 14px;
+      margin-bottom: 12px;
+      color: rgba(17,24,39,.86);
+      line-height: 1.45;
+    }
+
+    /* Footer submit */
+    .footer{
+      padding: 18px 26px 24px;
+      border-top: 1px solid rgba(17,24,39,.06);
       display:flex;
       align-items:center;
       justify-content:space-between;
       gap: 12px;
-      flex-wrap: wrap;
-    }
-    .note{
-      color: rgba(156,163,175,.95);
-      font-size: .92rem;
-      line-height: 1.35;
-      max-width: 560px;
+      flex-wrap:wrap;
+      background: rgba(245,245,247,.6);
     }
 
-    .cta{
-      width: 100%;
-      padding: 14px 16px;
-      border-radius: 14px;
-      border: 1px solid rgba(37,99,235,.45);
-      background: linear-gradient(135deg, var(--primary), var(--primary2));
-      color: white;
-      font-weight: 850;
+    .footnote{
+      font-size: .92rem;
+      color: rgba(17,24,39,.55);
+      line-height: 1.35;
+      max-width: 420px;
+    }
+
+    .btn{
+      padding: 12px 16px;
+      border-radius: 999px;
+      border: none;
+      background: var(--primary);
+      color: #fff;
+      font-weight: 700;
       font-size: 1rem;
       cursor: pointer;
-      box-shadow: 0 12px 26px rgba(37,99,235,.22);
+      box-shadow: 0 10px 22px rgba(37,99,235,.20);
       transition: transform .14s ease, box-shadow .14s ease, filter .14s ease;
+      min-width: 220px;
     }
-    .cta:hover{ transform: translateY(-1px); filter: brightness(1.03); box-shadow: 0 16px 34px rgba(37,99,235,.26); }
-    .cta:active{ transform: translateY(0) scale(.99); }
-    .cta[disabled]{ opacity:.7; cursor:not-allowed; transform:none; box-shadow:none; }
-
-    @media (min-width: 920px){
-      .cta{ width: 320px; }
+    .btn:hover{
+      transform: translateY(-1px);
+      filter: brightness(1.02);
+      box-shadow: 0 14px 28px rgba(37,99,235,.24);
     }
-    @media (max-width: 640px){
-      .hero{ padding: 26px 18px; }
-      .hero h1{ font-size: 1.85rem; }
-      .card{ padding: 16px; }
-    }
+    .btn:active{ transform: translateY(0) scale(.99); }
+    .btn[disabled]{ opacity:.7; cursor:not-allowed; transform:none; box-shadow:none; }
 
     @keyframes fadeUp{
-      from{ opacity:0; transform: translateY(10px); }
-      to{ opacity:1; transform: translateY(0); }
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 560px){
+      h1{ font-size: 1.85rem; }
+      .section{ padding: 22px 18px; }
+      .footer{ padding: 16px 18px 20px; }
+      .btn{ width: 100%; min-width: 0; }
     }
 
     @media (prefers-reduced-motion: reduce){
-      *{ transition:none !important; animation:none !important; }
+      * { transition:none !important; animation:none !important; }
       .section{ opacity: 1; transform:none; }
     }
   </style>
@@ -206,14 +223,15 @@
 
 <body>
   <div class="container">
-    <div class="hero">
+    <div class="top">
+      <div class="kicker">Internship</div>
       <h1>AI Developers</h1>
-      <p>6-Month Remote Internship — Apply Now</p>
-      <div class="badges">
-        <div class="badge">Remote</div>
-        <div class="badge">6 Months</div>
-        <div class="badge">Resume Required</div>
-        <div class="badge">Problem-Solving Focus</div>
+      <div class="sub">6-month remote internship. Resume required. Short problem-solving answer.</div>
+      <div class="meta">
+        <div class="chip">Remote</div>
+        <div class="chip">6 Months</div>
+        <div class="chip">Resume</div>
+        <div class="chip">Problem Solving</div>
       </div>
     </div>
 
@@ -226,166 +244,152 @@
         enctype="multipart/form-data"
         id="appForm"
       >
-        <div class="grid">
-          <div class="section" id="sec-personal">
-            <h2>
-              <div class="left">Personal Information</div>
-              <div class="pill">Step 1</div>
-            </h2>
-            <div class="divider"></div>
-
-            <div class="form-group">
-              <label>Full Name *</label>
+        <div class="section" id="sec-personal">
+          <div class="section-title">
+            <h2>Personal</h2>
+            <div class="hint">Required</div>
+          </div>
+          <div class="grid">
+            <div class="field">
+              <label>Full name *</label>
               <input type="text" name="full_name" required />
             </div>
-
-            <div class="form-group">
+            <div class="field">
               <label>Email *</label>
               <input type="email" name="email" required />
             </div>
-
-            <div class="form-group">
+            <div class="field">
               <label>Location (City, Country) *</label>
               <input type="text" name="location" placeholder="e.g., Buffalo, USA" required />
             </div>
           </div>
+        </div>
 
-          <div class="section" id="sec-education">
-            <h2>
-              <div class="left">Education</div>
-              <div class="pill">Step 2</div>
-            </h2>
-            <div class="divider"></div>
-
-            <div class="form-group">
-              <label>Education Level *</label>
+        <div class="section" id="sec-education">
+          <div class="section-title">
+            <h2>Education</h2>
+            <div class="hint">Required</div>
+          </div>
+          <div class="grid">
+            <div class="field">
+              <label>Education level *</label>
               <select name="education_level" required>
-                <option value="">Select...</option>
+                <option value="">Select…</option>
                 <option>High School</option>
                 <option>Undergraduate</option>
                 <option>Graduate</option>
                 <option>Other</option>
               </select>
             </div>
-
-            <div class="form-group">
+            <div class="field">
               <label>University *</label>
               <input type="text" name="university" required />
             </div>
-
-            <div class="form-group">
+            <div class="field">
               <label>Degree *</label>
-              <input type="text" name="degree" placeholder="BTech, BS, MS..." required />
+              <input type="text" name="degree" placeholder="BTech, BS, MS…" required />
             </div>
-
-            <div class="form-group">
+            <div class="field">
               <label>Major / Program *</label>
               <input type="text" name="major" required />
             </div>
-
-            <div class="form-group">
-              <label>Graduation Date *</label>
+            <div class="field">
+              <label>Graduation date *</label>
               <input type="month" name="graduation_date" required />
             </div>
-
-            <div class="form-group">
-              <label>GPA</label>
+            <div class="field">
+              <label>GPA (optional)</label>
               <input type="text" name="gpa" placeholder="e.g., 3.7 / 4.0" />
             </div>
           </div>
+        </div>
 
-          <div class="section" id="sec-internship">
-            <h2>
-              <div class="left">Internship Details</div>
-              <div class="pill">Step 3</div>
-            </h2>
-            <div class="divider"></div>
-
-            <div class="form-group">
-              <label>Internship Type</label>
-              <input type="text" name="internship_type" value="6 Months - Remote" readonly />
-              <div class="hint">Fully remote internship for 6 months.</div>
+        <div class="section" id="sec-internship">
+          <div class="section-title">
+            <h2>Internship</h2>
+            <div class="hint">Required</div>
+          </div>
+          <div class="grid">
+            <div class="field">
+              <label>Internship type</label>
+              <input type="text" name="internship_type" value="6 Months — Remote" readonly />
+              <div class="small">This role is fully remote for 6 months.</div>
             </div>
-
-            <div class="form-group">
-              <label>Can you commit for 6 months (Remote)? *</label>
+            <div class="field">
+              <label>Can you commit for 6 months? *</label>
               <select name="commitment" required>
-                <option value="">Select...</option>
+                <option value="">Select…</option>
                 <option>Yes</option>
                 <option>No</option>
                 <option>Not sure</option>
               </select>
             </div>
-
-            <div class="form-group">
-              <label>Upload Resume (PDF / DOC) *</label>
+            <div class="field">
+              <label>Upload resume (PDF/DOC) *</label>
               <input type="file" name="resume" accept=".pdf,.doc,.docx" required />
-              <div class="hint">Keep the file under ~10MB.</div>
+              <div class="small">Keep it under ~10MB.</div>
             </div>
-
-            <div class="form-group">
+            <div class="field">
               <label>Portfolio / GitHub (optional)</label>
               <input type="url" name="portfolio" placeholder="https://github.com/username" />
             </div>
           </div>
+        </div>
 
-          <div class="section span-2" id="sec-challenge">
-            <h2>
-              <div class="left">Problem Solving</div>
-              <div class="pill">Step 4</div>
-            </h2>
-            <div class="divider"></div>
+        <div class="section" id="sec-challenge">
+          <div class="section-title">
+            <h2>Problem Solving</h2>
+            <div class="hint">Required</div>
+          </div>
 
-            <div class="form-group">
-              <label>Challenge Question *</label>
+          <div class="callout">
+            <strong>Challenge:</strong> We built an AI feature, but users are confused and not using it.
+            What would you do to fix this?
+          </div>
+
+          <div class="grid">
+            <div class="field">
+              <label>Your answer *</label>
               <textarea
                 name="challenge_solution"
                 rows="6"
                 required
-                placeholder="We built an AI feature, but users are confused and not using it. What would you do to fix this?"
+                placeholder="Write clear steps. Example: talk to users → find confusion → simplify flow → test → measure → iterate."
               ></textarea>
-              <div class="hint">Clear steps win: understand → test → improve → measure → repeat.</div>
+              <div class="small">Tip: Clear reasoning beats buzzwords.</div>
             </div>
 
-            <div class="grid" style="margin-top: 6px;">
-              <div class="form-group">
-                <label>Skills / Tools (optional)</label>
-                <textarea name="skills" rows="3" placeholder="Python, React, AWS, LLMs..."></textarea>
-              </div>
-              <div class="form-group">
-                <label>Hobbies / Interests (optional)</label>
-                <textarea name="hobbies" rows="3" placeholder="Anything you enjoy outside work/study."></textarea>
-              </div>
-            </div>
-
-            <div class="actions">
-              <div class="note">
-                We’re looking for practical thinking, not buzzwords.
-              </div>
-              <button type="submit" class="cta" id="submitBtn">Submit Application</button>
+            <div class="field">
+              <label>Hobbies / Interests (optional)</label>
+              <textarea name="hobbies" rows="3" placeholder="Anything you enjoy outside work/study."></textarea>
             </div>
           </div>
+        </div>
+
+        <div class="footer">
+          <div class="footnote">
+            We review applications on a rolling basis. If shortlisted, we’ll contact you by email.
+          </div>
+          <button type="submit" class="btn" id="submitBtn">Submit application</button>
         </div>
       </form>
     </div>
   </div>
 
   <script>
-    // Smooth reveal on scroll (clean, not flashy)
+    // subtle reveal on scroll (premium, not flashy)
     const sections = document.querySelectorAll('.section');
     const io = new IntersectionObserver((entries) => {
-      entries.forEach(e => {
-        if (e.isIntersecting) e.target.classList.add('in');
-      });
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
     }, { threshold: 0.12 });
     sections.forEach(s => io.observe(s));
 
-    // Submit UX
+    // submit state
     const form = document.getElementById('appForm');
     const btn = document.getElementById('submitBtn');
     form.addEventListener('submit', () => {
       btn.disabled = true;
-      btn.textContent = 'Submitting...';
+      btn.textContent = 'Submitting…';
     });
   </script>
 </body>
