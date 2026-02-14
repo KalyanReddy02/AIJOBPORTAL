@@ -62,16 +62,18 @@
             background: #1d4ed8;
         }
         .success-message {
-            background: #d1fae5;
-            border: 2px solid var(--success);
-            color: #065f46;
-            padding: 20px;
-            border-radius: 8px;
             text-align: center;
-            margin-bottom: 20px;
-            display: none;
+            padding: 60px 40px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
-        .success-message.show { display: block; }
+        .success-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 24px;
+            color: var(--success);
+        }
     </style>
 </head>
 <body>
@@ -81,20 +83,9 @@
             <p>Join our mission to democratize AI education</p>
         </div>
         
-        <div id="successMsg" class="success-message">
-            <h2>✅ Application Submitted Successfully!</h2>
-            <p>Thank you! We'll review your application and get back to you soon.</p>
-        </div>
-        
-        <div class="form-wrapper">
-            <form name="application" method="POST" data-netlify="true" netlify-honeypot="bot-field">
-                <!-- Hidden field for Netlify -->
+        <div class="form-wrapper" id="formContainer">
+            <form name="application" method="POST" data-netlify="true" action="/success.html">
                 <input type="hidden" name="form-name" value="application">
-                
-                <!-- Honeypot spam protection -->
-                <div style="display: none;">
-                    <label>Don't fill this out: <input name="bot-field"></label>
-                </div>
                 
                 <div class="section">
                     <h2>Personal Information</h2>
@@ -146,14 +137,5 @@
             </form>
         </div>
     </div>
-    
-    <script>
-        // Show success message after form submission
-        const urlParams = new URLSearchParams(window.location.search);
-        if (urlParams.get('success') === 'true') {
-            document.getElementById('successMsg').classList.add('show');
-            document.querySelector('.form-wrapper').style.display = 'none';
-        }
-    </script>
 </body>
 </html>
