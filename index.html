@@ -1,574 +1,267 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AI Developers — Internship Application</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+<title>AI Developers – Internship Application</title>
 
-    :root{
-      --bg: #f4f6fb;
-      --card: #ffffff;
-      --text: #0b1220;
-      --muted: #5b6676;
-      --border2: rgba(15, 23, 42, .06);
-      --primary: #2563eb;
-      --primary2: #1d4ed8;
-      --ring: rgba(37, 99, 235, .16);
-      --shadow: 0 18px 55px rgba(15, 23, 42, .10);
-      --shadow2: 0 10px 26px rgba(15, 23, 42, .08);
-      --radius: 18px;
-    }
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
 
-    body{
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
-      background:
-        radial-gradient(900px 540px at 15% -10%, rgba(37,99,235,.18), transparent 60%),
-        radial-gradient(900px 540px at 95% 0%, rgba(29,78,216,.14), transparent 55%),
-        var(--bg);
-      color: var(--text);
-      padding: 24px 16px 40px;
-    }
+body{
+  font-family:system-ui,-apple-system,Segoe UI,Roboto;
+  background:linear-gradient(135deg,#2563eb,#1d4ed8);
+  min-height:100vh;
+  padding:30px;
+}
 
-    .container{ max-width: 920px; margin: 0 auto; }
+.container{
+  max-width:900px;
+  margin:auto;
+}
 
-    /* HERO */
-    .hero{
-      border-radius: 22px;
-      padding: 28px 24px;
-      color: #fff;
-      box-shadow: var(--shadow);
-      position: relative;
-      overflow: hidden;
-      background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 45%, #0b3aa8 100%);
-      animation: enter .55s ease both;
-    }
+.header{
+  background:#fff;
+  padding:30px;
+  border-radius:18px;
+  text-align:center;
+  margin-bottom:25px;
+  animation:fadeDown .6s ease;
+}
 
-    .hero:before{
-      content:"";
-      position:absolute;
-      inset:-2px;
-      background:
-        radial-gradient(800px 300px at 20% 10%, rgba(255,255,255,.18), transparent 60%),
-        radial-gradient(700px 260px at 80% 0%, rgba(255,255,255,.12), transparent 55%);
-      opacity: .9;
-      pointer-events:none;
-    }
+.header h1{
+  font-size:2.2rem;
+  margin-bottom:8px;
+}
 
-    .hero:after{
-      content:"";
-      position:absolute;
-      top:-120px; right:-140px;
-      width: 360px; height: 360px;
-      border-radius: 999px;
-      background: rgba(255,255,255,.12);
-      transform: rotate(10deg);
-      pointer-events:none;
-      animation: float 8s ease-in-out infinite;
-    }
+.header p{
+  color:#555;
+  font-size:1rem;
+}
 
-    @keyframes float{
-      0%,100% { transform: translate(0,0) rotate(10deg); }
-      50% { transform: translate(-18px, 14px) rotate(10deg); }
-    }
+.badges{
+  margin-top:15px;
+  display:flex;
+  justify-content:center;
+  gap:10px;
+  flex-wrap:wrap;
+}
 
-    .kicker{
-      position: relative;
-      font-size: .85rem;
-      letter-spacing: .22em;
-      text-transform: uppercase;
-      opacity: .88;
-      margin-bottom: 10px;
-    }
+.badge{
+  padding:7px 14px;
+  border-radius:20px;
+  background:#2563eb15;
+  border:1px solid #2563eb40;
+  font-weight:600;
+  color:#2563eb;
+}
 
-    h1{
-      position: relative;
-      font-size: 2.2rem;
-      letter-spacing: -.02em;
-      line-height: 1.12;
-    }
+.form-card{
+  background:#fff;
+  border-radius:18px;
+  padding:30px;
+  box-shadow:0 20px 40px rgba(0,0,0,.15);
+  animation:fadeUp .6s ease;
+}
 
-    .sub{
-      position: relative;
-      margin-top: 10px;
-      font-size: 1.05rem;
-      opacity: .92;
-      line-height: 1.55;
-      max-width: 70ch;
-    }
+.section{
+  margin-bottom:30px;
+}
 
-    .chips{
-      position: relative;
-      display:flex;
-      gap: 10px;
-      flex-wrap: wrap;
-      margin-top: 14px;
-    }
-    .chip{
-      padding: 8px 12px;
-      border-radius: 999px;
-      background: rgba(255,255,255,.14);
-      border: 1px solid rgba(255,255,255,.24);
-      backdrop-filter: blur(10px);
-      font-weight: 650;
-      font-size: .92rem;
-      display:flex;
-      align-items:center;
-      gap: 8px;
-    }
+.section h2{
+  margin-bottom:15px;
+  color:#1d4ed8;
+}
 
-    /* Sticky progress */
-    .progress-wrap{
-      position: sticky;
-      top: 14px;
-      z-index: 20;
-      margin-top: 14px;
-    }
+.field{
+  margin-bottom:15px;
+}
 
-    .progress{
-      background: rgba(255,255,255,.78);
-      border: 1px solid var(--border2);
-      border-radius: 16px;
-      box-shadow: var(--shadow2);
-      padding: 12px 14px;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap: 12px;
-      backdrop-filter: blur(10px);
-      animation: enter .55s ease both;
-      animation-delay: .06s;
-    }
+label{
+  font-weight:600;
+  display:block;
+  margin-bottom:6px;
+}
 
-    .steps{
-      display:flex;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-    .step{
-      display:flex;
-      align-items:center;
-      gap: 8px;
-      padding: 8px 10px;
-      border-radius: 12px;
-      border: 1px solid rgba(15,23,42,.10);
-      background: rgba(255,255,255,.85);
-      font-weight: 650;
-      font-size: .92rem;
-      color: rgba(11,18,32,.72);
-      transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
-    }
-    .dot{
-      width: 10px;
-      height: 10px;
-      border-radius: 999px;
-      background: rgba(148,163,184,.9);
-    }
-    .step.active{
-      color: rgba(11,18,32,.92);
-      border-color: rgba(37,99,235,.28);
-      box-shadow: 0 0 0 5px var(--ring);
-      transform: translateY(-1px);
-    }
-    .step.active .dot{ background: var(--primary); }
+input,select,textarea{
+  width:100%;
+  padding:12px;
+  border-radius:10px;
+  border:1px solid #ddd;
+  font-size:1rem;
+  transition:.2s;
+}
 
-    .bar{
-      height: 10px;
-      min-width: 160px;
-      max-width: 260px;
-      flex: 1;
-      border-radius: 999px;
-      background: rgba(148,163,184,.22);
-      overflow: hidden;
-    }
-    .bar > div{
-      height: 100%;
-      width: 0%;
-      border-radius: 999px;
-      background: linear-gradient(90deg, var(--primary), var(--primary2));
-      transition: width .25s ease;
-    }
+input:focus,
+select:focus,
+textarea:focus{
+  outline:none;
+  border-color:#2563eb;
+  box-shadow:0 0 0 3px #2563eb30;
+}
 
-    /* FORM CARD */
-    .card{
-      margin-top: 14px;
-      background: var(--card);
-      border: 1px solid var(--border2);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      overflow: hidden;
-      animation: enter .55s ease both;
-      animation-delay: .12s;
-    }
+textarea{
+  resize:vertical;
+}
 
-    .section{
-      padding: 22px 22px;
-      border-top: 1px solid var(--border2);
-      opacity: 0;
-      transform: translateY(12px);
-      transition: opacity 520ms ease, transform 520ms ease;
-    }
-    .section:first-child{ border-top: none; }
-    .section.in{ opacity: 1; transform: translateY(0); }
+button{
+  width:100%;
+  padding:14px;
+  background:#2563eb;
+  color:#fff;
+  border:none;
+  border-radius:12px;
+  font-size:1.1rem;
+  font-weight:700;
+  cursor:pointer;
+  transition:.2s;
+}
 
-    .section-head{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap: 12px;
-      margin-bottom: 14px;
-    }
-    .section-head h2{
-      font-size: 1.05rem;
-      letter-spacing: -.01em;
-      display:flex;
-      align-items:center;
-      gap: 10px;
-    }
-    .num{
-      width: 30px; height: 30px;
-      border-radius: 10px;
-      display:grid; place-items:center;
-      background: rgba(37,99,235,.08);
-      border: 1px solid rgba(37,99,235,.18);
-      color: var(--primary);
-      font-weight: 800;
-      font-size: .95rem;
-    }
-    .req{
-      font-size: .92rem;
-      color: rgba(11,18,32,.58);
-    }
+button:hover{
+  background:#1d4ed8;
+  transform:translateY(-1px);
+}
 
-    .grid{
-      display:grid;
-      grid-template-columns: 1fr;
-      gap: 14px;
-    }
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(20px)}
+  to{opacity:1;transform:translateY(0)}
+}
 
-    @media (min-width: 860px){
-      .two{ grid-template-columns: 1fr 1fr; }
-      .span-2{ grid-column: 1 / -1; }
-    }
-
-    .field label{
-      display:block;
-      font-weight: 650;
-      font-size: .95rem;
-      margin-bottom: 8px;
-      color: rgba(11,18,32,.86);
-    }
-
-    input, select, textarea{
-      width: 100%;
-      padding: 12px 12px;
-      border-radius: 14px;
-      border: 1px solid rgba(15,23,42,.14);
-      background: #fff;
-      color: var(--text);
-      font-size: 1rem;
-      transition: border-color .16s ease, box-shadow .16s ease, transform .16s ease;
-    }
-    input::placeholder, textarea::placeholder{ color: rgba(11,18,32,.42); }
-
-    input:focus, select:focus, textarea:focus{
-      outline: none;
-      border-color: rgba(37,99,235,.55);
-      box-shadow: 0 0 0 6px var(--ring);
-      transform: translateY(-1px);
-    }
-
-    .help{
-      margin-top: 7px;
-      font-size: .92rem;
-      color: rgba(11,18,32,.58);
-      line-height: 1.4;
-    }
-
-    .callout{
-      border-radius: 16px;
-      border: 1px solid rgba(37,99,235,.18);
-      background: rgba(37,99,235,.06);
-      padding: 14px 14px;
-      margin-bottom: 12px;
-      line-height: 1.5;
-      color: rgba(11,18,32,.86);
-    }
-    .callout strong{ color: rgba(11,18,32,.92); }
-
-    .footer{
-      padding: 16px 22px 20px;
-      border-top: 1px solid var(--border2);
-      background: rgba(244,246,251,.65);
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap: 12px;
-      flex-wrap:wrap;
-    }
-    .footnote{
-      font-size: .92rem;
-      color: rgba(11,18,32,.58);
-      line-height: 1.4;
-      max-width: 520px;
-    }
-
-    .btn{
-      padding: 12px 16px;
-      border-radius: 999px;
-      border: none;
-      background: linear-gradient(135deg, var(--primary), var(--primary2));
-      color: #fff;
-      font-weight: 750;
-      font-size: 1rem;
-      cursor: pointer;
-      box-shadow: 0 14px 28px rgba(37,99,235,.18);
-      transition: transform .14s ease, box-shadow .14s ease, filter .14s ease;
-      min-width: 230px;
-    }
-    .btn:hover{
-      transform: translateY(-1px);
-      box-shadow: 0 18px 34px rgba(37,99,235,.22);
-      filter: brightness(1.02);
-    }
-    .btn:active{ transform: translateY(0) scale(.99); }
-    .btn[disabled]{ opacity:.7; cursor:not-allowed; transform:none; box-shadow:none; }
-
-    @keyframes enter{
-      from { opacity: 0; transform: translateY(10px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-
-    @media (max-width: 560px){
-      h1{ font-size: 1.85rem; }
-      .hero{ padding: 24px 18px; }
-      .section{ padding: 20px 18px; }
-      .footer{ padding: 14px 18px 18px; }
-      .btn{ width: 100%; min-width: 0; }
-    }
-
-    @media (prefers-reduced-motion: reduce){
-      *{ animation:none !important; transition:none !important; }
-      .section{ opacity: 1; transform:none; }
-      .progress-wrap{ position: static; }
-    }
-  </style>
+@keyframes fadeDown{
+  from{opacity:0;transform:translateY(-20px)}
+  to{opacity:1;transform:translateY(0)}
+}
+</style>
 </head>
 
 <body>
-  <div class="container">
-    <div class="hero">
-      <div class="kicker">INTERNSHIP</div>
-      <h1>AI Developers</h1>
-      <div class="sub">
-        6-month remote internship. Resume required. Short problem-solving answer.
-      </div>
 
-      <div class="chips">
-        <div class="chip">🌍 Remote</div>
-        <div class="chip">🗓️ 6 Months</div>
-        <div class="chip">🧠 Problem Solving</div>
-      </div>
-    </div>
+<div class="container">
 
-    <div class="progress-wrap">
-      <div class="progress">
-        <div class="steps" id="steps">
-          <div class="step active" data-step="0"><div class="dot"></div>Personal</div>
-          <div class="step" data-step="1"><div class="dot"></div>Education</div>
-          <div class="step" data-step="2"><div class="dot"></div>Internship</div>
-          <div class="step" data-step="3"><div class="dot"></div>Challenge</div>
-        </div>
-        <div class="bar"><div id="barFill"></div></div>
-      </div>
-    </div>
+<!-- HEADER -->
+<div class="header">
+  <h1>AI Developers</h1>
+  <p>6-Month Remote Internship — Apply Now</p>
 
-    <div class="card">
-      <form
-        name="application"
-        method="POST"
-        netlify
-        action="/success.html"
-        enctype="multipart/form-data"
-        id="appForm"
-      >
-        <!-- Personal -->
-        <div class="section" id="sec-personal">
-          <div class="section-head">
-            <h2><span class="num">1</span> Personal</h2>
-            <div class="req">Required</div>
-          </div>
-
-          <div class="grid">
-            <div class="field">
-              <label>Full name *</label>
-              <input type="text" name="full_name" required />
-            </div>
-
-            <div class="field">
-              <label>Email *</label>
-              <input type="email" name="email" required />
-            </div>
-
-            <div class="field">
-              <label>Location (City, Country) *</label>
-              <input type="text" name="location" placeholder="e.g., Buffalo, USA" required />
-            </div>
-          </div>
-        </div>
-
-        <!-- Education -->
-        <div class="section" id="sec-education">
-          <div class="section-head">
-            <h2><span class="num">2</span> Education</h2>
-            <div class="req">Required</div>
-          </div>
-
-          <div class="grid two">
-            <div class="field">
-              <label>Education level *</label>
-              <select name="education_level" required>
-                <option value="">Select…</option>
-                <option>High School</option>
-                <option>Undergraduate</option>
-                <option>Graduate</option>
-                <option>Other</option>
-              </select>
-            </div>
-
-            <div class="field">
-              <label>University *</label>
-              <input type="text" name="university" required />
-            </div>
-
-            <div class="field">
-              <label>Degree *</label>
-              <input type="text" name="degree" placeholder="BTech, BS, MS…" required />
-            </div>
-
-            <div class="field">
-              <label>Major / Program *</label>
-              <input type="text" name="major" required />
-            </div>
-
-            <div class="field">
-              <label>Graduation date *</label>
-              <input type="month" name="graduation_date" required />
-            </div>
-          </div>
-        </div>
-
-        <!-- Internship -->
-        <div class="section" id="sec-internship">
-          <div class="section-head">
-            <h2><span class="num">3</span> Internship</h2>
-            <div class="req">Required</div>
-          </div>
-
-          <div class="grid two">
-            <div class="field">
-              <label>Internship type</label>
-              <input type="text" name="internship_type" value="6 Months — Remote" readonly />
-              <div class="help">Fully remote internship for 6 months.</div>
-            </div>
-
-            <div class="field">
-              <label>Can you commit for 6 months? *</label>
-              <select name="commitment" required>
-                <option value="">Select…</option>
-                <option>Yes</option>
-                <option>No</option>
-                <option>Not sure</option>
-              </select>
-            </div>
-
-            <div class="field span-2">
-              <label>Upload resume (PDF/DOC) *</label>
-              <input type="file" name="resume" accept=".pdf,.doc,.docx" required />
-              <div class="help">Keep it under ~10MB.</div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Challenge -->
-        <div class="section" id="sec-challenge">
-          <div class="section-head">
-            <h2><span class="num">4</span> Problem Solving</h2>
-            <div class="req">Required</div>
-          </div>
-
-          <div class="callout">
-            <strong>Challenge:</strong> We built an AI feature, but users are confused and not using it.
-            What would you do to fix this?
-          </div>
-
-          <div class="grid">
-            <div class="field">
-              <label>Your answer *</label>
-              <textarea
-                name="challenge_solution"
-                rows="6"
-                required
-                placeholder="Write clear steps: understand users → find confusion → improve → test → measure → iterate."
-              ></textarea>
-              <div class="help">Clear thinking beats buzzwords.</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="footer">
-          <div class="footnote">
-            We review applications on a rolling basis. If shortlisted, we’ll contact you by email.
-          </div>
-          <button type="submit" class="btn" id="submitBtn">Submit application</button>
-        </div>
-      </form>
-    </div>
+  <div class="badges">
+    <div class="badge">Remote</div>
+    <div class="badge">6 Months</div>
+    <div class="badge">Problem Solving</div>
   </div>
+</div>
 
-  <script>
-    // Section reveal
-    const sections = document.querySelectorAll('.section');
-    const io = new IntersectionObserver((entries) => {
-      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
-    }, { threshold: 0.12 });
-    sections.forEach(s => io.observe(s));
 
-    // Progress tracker based on scroll
-    const steps = Array.from(document.querySelectorAll('.step'));
-    const fill = document.getElementById('barFill');
-    const secIds = ['sec-personal', 'sec-education', 'sec-internship', 'sec-challenge'];
-    const secEls = secIds.map(id => document.getElementById(id));
+<!-- FORM -->
+<div class="form-card">
 
-    function updateProgress(){
-      const y = window.scrollY + window.innerHeight * 0.35;
-      let active = 0;
+<form name="application" method="POST" netlify enctype="multipart/form-data">
 
-      secEls.forEach((sec, i) => {
-        const top = sec.getBoundingClientRect().top + window.scrollY;
-        if (y >= top) active = i;
-      });
+<!-- PERSONAL -->
+<div class="section">
+<h2>Personal Information</h2>
 
-      steps.forEach(s => s.classList.remove('active'));
-      const current = steps.find(s => Number(s.dataset.step) === active);
-      if (current) current.classList.add('active');
+<div class="field">
+<label>Full Name *</label>
+<input type="text" name="name" required>
+</div>
 
-      const pct = (active / (secEls.length - 1)) * 100;
-      fill.style.width = pct + '%';
-    }
+<div class="field">
+<label>Email *</label>
+<input type="email" name="email" required>
+</div>
 
-    window.addEventListener('scroll', updateProgress, { passive: true });
-    window.addEventListener('load', updateProgress);
+<div class="field">
+<label>Location *</label>
+<input type="text" name="location" placeholder="City, Country" required>
+</div>
+</div>
 
-    // Submit UX
-    const form = document.getElementById('appForm');
-    const btn = document.getElementById('submitBtn');
-    form.addEventListener('submit', () => {
-      btn.disabled = true;
-      btn.textContent = 'Submitting…';
-    });
-  </script>
+
+<!-- EDUCATION -->
+<div class="section">
+<h2>Education</h2>
+
+<div class="field">
+<label>Education Level *</label>
+<select name="level" required>
+<option value="">Select</option>
+<option>High School</option>
+<option>Undergraduate</option>
+<option>Graduate</option>
+<option>Other</option>
+</select>
+</div>
+
+<div class="field">
+<label>University *</label>
+<input type="text" name="university" required>
+</div>
+
+<div class="field">
+<label>Degree *</label>
+<input type="text" name="degree" required>
+</div>
+
+<div class="field">
+<label>Major *</label>
+<input type="text" name="major" required>
+</div>
+
+<div class="field">
+<label>Graduation Date *</label>
+<input type="month" name="grad" required>
+</div>
+
+</div>
+
+
+<!-- INTERNSHIP -->
+<div class="section">
+<h2>Internship</h2>
+
+<div class="field">
+<label>Commitment (6 Months) *</label>
+<select name="commit" required>
+<option value="">Select</option>
+<option>Yes</option>
+<option>No</option>
+<option>Not Sure</option>
+</select>
+</div>
+
+<div class="field">
+<label>Upload Resume *</label>
+<input type="file" name="resume" accept=".pdf,.doc,.docx" required>
+</div>
+
+</div>
+
+
+<!-- CHALLENGE -->
+<div class="section">
+<h2>Problem Solving</h2>
+
+<p style="margin-bottom:10px;color:#444;">
+We built an AI feature, but users are confused and not using it.
+What would you do to fix this?
+</p>
+
+<div class="field">
+<textarea name="challenge" rows="6" required
+placeholder="Explain your thinking step by step..."></textarea>
+</div>
+
+</div>
+
+
+<!-- SUBMIT -->
+<button type="submit">Submit Application</button>
+
+</form>
+
+</div>
+</div>
+
 </body>
 </html>
