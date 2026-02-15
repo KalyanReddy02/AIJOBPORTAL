@@ -3,151 +3,183 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AI Developers — 6-Month Remote Internship</title>
+  <title>AI Developers — Internship Application</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
     html, body { height: 100%; }
     :root{
-      --bgA:#060814;
-      --bgB:#071a3c;
-      --bgC:#0b2b6f;
-
-      --cardA: rgba(255,255,255,.10);
-      --cardB: rgba(255,255,255,.06);
-
-      --stroke: rgba(255,255,255,.16);
-      --stroke2: rgba(255,255,255,.10);
+      --bg0:#050713;
+      --bg1:#071a3a;
+      --bg2:#0b2b6d;
 
       --text: rgba(255,255,255,.92);
-      --muted: rgba(255,255,255,.72);
+      --muted: rgba(255,255,255,.70);
 
-      --accent:#6bd6ff;
-      --accent2:#4a7cff;
-      --accent3:#8b5cff;
+      --accent:#5aa2ff;
+      --accent2:#2f66ff;
 
-      --shadow1: 0 50px 140px rgba(0,0,0,.55);
-      --shadow2: 0 24px 65px rgba(0,0,0,.40);
-      --shadow3: 0 14px 30px rgba(0,0,0,.28);
+      --r: 24px;
 
-      --r: 26px;
-      --r2: 18px;
-      --ring: rgba(107,214,255,.22);
+      --stroke: rgba(255,255,255,.18);
+      --stroke2: rgba(255,255,255,.10);
 
-      --max: 1060px;
+      --glassA: rgba(255,255,255,.12);
+      --glassB: rgba(255,255,255,.06);
+
+      --shadowA: 0 50px 140px rgba(0,0,0,.55);
+      --shadowB: 0 26px 70px rgba(0,0,0,.40);
+      --shadowC: 0 14px 34px rgba(0,0,0,.26);
+
+      --ring: rgba(90,162,255,.26);
     }
 
     body{
       font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
       color: var(--text);
       overflow-x: hidden;
-      background: radial-gradient(1200px 760px at 20% -10%, rgba(107,214,255,.25), transparent 60%),
-                  radial-gradient(1100px 680px at 90% 0%, rgba(74,124,255,.22), transparent 58%),
-                  radial-gradient(900px 600px at 50% 110%, rgba(139,92,255,.16), transparent 62%),
-                  linear-gradient(180deg, var(--bgA), var(--bgB) 40%, var(--bgA));
-      padding: 26px 14px 60px;
+      background:
+        radial-gradient(1100px 640px at 12% -18%, rgba(90,162,255,.40), transparent 60%),
+        radial-gradient(950px 580px at 92% 0%, rgba(47,102,255,.28), transparent 55%),
+        linear-gradient(180deg, var(--bg0), var(--bg1) 35%, var(--bg0));
+      padding: 26px 16px 52px;
     }
 
-    /* ===== Animated mesh background ===== */
-    .bg {
+    /* ====== 3D STAGE (floor + perspective grid) ====== */
+    .stage{
       position: fixed;
       inset: 0;
+      z-index: -3;
       pointer-events: none;
-      z-index: -5;
+      perspective: 1200px;
       overflow: hidden;
     }
-    .mesh {
+    .floor{
       position: absolute;
-      inset: -40px;
+      left: 50%;
+      top: 58%;
+      width: 1600px;
+      height: 900px;
+      transform: translateX(-50%) rotateX(72deg);
+      transform-origin: center;
       background:
-        radial-gradient(900px 500px at 20% 10%, rgba(107,214,255,.20), transparent 60%),
-        radial-gradient(820px 480px at 85% 10%, rgba(74,124,255,.18), transparent 58%),
-        radial-gradient(760px 520px at 55% 85%, rgba(139,92,255,.14), transparent 62%),
-        radial-gradient(520px 360px at 30% 70%, rgba(255,255,255,.06), transparent 62%);
-      filter: blur(2px);
-      animation: drift 10s ease-in-out infinite;
-      opacity: .95;
+        radial-gradient(closest-side at 50% 40%, rgba(255,255,255,.06), transparent 62%),
+        linear-gradient(90deg, rgba(255,255,255,.06) 1px, transparent 1px),
+        linear-gradient(0deg, rgba(255,255,255,.05) 1px, transparent 1px);
+      background-size: auto, 52px 52px, 52px 52px;
+      opacity: .35;
+      filter: blur(.1px);
+      mask-image: radial-gradient(closest-side at 50% 35%, rgba(0,0,0,1) 0%, rgba(0,0,0,.9) 30%, rgba(0,0,0,0) 75%);
     }
-    @keyframes drift{
-      0%,100%{ transform: translate3d(0,0,0) scale(1); }
-      50%{ transform: translate3d(-18px, 12px, 0) scale(1.02); }
-    }
-
-    /* particles */
-    canvas#particles{
+    .fog{
       position:absolute;
-      inset:0;
-      width:100%;
-      height:100%;
-      opacity:.55;
-      filter: blur(.0px);
+      inset:-60px;
+      background:
+        radial-gradient(900px 520px at 20% 20%, rgba(90,162,255,.18), transparent 60%),
+        radial-gradient(900px 520px at 80% 10%, rgba(47,102,255,.14), transparent 55%),
+        radial-gradient(850px 520px at 50% 85%, rgba(255,255,255,.06), transparent 60%);
+      opacity: .9;
+      animation: fog 9s ease-in-out infinite;
+    }
+    @keyframes fog{
+      0%,100% { transform: translate3d(0,0,0) scale(1); }
+      50% { transform: translate3d(-14px, 10px, 0) scale(1.02); }
     }
 
-    /* ===== layout ===== */
-    .container{ max-width: var(--max); margin: 0 auto; perspective: 1400px; }
+    /* ====== CONTAINER ====== */
+    .container{
+      max-width: 980px;
+      margin: 0 auto;
+      perspective: 1400px;
+    }
 
-    /* ===== 3D card system ===== */
-    .card3d{
+    /* ====== REAL 3D OBJECTS ====== */
+    .obj{
       position: relative;
       transform-style: preserve-3d;
-      border-radius: var(--r);
       will-change: transform;
+      border-radius: var(--r);
     }
-    .thick{
-      position:absolute; inset:0;
-      border-radius: inherit;
-      transform: translateZ(-16px);
-      background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(0,0,0,.38));
-      opacity: .9;
-      pointer-events:none;
-    }
-    .surface{
-      position: relative;
-      border-radius: inherit;
-      overflow: hidden;
-      background: linear-gradient(180deg, var(--cardA), var(--cardB));
-      border: 1px solid var(--stroke2);
-      backdrop-filter: blur(18px);
-      -webkit-backdrop-filter: blur(18px);
-      box-shadow: var(--shadow1);
-      transform: translateZ(16px);
-    }
-    .surface::before{
+
+    /* bevel + thickness illusion */
+    .obj::before{
       content:"";
-      position:absolute; inset:0;
+      position:absolute;
+      inset:0;
       border-radius: inherit;
       pointer-events:none;
-      border: 1px solid rgba(255,255,255,.14);
+      border: 1px solid rgba(255,255,255,.18);
       box-shadow:
-        inset 0 1px 0 rgba(255,255,255,.14),
+        inset 0 1px 0 rgba(255,255,255,.12),
         inset 0 -1px 0 rgba(0,0,0,.35);
-      opacity: .95;
+      opacity: .9;
     }
+
+    /* side wall (fake thickness) */
+    .thickness{
+      position:absolute;
+      inset:0;
+      border-radius: inherit;
+      pointer-events:none;
+      transform: translateZ(-18px);
+      background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(0,0,0,.40));
+      filter: blur(.1px);
+      opacity: .85;
+    }
+
+    /* glare that follows cursor */
     .glare{
       position:absolute;
       inset:-2px;
       border-radius: inherit;
       pointer-events:none;
       background:
-        radial-gradient(560px 360px at var(--gx, 50%) var(--gy, 25%),
-          rgba(255,255,255,.50), transparent 60%),
-        radial-gradient(900px 520px at 120% -20%,
-          rgba(107,214,255,.20), transparent 55%),
-        radial-gradient(700px 420px at -20% 120%,
-          rgba(139,92,255,.14), transparent 55%);
+        radial-gradient(520px 320px at var(--gx, 50%) var(--gy, 20%),
+          rgba(255,255,255,.45), transparent 60%),
+        radial-gradient(900px 520px at 120% -10%,
+          rgba(90,162,255,.22), transparent 55%);
       mix-blend-mode: screen;
-      opacity: 0;
+      opacity: .0;
       transition: opacity .18s ease;
     }
-    .card3d:hover .glare{ opacity: .9; }
+    .obj:hover .glare{ opacity: .85; }
 
-    /* ===== HERO ===== */
+    /* main surface */
+    .surface{
+      position: relative;
+      border-radius: inherit;
+      overflow: hidden;
+      background: linear-gradient(180deg, var(--glassA), var(--glassB));
+      border: 1px solid var(--stroke2);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      box-shadow: var(--shadowA);
+      transform: translateZ(18px);
+    }
+
+    /* ====== HERO ====== */
     .hero .surface{
       background:
-        radial-gradient(900px 480px at 20% 10%, rgba(255,255,255,.10), transparent 62%),
-        radial-gradient(700px 420px at 92% -10%, rgba(255,255,255,.07), transparent 58%),
-        linear-gradient(135deg, rgba(107,214,255,.20), rgba(74,124,255,.16), rgba(139,92,255,.10));
+        radial-gradient(900px 420px at 20% 10%, rgba(255,255,255,.10), transparent 60%),
+        radial-gradient(700px 360px at 90% 0%, rgba(255,255,255,.06), transparent 55%),
+        linear-gradient(135deg, rgba(90,162,255,.28), rgba(47,102,255,.18), rgba(255,255,255,.05));
     }
-    .heroInner{ padding: 34px 28px; transform: translateZ(22px); }
+    .hero .surface::after{
+      content:"";
+      position:absolute;
+      top:-140px; right:-160px;
+      width: 520px; height: 520px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.06);
+      transform: translateZ(26px);
+      animation: orb 7.5s ease-in-out infinite;
+      pointer-events:none;
+    }
+    @keyframes orb{
+      0%,100%{ transform: translateZ(26px) translate(0,0); }
+      50%{ transform: translateZ(26px) translate(-22px, 16px); }
+    }
+
+    .heroInner{ padding: 32px 26px; transform: translateZ(26px); }
     .kicker{
       letter-spacing: .28em;
       text-transform: uppercase;
@@ -156,61 +188,56 @@
     }
     h1{
       margin-top: 10px;
-      font-size: 2.65rem;
-      letter-spacing: -.03em;
-      line-height: 1.05;
-      text-shadow: 0 30px 90px rgba(0,0,0,.45);
+      font-size: 2.55rem;
+      letter-spacing: -.02em;
+      line-height: 1.06;
+      text-shadow: 0 24px 70px rgba(0,0,0,.45);
     }
     .sub{
       margin-top: 12px;
       font-size: 1.06rem;
-      line-height: 1.65;
-      opacity: .86;
-      max-width: 78ch;
+      line-height: 1.6;
+      opacity: .85;
+      max-width: 72ch;
     }
 
-    .chips{
-      margin-top: 18px;
-      display:flex;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
+    .chips{ margin-top: 16px; display:flex; gap: 12px; flex-wrap: wrap; }
     .chip{
       padding: 10px 14px;
       border-radius: 999px;
       background: rgba(255,255,255,.10);
-      border: 1px solid rgba(255,255,255,.16);
-      box-shadow: 0 22px 60px rgba(0,0,0,.25);
-      font-weight: 900;
+      border: 1px solid rgba(255,255,255,.18);
+      box-shadow: 0 20px 50px rgba(0,0,0,.25);
+      font-weight: 850;
       color: rgba(255,255,255,.90);
-      transform: translateZ(10px);
     }
 
-    /* ===== Sticky stepper ===== */
-    .sticky{ position: sticky; top: 14px; z-index: 80; margin-top: 16px; }
-    .stepper .surface{ box-shadow: var(--shadow2); }
-    .stepperInner{ padding: 14px 14px 12px; transform: translateZ(20px); }
+    /* ====== PROGRESS ====== */
+    .progressWrap{ position: sticky; top: 14px; z-index: 60; margin-top: 18px; }
+    .progress .surface{ box-shadow: var(--shadowB); }
+    .progressInner{ padding: 14px; transform: translateZ(22px); }
 
     .steps{ display:flex; gap: 10px; flex-wrap: wrap; }
     .step{
       display:flex; align-items:center; gap: 10px;
       padding: 12px 14px;
       border-radius: 16px;
-      background: linear-gradient(180deg, rgba(255,255,255,.14), rgba(255,255,255,.08));
+
+      background: linear-gradient(180deg, rgba(255,255,255,.15), rgba(255,255,255,.08));
       border: 1px solid rgba(255,255,255,.16);
+
       box-shadow:
         0 20px 55px rgba(0,0,0,.22),
         inset 0 1px 0 rgba(255,255,255,.14);
-      font-weight: 950;
+
+      font-weight: 900;
       color: rgba(255,255,255,.78);
-      transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
-      cursor: pointer;
-      user-select: none;
+      transition: transform .16s ease, box-shadow .16s ease, border-color .16s ease;
     }
     .step:hover{
-      transform: translateY(-2px) translateZ(10px);
-      box-shadow: 0 28px 80px rgba(0,0,0,.28), inset 0 1px 0 rgba(255,255,255,.16);
-      border-color: rgba(255,255,255,.22);
+      transform: translateY(-2px) translateZ(8px);
+      box-shadow: 0 28px 75px rgba(0,0,0,.28), inset 0 1px 0 rgba(255,255,255,.16);
+      border-color: rgba(255,255,255,.20);
     }
     .dot{
       width: 10px; height: 10px; border-radius: 999px;
@@ -218,18 +245,18 @@
       box-shadow: 0 0 0 6px rgba(255,255,255,.06);
     }
     .step.active{
-      color: rgba(255,255,255,.96);
-      border-color: rgba(107,214,255,.65);
-      background: linear-gradient(180deg, rgba(107,214,255,.26), rgba(255,255,255,.10));
+      color: rgba(255,255,255,.94);
+      border-color: rgba(90,162,255,.60);
+      background: linear-gradient(180deg, rgba(90,162,255,.28), rgba(255,255,255,.10));
       box-shadow:
-        0 34px 110px rgba(107,214,255,.16),
+        0 34px 95px rgba(90,162,255,.20),
         0 22px 60px rgba(0,0,0,.26),
         inset 0 1px 0 rgba(255,255,255,.18);
-      transform: translateY(-2px) translateZ(12px);
+      transform: translateY(-2px) translateZ(10px);
     }
     .step.active .dot{
       background: var(--accent);
-      box-shadow: 0 0 0 6px rgba(107,214,255,.18), 0 0 28px rgba(107,214,255,.45);
+      box-shadow: 0 0 0 6px rgba(90,162,255,.18), 0 0 26px rgba(90,162,255,.40);
     }
 
     .bar{
@@ -245,61 +272,54 @@
       height:100%;
       width:0%;
       border-radius: 999px;
-      background: linear-gradient(90deg, var(--accent), var(--accent2), var(--accent3));
-      box-shadow: 0 0 30px rgba(107,214,255,.40);
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      box-shadow: 0 0 28px rgba(90,162,255,.42);
       transition: width .25s ease;
     }
 
-    /* ===== Form card ===== */
-    .formCard{ margin-top: 18px; }
-    .formCard .surface{ box-shadow: var(--shadow1); }
+    /* ====== FORM CARD ====== */
+    .card{ margin-top: 18px; }
+    .card .surface{ box-shadow: var(--shadowA); }
 
     .section{
       padding: 24px 22px;
       border-top: 1px solid rgba(255,255,255,.10);
-      background: linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.06));
       opacity: 0;
       transform: translateY(14px);
       transition: opacity 520ms ease, transform 520ms ease;
+      background: linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.06));
     }
-    .section:first-child{ border-top: none; }
+    .section:first-child{ border-top:none; }
     .section.in{ opacity: 1; transform: translateY(0); }
 
     .sectionHead{
-      display:flex;
-      align-items:center;
-      justify-content: space-between;
-      gap: 14px;
-      margin-bottom: 14px;
+      display:flex; align-items:center; justify-content: space-between;
+      gap: 14px; margin-bottom: 14px;
     }
     .sectionHead h2{
-      display:flex;
-      align-items:center;
-      gap: 10px;
-      font-size: 1.12rem;
-      letter-spacing: -.01em;
+      display:flex; align-items:center; gap: 10px;
+      font-size: 1.10rem; letter-spacing: -.01em;
     }
     .num{
-      width: 38px; height: 38px;
-      border-radius: 14px;
+      width: 36px; height: 36px; border-radius: 12px;
       display:grid; place-items:center;
-      background: linear-gradient(180deg, rgba(107,214,255,.24), rgba(255,255,255,.10));
-      border: 1px solid rgba(107,214,255,.45);
-      box-shadow: 0 24px 70px rgba(107,214,255,.14), inset 0 1px 0 rgba(255,255,255,.16);
+      background: linear-gradient(180deg, rgba(90,162,255,.28), rgba(255,255,255,.10));
+      border: 1px solid rgba(90,162,255,.42);
+      box-shadow: 0 22px 55px rgba(90,162,255,.16), inset 0 1px 0 rgba(255,255,255,.16);
       font-weight: 950;
     }
-    .req{ color: rgba(255,255,255,.68); font-size: .95rem; }
+    .req{ color: rgba(255,255,255,.70); font-size: .95rem; }
 
     .grid{ display:grid; grid-template-columns: 1fr; gap: 14px; }
-    @media (min-width: 900px){
+    @media (min-width: 860px){
       .two{ grid-template-columns: 1fr 1fr; }
       .span2{ grid-column: 1 / -1; }
     }
 
     label{
       display:block;
-      font-weight: 950;
-      color: rgba(255,255,255,.92);
+      font-weight: 900;
+      color: rgba(255,255,255,.90);
       margin-bottom: 8px;
       font-size: .95rem;
     }
@@ -309,69 +329,65 @@
       padding: 13px 14px;
       border-radius: 16px;
       border: 1px solid rgba(255,255,255,.14);
-      background: rgba(6,10,18,.32);
+      background: rgba(6,10,18,.38);
       color: rgba(255,255,255,.92);
       font-size: 1rem;
-
       backdrop-filter: blur(10px);
       -webkit-backdrop-filter: blur(10px);
 
       box-shadow:
         inset 0 2px 12px rgba(0,0,0,.45),
-        0 22px 70px rgba(0,0,0,.18);
+        0 22px 65px rgba(0,0,0,.18);
 
-      transition: transform .16s ease, box-shadow .16s ease, border-color .16s ease;
+      transition: transform .15s ease, box-shadow .15s ease, border-color .15s ease;
     }
     input::placeholder, textarea::placeholder{ color: rgba(255,255,255,.45); }
 
     input:hover, select:hover, textarea:hover{
       transform: translateY(-2px);
-      box-shadow: inset 0 2px 12px rgba(0,0,0,.45), 0 38px 110px rgba(0,0,0,.24);
+      box-shadow: inset 0 2px 12px rgba(0,0,0,.45), 0 34px 95px rgba(0,0,0,.24);
       border-color: rgba(255,255,255,.18);
     }
     input:focus, select:focus, textarea:focus{
       outline:none;
-      border-color: rgba(107,214,255,.80);
+      border-color: rgba(90,162,255,.75);
       box-shadow:
         0 0 0 7px var(--ring),
         inset 0 2px 12px rgba(0,0,0,.45),
-        0 48px 150px rgba(107,214,255,.12);
+        0 40px 120px rgba(90,162,255,.14);
       transform: translateY(-2px);
     }
-
-    .callout{
-      border-radius: 18px;
-      border: 1px solid rgba(107,214,255,.34);
-      background: linear-gradient(180deg, rgba(107,214,255,.16), rgba(255,255,255,.07));
-      padding: 14px 14px;
-      margin-bottom: 12px;
-      box-shadow: 0 34px 120px rgba(107,214,255,.10), 0 22px 70px rgba(0,0,0,.24);
-      color: rgba(255,255,255,.88);
-      line-height: 1.6;
-    }
-    .callout strong{ color: rgba(255,255,255,.98); }
 
     .help{
       margin-top: 8px;
       color: rgba(255,255,255,.68);
       font-size: .92rem;
-      line-height: 1.45;
+      line-height: 1.4;
     }
 
+    .callout{
+      border-radius: 18px;
+      border: 1px solid rgba(90,162,255,.38);
+      background: linear-gradient(180deg, rgba(90,162,255,.18), rgba(255,255,255,.07));
+      padding: 14px 14px;
+      margin-bottom: 12px;
+      box-shadow: 0 30px 90px rgba(90,162,255,.10), 0 22px 65px rgba(0,0,0,.26);
+      color: rgba(255,255,255,.88);
+      line-height: 1.55;
+    }
+    .callout strong{ color: rgba(255,255,255,.96); }
+
     .footer{
-      display:flex;
-      align-items:center;
-      justify-content: space-between;
-      gap: 12px;
-      flex-wrap: wrap;
+      display:flex; align-items:center; justify-content: space-between;
+      gap: 12px; flex-wrap: wrap;
       padding: 18px 22px 22px;
       border-top: 1px solid rgba(255,255,255,.10);
       background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.06));
     }
     .footnote{
-      color: rgba(255,255,255,.66);
+      color: rgba(255,255,255,.68);
       font-size: .92rem;
-      line-height: 1.45;
+      line-height: 1.4;
       max-width: 560px;
     }
 
@@ -380,62 +396,50 @@
       cursor: pointer;
       padding: 13px 18px;
       border-radius: 999px;
-      min-width: 260px;
+      min-width: 240px;
       font-size: 1rem;
       font-weight: 950;
       color: rgba(255,255,255,.96);
-      background: linear-gradient(135deg, var(--accent), var(--accent2), var(--accent3));
-      box-shadow: 0 60px 180px rgba(107,214,255,.18), 0 30px 95px rgba(0,0,0,.34);
-      transition: transform .16s ease, box-shadow .16s ease, filter .16s ease;
-      position: relative;
-      overflow: hidden;
-    }
-    .btn::after{
-      content:"";
-      position:absolute;
-      inset:-2px;
-      background: radial-gradient(360px 160px at 20% 20%, rgba(255,255,255,.45), transparent 55%);
-      opacity: .35;
-      transform: translateX(-20%);
-      transition: transform .35s ease, opacity .35s ease;
-      pointer-events:none;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      box-shadow: 0 42px 130px rgba(90,162,255,.20), 0 26px 80px rgba(0,0,0,.32);
+      transition: transform .15s ease, box-shadow .15s ease, filter .15s ease;
     }
     .btn:hover{
-      transform: translateY(-2px) translateZ(12px);
-      box-shadow: 0 74px 220px rgba(107,214,255,.22), 0 34px 110px rgba(0,0,0,.36);
+      transform: translateY(-2px) translateZ(10px);
+      box-shadow: 0 56px 160px rgba(90,162,255,.24), 0 30px 95px rgba(0,0,0,.35);
       filter: brightness(1.05);
     }
-    .btn:hover::after{ transform: translateX(12%); opacity: .45; }
     .btn:active{ transform: translateY(0) scale(.99); }
     .btn[disabled]{ opacity:.7; cursor:not-allowed; transform:none; box-shadow:none; }
 
-    @media (max-width: 620px){
-      h1{ font-size: 2.15rem; }
+    @media (max-width: 560px){
+      h1{ font-size: 2.05rem; }
       .heroInner{ padding: 26px 18px; }
       .section{ padding: 22px 18px; }
       .footer{ padding: 16px 18px 20px; }
       .btn{ width: 100%; min-width: 0; }
-      .sticky{ position: static; }
+      .floor{ top: 62%; }
     }
 
     @media (prefers-reduced-motion: reduce){
-      *{ transition:none !important; animation:none !important; }
-      .sticky{ position: static; }
+      .fog{ animation:none !important; }
+      *{ transition:none !important; }
+      .progressWrap{ position: static; }
       .section{ opacity:1; transform:none; }
     }
   </style>
 </head>
 
 <body>
-  <div class="bg">
-    <div class="mesh"></div>
-    <canvas id="particles"></canvas>
+  <div class="stage">
+    <div class="fog"></div>
+    <div class="floor"></div>
   </div>
 
   <div class="container">
     <!-- HERO -->
-    <div class="card3d hero" data-tilt>
-      <div class="thick"></div>
+    <div class="obj hero" data-tilt>
+      <div class="thickness"></div>
       <div class="surface">
         <div class="glare"></div>
         <div class="heroInner">
@@ -451,13 +455,13 @@
       </div>
     </div>
 
-    <!-- STEPPER -->
-    <div class="sticky">
-      <div class="card3d stepper" data-tilt>
-        <div class="thick"></div>
+    <!-- PROGRESS -->
+    <div class="progressWrap">
+      <div class="obj progress" data-tilt>
+        <div class="thickness"></div>
         <div class="surface">
           <div class="glare"></div>
-          <div class="stepperInner">
+          <div class="progressInner">
             <div class="steps" id="steps">
               <div class="step active" data-step="0"><div class="dot"></div>Personal</div>
               <div class="step" data-step="1"><div class="dot"></div>Education</div>
@@ -471,8 +475,8 @@
     </div>
 
     <!-- FORM -->
-    <div class="card3d formCard" data-tilt>
-      <div class="thick"></div>
+    <div class="obj card" data-tilt>
+      <div class="thickness"></div>
       <div class="surface">
         <div class="glare"></div>
 
@@ -484,7 +488,6 @@
           enctype="multipart/form-data"
           id="appForm"
         >
-          <!-- Personal -->
           <div class="section" id="sec-personal">
             <div class="sectionHead">
               <h2><span class="num">1</span> Personal</h2>
@@ -506,7 +509,6 @@
             </div>
           </div>
 
-          <!-- Education -->
           <div class="section" id="sec-education">
             <div class="sectionHead">
               <h2><span class="num">2</span> Education</h2>
@@ -542,7 +544,6 @@
             </div>
           </div>
 
-          <!-- Internship -->
           <div class="section" id="sec-internship">
             <div class="sectionHead">
               <h2><span class="num">3</span> Internship</h2>
@@ -571,7 +572,6 @@
             </div>
           </div>
 
-          <!-- Challenge -->
           <div class="section" id="sec-challenge">
             <div class="sectionHead">
               <h2><span class="num">4</span> Problem Solving</h2>
@@ -590,7 +590,7 @@
                   name="challenge_solution"
                   rows="6"
                   required
-                  placeholder="Write your plan. Keep it clear and practical."
+                  placeholder="Write clear steps: understand users → find confusion → improve → test → measure → iterate."
                 ></textarea>
                 <div class="help">Clear thinking beats buzzwords.</div>
               </div>
@@ -609,14 +609,14 @@
   </div>
 
   <script>
-    // ===== Section reveal =====
+    // Smooth reveal
     const sections = document.querySelectorAll('.section');
     const io = new IntersectionObserver((entries) => {
       entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
     }, { threshold: 0.12 });
     sections.forEach(s => io.observe(s));
 
-    // ===== Progress tracker =====
+    // Progress tracker
     const steps = Array.from(document.querySelectorAll('.step'));
     const fill = document.getElementById('barFill');
     const secIds = ['sec-personal','sec-education','sec-internship','sec-challenge'];
@@ -637,24 +637,17 @@
     window.addEventListener('scroll', updateProgress, { passive: true });
     window.addEventListener('load', updateProgress);
 
-    // click step -> scroll
-    steps.forEach(btn => {
-      btn.addEventListener('click', () => {
-        const i = Number(btn.dataset.step);
-        secEls[i].scrollIntoView({ behavior: 'smooth', block: 'start' });
-      });
-    });
-
-    // ===== Submit UX =====
+    // Submit UX
     const form = document.getElementById('appForm');
-    const submitBtn = document.getElementById('submitBtn');
+    const btn = document.getElementById('submitBtn');
     form.addEventListener('submit', () => {
-      submitBtn.disabled = true;
-      submitBtn.textContent = 'Submitting…';
+      btn.disabled = true;
+      btn.textContent = 'Submitting…';
     });
 
-    // ===== Real 3D tilt + glare tracking =====
+    // Real 3D tilt + light tracking (stronger than before)
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
     function tilt(el){
       const glare = el.querySelector('.glare');
       let raf = null;
@@ -663,7 +656,7 @@
         el.style.transform = `rotateX(0deg) rotateY(0deg) translateY(0px)`;
         if (glare){
           el.style.setProperty('--gx','50%');
-          el.style.setProperty('--gy','25%');
+          el.style.setProperty('--gy','20%');
         }
       };
 
@@ -674,8 +667,11 @@
         const px = x / r.width;
         const py = y / r.height;
 
-        const rx = (py - 0.5) * -12;
-        const ry = (px - 0.5) *  14;
+        // stronger tilt + perspective pop
+        const rx = (py - 0.5) * -14;
+        const ry = (px - 0.5) *  16;
+
+        // depth lift
         const lift = -6;
 
         if (raf) cancelAnimationFrame(raf);
@@ -692,76 +688,8 @@
       el.addEventListener('mouseleave', reset);
       el.addEventListener('touchstart', reset, { passive:true });
     }
+
     if (!reduced) document.querySelectorAll('[data-tilt]').forEach(tilt);
-
-    // ===== Particle background (lightweight) =====
-    const canvas = document.getElementById('particles');
-    const ctx = canvas.getContext('2d');
-    let W, H, dpr;
-    const P = [];
-    const N = 70;
-
-    function resize(){
-      dpr = Math.min(window.devicePixelRatio || 1, 2);
-      W = canvas.clientWidth;
-      H = canvas.clientHeight;
-      canvas.width = Math.floor(W * dpr);
-      canvas.height = Math.floor(H * dpr);
-      ctx.setTransform(dpr,0,0,dpr,0,0);
-    }
-    function rand(a,b){ return a + Math.random()*(b-a); }
-
-    function init(){
-      P.length = 0;
-      for(let i=0;i<N;i++){
-        P.push({
-          x: rand(0,W), y: rand(0,H),
-          vx: rand(-.18,.18), vy: rand(-.10,.10),
-          r: rand(1.2,2.8),
-          a: rand(.18,.55)
-        });
-      }
-    }
-
-    function tick(){
-      ctx.clearRect(0,0,W,H);
-
-      for(const p of P){
-        p.x += p.vx; p.y += p.vy;
-        if (p.x < -30) p.x = W + 30;
-        if (p.x > W + 30) p.x = -30;
-        if (p.y < -30) p.y = H + 30;
-        if (p.y > H + 30) p.y = -30;
-
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.r, 0, Math.PI*2);
-        ctx.fillStyle = `rgba(255,255,255,${p.a})`;
-        ctx.fill();
-      }
-
-      // soft connecting lines (subtle)
-      for(let i=0;i<P.length;i++){
-        for(let j=i+1;j<P.length;j++){
-          const a = P[i], b = P[j];
-          const dx = a.x-b.x, dy=a.y-b.y;
-          const dist = Math.sqrt(dx*dx+dy*dy);
-          if(dist < 140){
-            const alpha = (1 - dist/140) * 0.12;
-            ctx.strokeStyle = `rgba(107,214,255,${alpha})`;
-            ctx.lineWidth = 1;
-            ctx.beginPath();
-            ctx.moveTo(a.x,a.y);
-            ctx.lineTo(b.x,b.y);
-            ctx.stroke();
-          }
-        }
-      }
-
-      requestAnimationFrame(tick);
-    }
-
-    resize(); init(); tick();
-    window.addEventListener('resize', () => { resize(); init(); });
   </script>
 </body>
 </html>
