@@ -11,8 +11,8 @@
 
     :root{
       --bg: #070814;
-      --panel: rgba(18, 18, 30, 0.72);
-      --panel2: rgba(18, 18, 30, 0.88);
+      --panel: rgba(18, 18, 30, 0.70);
+      --panel2: rgba(18, 18, 30, 0.85);
 
       --text: #F2F5FF;
       --muted: rgba(242,245,255,.72);
@@ -21,18 +21,17 @@
       --stroke: rgba(255,255,255,.10);
       --stroke2: rgba(255,255,255,.16);
 
-      --v: #7C3AED;  /* violet */
-      --c: #06B6D4;  /* cyan */
-      --p: #FF3D8D;  /* pink accent */
-      --g: #22C55E;  /* green */
+      --v: #7C3AED;
+      --c: #06B6D4;
+      --p: #FF3D8D;
 
       --r: 22px;
       --r2: 16px;
 
-      /* “3D” depth without looking like crypto-glass */
-      --shadow1: 0 30px 80px rgba(0,0,0,.55);
-      --shadow2: 0 14px 34px rgba(0,0,0,.35);
-      --shadow3: 0 1px 0 rgba(255,255,255,.10) inset;
+      /* 2026 “depth”: layered shadows, not tilt */
+      --shadowA: 0 28px 85px rgba(0,0,0,.55);
+      --shadowB: 0 16px 36px rgba(0,0,0,.35);
+      --inner: 0 1px 0 rgba(255,255,255,.10) inset;
 
       --max: 1100px;
     }
@@ -44,57 +43,55 @@
       overflow-x: hidden;
     }
 
-    /* ===== Premium AI background ===== */
+    /* ===== Background ===== */
     .bg {
       position: fixed; inset: 0; z-index: -3;
       background:
-        radial-gradient(1000px 600px at 20% 10%, rgba(124,58,237,.36), transparent 55%),
-        radial-gradient(900px 580px at 86% 15%, rgba(6,182,212,.26), transparent 55%),
-        radial-gradient(900px 600px at 45% 100%, rgba(255,61,141,.16), transparent 60%),
+        radial-gradient(1100px 650px at 18% 12%, rgba(124,58,237,.34), transparent 60%),
+        radial-gradient(1000px 650px at 88% 18%, rgba(6,182,212,.26), transparent 60%),
+        radial-gradient(900px 650px at 48% 110%, rgba(255,61,141,.14), transparent 65%),
         linear-gradient(180deg, #070814, #050614 55%, #070814);
     }
 
     .grid {
       position: fixed; inset: -2px; z-index: -2; pointer-events: none;
-      opacity: .18;
+      opacity: .16;
       background:
         linear-gradient(to right, rgba(255,255,255,.08) 1px, transparent 1px),
         linear-gradient(to bottom, rgba(255,255,255,.08) 1px, transparent 1px);
-      background-size: 64px 64px;
-      mask-image: radial-gradient(60% 50% at 50% 30%, black 40%, transparent 70%);
+      background-size: 68px 68px;
+      mask-image: radial-gradient(60% 50% at 50% 28%, black 42%, transparent 72%);
+      animation: gridFloat 12s ease-in-out infinite;
       transform: translateZ(0);
-      animation: gridFloat 10s ease-in-out infinite;
     }
     @keyframes gridFloat{
       0% { transform: translateY(0); }
-      50% { transform: translateY(10px); }
+      50% { transform: translateY(12px); }
       100% { transform: translateY(0); }
     }
 
     .noise {
       position: fixed; inset: 0; z-index: -1; pointer-events: none;
       background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='240' height='240' filter='url(%23n)' opacity='.25'/%3E%3C/svg%3E");
-      opacity: .14;
+      opacity: .12;
       mix-blend-mode: overlay;
     }
 
-    .auras{
-      position: fixed; inset: 0; z-index: -2; pointer-events: none;
-    }
+    .auras{ position: fixed; inset: 0; z-index: -2; pointer-events: none; }
     .aura{
       position:absolute;
-      width: 520px; height: 520px; border-radius: 999px;
-      filter: blur(48px);
-      opacity: .35;
-      animation: aura 16s ease-in-out infinite;
+      width: 560px; height: 560px; border-radius: 999px;
+      filter: blur(52px);
+      opacity: .33;
+      animation: aura 18s ease-in-out infinite;
       transform: translate3d(0,0,0);
     }
-    .a1{ left:-160px; top:-160px; background: radial-gradient(circle at 30% 30%, rgba(124,58,237,.95), transparent 55%); }
-    .a2{ right:-180px; top: 60px; background: radial-gradient(circle at 30% 30%, rgba(6,182,212,.90), transparent 55%); animation-delay: 2s; }
-    .a3{ left: 25%; bottom:-260px; background: radial-gradient(circle at 30% 30%, rgba(255,61,141,.60), transparent 58%); animation-delay: 4s; }
+    .a1{ left:-190px; top:-190px; background: radial-gradient(circle at 30% 30%, rgba(124,58,237,.95), transparent 55%); }
+    .a2{ right:-210px; top: 80px; background: radial-gradient(circle at 30% 30%, rgba(6,182,212,.90), transparent 55%); animation-delay: 2s; }
+    .a3{ left: 24%; bottom:-280px; background: radial-gradient(circle at 30% 30%, rgba(255,61,141,.58), transparent 58%); animation-delay: 4s; }
     @keyframes aura{
       0% { transform: translate3d(0,0,0) scale(1); }
-      50% { transform: translate3d(30px,-18px,0) scale(1.05); }
+      50% { transform: translate3d(34px,-20px,0) scale(1.05); }
       100% { transform: translate3d(0,0,0) scale(1); }
     }
 
@@ -113,7 +110,7 @@
         radial-gradient(900px 440px at 18% 10%, rgba(124,58,237,.22), transparent 65%),
         radial-gradient(900px 440px at 86% 20%, rgba(6,182,212,.16), transparent 65%),
         rgba(18,18,30,.52);
-      box-shadow: var(--shadow1);
+      box-shadow: var(--shadowA);
       overflow:hidden;
       position: relative;
     }
@@ -123,13 +120,7 @@
       background: radial-gradient(520px 200px at 20% 15%, rgba(255,255,255,.14), transparent 60%);
       opacity:.75; pointer-events:none;
     }
-
-    .heroInner{
-      padding: 34px 24px;
-      display:flex;
-      flex-direction: column;
-      gap: 12px;
-    }
+    .heroInner{ padding: 34px 24px; display:flex; flex-direction: column; gap: 12px; }
 
     .kicker{
       letter-spacing: .22em;
@@ -137,17 +128,8 @@
       font-size: .80rem;
       color: var(--muted2);
     }
-    h1{
-      font-size: 2.7rem;
-      letter-spacing: -.04em;
-      line-height: 1.03;
-    }
-    .sub{
-      color: var(--muted);
-      font-size: 1.05rem;
-      line-height: 1.65;
-      max-width: 80ch;
-    }
+    h1{ font-size: 2.7rem; letter-spacing: -.04em; line-height: 1.03; }
+    .sub{ color: var(--muted); font-size: 1.05rem; line-height: 1.65; max-width: 80ch; }
 
     .chips{ display:flex; flex-wrap: wrap; gap: 10px; margin-top: 6px; }
     .chip{
@@ -159,55 +141,49 @@
       color: rgba(242,245,255,.86);
       transition: transform .16s ease, background .16s ease, border-color .16s ease;
     }
-    .chip:hover{
-      transform: translateY(-2px);
-      background: rgba(255,255,255,.06);
-      border-color: rgba(255,255,255,.22);
-    }
+    .chip:hover{ transform: translateY(-2px); background: rgba(255,255,255,.06); border-color: rgba(255,255,255,.22); }
 
-    /* ===== “3D” card (real depth + tilt) ===== */
-    .card3dWrap{ perspective: 1100px; margin-top: 16px; }
-    .card3d{
+    /* ===== Main card: NO tilt. Just depth + glow + hover lift ===== */
+    .card{
+      margin-top: 16px;
       border-radius: calc(var(--r) + 10px);
       border: 1px solid rgba(255,255,255,.10);
       background:
         linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02)),
         rgba(18,18,30,.55);
-      box-shadow: var(--shadow2), var(--shadow3);
+      box-shadow: var(--shadowB), var(--inner);
       overflow:hidden;
-      transform-style: preserve-3d;
-      transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
       position: relative;
+      transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
     }
-
-    .card3d::after{
-      /* premium edge glow */
+    .card:hover{
+      transform: translateY(-4px);
+      border-color: rgba(255,255,255,.16);
+      box-shadow: 0 22px 70px rgba(0,0,0,.52), 0 14px 34px rgba(0,0,0,.32), var(--inner);
+    }
+    .card::after{
       content:"";
-      position:absolute; inset: -1px;
+      position:absolute; inset:-1px;
       background:
-        radial-gradient(400px 220px at 15% 10%, rgba(124,58,237,.30), transparent 70%),
-        radial-gradient(420px 240px at 85% 20%, rgba(6,182,212,.26), transparent 70%),
-        radial-gradient(520px 240px at 70% 100%, rgba(255,61,141,.16), transparent 75%);
+        radial-gradient(420px 240px at 15% 10%, rgba(124,58,237,.22), transparent 70%),
+        radial-gradient(460px 260px at 86% 22%, rgba(6,182,212,.18), transparent 72%),
+        radial-gradient(560px 260px at 70% 110%, rgba(255,61,141,.12), transparent 78%);
       opacity:.75;
       pointer-events:none;
       mix-blend-mode: screen;
     }
 
-    /* top steps bar */
+    /* Steps */
     .steps{
-      display:flex;
-      gap: 10px;
+      display:flex; gap: 10px;
       padding: 14px 14px 12px;
       border-bottom: 1px solid rgba(255,255,255,.08);
       background: rgba(10,12,24,.45);
       backdrop-filter: blur(10px);
       -webkit-backdrop-filter: blur(10px);
-      position: sticky;
-      top: 0;
-      z-index: 5;
+      position: sticky; top: 0; z-index: 5;
       flex-wrap: wrap;
     }
-
     .step{
       display:flex; align-items:center; gap: 10px;
       padding: 10px 12px;
@@ -236,13 +212,13 @@
     }
     .step:hover{ transform: translateY(-1px); border-color: rgba(255,255,255,.20); background: rgba(255,255,255,.05); }
 
-    /* sections */
+    /* Sections animation */
     .section{
       padding: 22px 18px;
       border-top: 1px solid rgba(255,255,255,.08);
       background: rgba(18,18,30,.52);
       opacity: 0;
-      transform: translateY(12px);
+      transform: translateY(14px);
       transition: opacity 520ms ease, transform 520ms ease;
     }
     .section:first-of-type{ border-top: none; }
@@ -382,6 +358,7 @@
       * { transition: none !important; animation: none !important; }
       .section{ opacity: 1; transform: none; }
       .grid{ animation: none; }
+      .card{ transform:none !important; }
     }
   </style>
 </head>
@@ -398,7 +375,6 @@
 
   <div class="wrap">
 
-    <!-- HERO -->
     <div class="hero">
       <div class="heroInner">
         <div class="kicker">INTERNSHIP</div>
@@ -413,143 +389,132 @@
       </div>
     </div>
 
-    <!-- FORM CARD -->
-    <div class="card3dWrap">
-      <div class="card3d" id="tiltCard">
+    <div class="card" id="mainCard">
+      <div class="steps" id="steps">
+        <div class="step active" data-target="sec-personal"><span class="dot"></span>Personal</div>
+        <div class="step" data-target="sec-education"><span class="dot"></span>Education</div>
+        <div class="step" data-target="sec-resume"><span class="dot"></span>Resume</div>
+        <div class="step" data-target="sec-challenge"><span class="dot"></span>Challenge</div>
+      </div>
 
-        <div class="steps" id="steps">
-          <div class="step active" data-target="sec-personal"><span class="dot"></span>Personal</div>
-          <div class="step" data-target="sec-education"><span class="dot"></span>Education</div>
-          <div class="step" data-target="sec-resume"><span class="dot"></span>Resume</div>
-          <div class="step" data-target="sec-challenge"><span class="dot"></span>Challenge</div>
+      <form
+        name="application"
+        method="POST"
+        netlify
+        action="/success.html"
+        enctype="multipart/form-data"
+        id="appForm"
+      >
+        <input type="hidden" name="form-name" value="application" />
+
+        <div class="section" id="sec-personal">
+          <div class="sectionHead">
+            <div class="title"><span class="num">1</span> Personal</div>
+            <div class="req">Required</div>
+          </div>
+
+          <div class="grid2">
+            <div>
+              <label>Full name *</label>
+              <input type="text" name="full_name" required />
+            </div>
+            <div>
+              <label>Email *</label>
+              <input type="email" name="email" required />
+            </div>
+            <div>
+              <label>Location (City, Country) *</label>
+              <input type="text" name="location" placeholder="e.g., Buffalo, USA" required />
+            </div>
+          </div>
         </div>
 
-        <form
-          name="application"
-          method="POST"
-          netlify
-          action="/success.html"
-          enctype="multipart/form-data"
-          id="appForm"
-        >
-          <!-- Netlify form detection helper -->
-          <input type="hidden" name="form-name" value="application" />
-
-          <!-- PERSONAL -->
-          <div class="section" id="sec-personal">
-            <div class="sectionHead">
-              <div class="title"><span class="num">1</span> Personal</div>
-              <div class="req">Required</div>
-            </div>
-
-            <div class="grid2">
-              <div>
-                <label>Full name *</label>
-                <input type="text" name="full_name" required />
-              </div>
-              <div>
-                <label>Email *</label>
-                <input type="email" name="email" required />
-              </div>
-              <div>
-                <label>Location (City/Town, State) *</label>
-                <input type="text" name="location" placeholder="e.g., Tirupati, AP" required />
-              </div>
-            </div>
+        <div class="section" id="sec-education">
+          <div class="sectionHead">
+            <div class="title"><span class="num">2</span> Education</div>
+            <div class="req">Required</div>
           </div>
 
-          <!-- EDUCATION -->
-          <div class="section" id="sec-education">
-            <div class="sectionHead">
-              <div class="title"><span class="num">2</span> Education</div>
-              <div class="req">Required</div>
+          <div class="grid2 two">
+            <div>
+              <label>Education level *</label>
+              <select name="education_level" required>
+                <option value="">Select…</option>
+                <option>High School</option>
+                <option>Undergraduate</option>
+                <option>Graduate</option>
+                <option>Other</option>
+              </select>
             </div>
-
-            <div class="grid2 two">
-              <div>
-                <label>Education level *</label>
-                <select name="education_level" required>
-                  <option value="">Select…</option>
-                  <option>High School</option>
-                  <option>Undergraduate</option>
-                  <option>Graduate</option>
-                  <option>Other</option>
-                </select>
-              </div>
-              <div>
-                <label>University *</label>
-                <input type="text" name="university" required />
-              </div>
-              <div>
-                <label>Degree *</label>
-                <input type="text" name="degree" placeholder="BTech, BS, MS…" required />
-              </div>
-              <div>
-                <label>Major / Program *</label>
-                <input type="text" name="major" required />
-              </div>
-              <div>
-                <label>Graduation date *</label>
-                <input type="month" name="graduation_date" required />
-              </div>
+            <div>
+              <label>University *</label>
+              <input type="text" name="university" required />
+            </div>
+            <div>
+              <label>Degree *</label>
+              <input type="text" name="degree" placeholder="BTech, BS, MS…" required />
+            </div>
+            <div>
+              <label>Major / Program *</label>
+              <input type="text" name="major" required />
+            </div>
+            <div>
+              <label>Graduation date *</label>
+              <input type="month" name="graduation_date" required />
             </div>
           </div>
+        </div>
 
-          <!-- RESUME -->
-          <div class="section" id="sec-resume">
-            <div class="sectionHead">
-              <div class="title"><span class="num">3</span> Resume</div>
-              <div class="req">Required</div>
-            </div>
-
-            <div class="grid2">
-              <div>
-                <label>Upload resume (PDF/DOC) *</label>
-                <input type="file" name="resume" accept=".pdf,.doc,.docx" required />
-                <div class="help">PDF preferred. Keep it reasonably small (Netlify plan limits apply).</div>
-              </div>
-            </div>
+        <div class="section" id="sec-resume">
+          <div class="sectionHead">
+            <div class="title"><span class="num">3</span> Resume</div>
+            <div class="req">Required</div>
           </div>
 
-          <!-- CHALLENGE -->
-          <div class="section" id="sec-challenge">
-            <div class="sectionHead">
-              <div class="title"><span class="num">4</span> Challenge</div>
-              <div class="req">Required</div>
-            </div>
-
-            <div class="callout">
-              <strong>Challenge:</strong> We built an AI feature, but users are confused and not using it.
-              What would you do to fix this?
-            </div>
-
-            <div class="grid2">
-              <div>
-                <label>Your answer *</label>
-                <textarea
-                  name="challenge_solution"
-                  rows="6"
-                  required
-                  placeholder="Keep it practical. Write the process clearly step by step, and how do you measure success?"
-                ></textarea>
-                <div class="help">We care about clarity and action, not buzzwords.</div>
-              </div>
+          <div class="grid2">
+            <div>
+              <label>Upload resume (PDF/DOC) *</label>
+              <input type="file" name="resume" accept=".pdf,.doc,.docx" required />
+              <div class="help">PDF preferred. Keep it reasonably small (Netlify limits apply).</div>
             </div>
           </div>
+        </div>
 
-          <div class="footer">
-            <div class="footnote">We review applications on a rolling basis. If shortlisted, we’ll contact you by email.</div>
-            <button type="submit" class="btn" id="submitBtn">Submit application</button>
+        <div class="section" id="sec-challenge">
+          <div class="sectionHead">
+            <div class="title"><span class="num">4</span> Challenge</div>
+            <div class="req">Required</div>
           </div>
-        </form>
 
-      </div>
+          <div class="callout">
+            <strong>Challenge:</strong> We built an AI feature, but users are confused and not using it.
+            What would you do to fix this?
+          </div>
+
+          <div class="grid2">
+            <div>
+              <label>Your answer *</label>
+              <textarea
+                name="challenge_solution"
+                rows="6"
+                required
+                placeholder="Keep it practical. What would you do in week 1, week 2, and how do you measure success?"
+              ></textarea>
+              <div class="help">We care about clarity and action, not buzzwords.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="footer">
+          <div class="footnote">We review applications on a rolling basis. If shortlisted, we’ll contact you by email.</div>
+          <button type="submit" class="btn" id="submitBtn">Submit application</button>
+        </div>
+      </form>
     </div>
-
   </div>
 
   <script>
-    // Section reveal (smooth)
+    // Smooth reveal
     const sections = document.querySelectorAll('.section');
     const revealIO = new IntersectionObserver((entries) => {
       entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
@@ -583,41 +548,6 @@
       btn.disabled = true;
       btn.textContent = 'Submitting…';
     });
-
-    // “3D” tilt card (premium, subtle)
-    const card = document.getElementById('tiltCard');
-    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-    if (!prefersReduced && card) {
-      let raf = null;
-      const maxTilt = 7; // keep subtle
-
-      function onMove(e){
-        const rect = card.getBoundingClientRect();
-        const x = (e.clientX - rect.left) / rect.width;
-        const y = (e.clientY - rect.top) / rect.height;
-
-        const rotY = (x - 0.5) * (maxTilt * 2);
-        const rotX = (0.5 - y) * (maxTilt * 2);
-
-        if (raf) cancelAnimationFrame(raf);
-        raf = requestAnimationFrame(() => {
-          card.style.transform = `rotateX(${rotX}deg) rotateY(${rotY}deg) translateY(-2px)`;
-          card.style.borderColor = 'rgba(255,255,255,.14)';
-          card.style.boxShadow = '0 26px 90px rgba(0,0,0,.52), 0 18px 38px rgba(0,0,0,.35), 0 1px 0 rgba(255,255,255,.10) inset';
-        });
-      }
-
-      function reset(){
-        if (raf) cancelAnimationFrame(raf);
-        card.style.transform = 'rotateX(0deg) rotateY(0deg) translateY(0px)';
-        card.style.borderColor = 'rgba(255,255,255,.10)';
-        card.style.boxShadow = '0 14px 34px rgba(0,0,0,.35), 0 1px 0 rgba(255,255,255,.10) inset';
-      }
-
-      card.addEventListener('mousemove', onMove);
-      card.addEventListener('mouseleave', reset);
-    }
   </script>
 </body>
 </html>
