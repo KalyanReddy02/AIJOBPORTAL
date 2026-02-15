@@ -4,164 +4,194 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>AI Developers — Internship Application</title>
-
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
     html, body { height: 100%; }
-
     :root{
-      --bg0:#070A13;
-      --bg1:#0B1634;
-      --bg2:#0A2A6A;
-
-      --card: rgba(255,255,255,.08);
-      --card2: rgba(255,255,255,.12);
-      --stroke: rgba(255,255,255,.16);
-      --stroke2: rgba(255,255,255,.08);
+      --bg0:#050713;
+      --bg1:#071a3a;
+      --bg2:#0b2b6d;
 
       --text: rgba(255,255,255,.92);
-      --muted: rgba(255,255,255,.72);
+      --muted: rgba(255,255,255,.70);
 
-      --primary:#4F8CFF;
-      --primary2:#2B5CFF;
+      --accent:#5aa2ff;
+      --accent2:#2f66ff;
 
-      --ring: rgba(79,140,255,.24);
+      --r: 24px;
 
-      --radius: 22px;
+      --stroke: rgba(255,255,255,.18);
+      --stroke2: rgba(255,255,255,.10);
 
-      --shadowA: 0 30px 90px rgba(0,0,0,.45);
-      --shadowB: 0 18px 55px rgba(0,0,0,.35);
-      --shadowC: 0 10px 28px rgba(0,0,0,.22);
+      --glassA: rgba(255,255,255,.12);
+      --glassB: rgba(255,255,255,.06);
+
+      --shadowA: 0 50px 140px rgba(0,0,0,.55);
+      --shadowB: 0 26px 70px rgba(0,0,0,.40);
+      --shadowC: 0 14px 34px rgba(0,0,0,.26);
+
+      --ring: rgba(90,162,255,.26);
     }
 
     body{
       font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
       color: var(--text);
       overflow-x: hidden;
-      background: radial-gradient(1200px 600px at 10% -20%, rgba(79,140,255,.35), transparent 60%),
-                  radial-gradient(1200px 600px at 95% 0%, rgba(43,92,255,.25), transparent 55%),
-                  linear-gradient(180deg, var(--bg0), var(--bg1) 35%, var(--bg0));
-      padding: 26px 16px 48px;
+      background:
+        radial-gradient(1100px 640px at 12% -18%, rgba(90,162,255,.40), transparent 60%),
+        radial-gradient(950px 580px at 92% 0%, rgba(47,102,255,.28), transparent 55%),
+        linear-gradient(180deg, var(--bg0), var(--bg1) 35%, var(--bg0));
+      padding: 26px 16px 52px;
     }
 
-    /* animated depth background */
-    .bg{
+    /* ====== 3D STAGE (floor + perspective grid) ====== */
+    .stage{
       position: fixed;
-      inset: -40px;
-      z-index: -2;
+      inset: 0;
+      z-index: -3;
       pointer-events: none;
-      transform: translateZ(0);
-      filter: blur(0.2px);
+      perspective: 1200px;
+      overflow: hidden;
     }
-    .mesh{
-      position:absolute; inset:0;
+    .floor{
+      position: absolute;
+      left: 50%;
+      top: 58%;
+      width: 1600px;
+      height: 900px;
+      transform: translateX(-50%) rotateX(72deg);
+      transform-origin: center;
       background:
-        radial-gradient(800px 380px at 15% 15%, rgba(79,140,255,.25), transparent 60%),
-        radial-gradient(700px 360px at 80% 20%, rgba(43,92,255,.20), transparent 55%),
-        radial-gradient(600px 320px at 50% 90%, rgba(255,255,255,.06), transparent 55%);
-      opacity: .9;
-      animation: meshMove 9s ease-in-out infinite;
+        radial-gradient(closest-side at 50% 40%, rgba(255,255,255,.06), transparent 62%),
+        linear-gradient(90deg, rgba(255,255,255,.06) 1px, transparent 1px),
+        linear-gradient(0deg, rgba(255,255,255,.05) 1px, transparent 1px);
+      background-size: auto, 52px 52px, 52px 52px;
+      opacity: .35;
+      filter: blur(.1px);
+      mask-image: radial-gradient(closest-side at 50% 35%, rgba(0,0,0,1) 0%, rgba(0,0,0,.9) 30%, rgba(0,0,0,0) 75%);
     }
-    @keyframes meshMove{
+    .fog{
+      position:absolute;
+      inset:-60px;
+      background:
+        radial-gradient(900px 520px at 20% 20%, rgba(90,162,255,.18), transparent 60%),
+        radial-gradient(900px 520px at 80% 10%, rgba(47,102,255,.14), transparent 55%),
+        radial-gradient(850px 520px at 50% 85%, rgba(255,255,255,.06), transparent 60%);
+      opacity: .9;
+      animation: fog 9s ease-in-out infinite;
+    }
+    @keyframes fog{
       0%,100% { transform: translate3d(0,0,0) scale(1); }
       50% { transform: translate3d(-14px, 10px, 0) scale(1.02); }
     }
-    .stars{
-      position:absolute; inset:0;
-      background-image:
-        radial-gradient(2px 2px at 20% 30%, rgba(255,255,255,.22) 40%, transparent 41%),
-        radial-gradient(1px 1px at 80% 20%, rgba(255,255,255,.18) 40%, transparent 41%),
-        radial-gradient(1px 1px at 50% 60%, rgba(255,255,255,.14) 40%, transparent 41%),
-        radial-gradient(1px 1px at 10% 75%, rgba(255,255,255,.10) 40%, transparent 41%),
-        radial-gradient(2px 2px at 90% 70%, rgba(255,255,255,.12) 40%, transparent 41%);
-      opacity:.75;
-      animation: starsFloat 12s ease-in-out infinite;
-    }
-    @keyframes starsFloat{
-      0%,100%{ transform: translate3d(0,0,0); }
-      50%{ transform: translate3d(10px,-8px,0); }
-    }
 
+    /* ====== CONTAINER ====== */
     .container{
-      max-width: 960px;
+      max-width: 980px;
       margin: 0 auto;
-      perspective: 1200px;
+      perspective: 1400px;
     }
 
-    /* ===== 3D CARD BASE ===== */
-    .tilt{
+    /* ====== REAL 3D OBJECTS ====== */
+    .obj{
       position: relative;
       transform-style: preserve-3d;
       will-change: transform;
+      border-radius: var(--r);
     }
-    .glass{
-      background: linear-gradient(180deg, rgba(255,255,255,.12), rgba(255,255,255,.06));
-      border: 1px solid var(--stroke2);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-    }
-    .glowStroke::after{
+
+    /* bevel + thickness illusion */
+    .obj::before{
       content:"";
       position:absolute;
       inset:0;
       border-radius: inherit;
       pointer-events:none;
       border: 1px solid rgba(255,255,255,.18);
-      box-shadow: inset 0 1px 0 rgba(255,255,255,.14);
-      mix-blend-mode: screen;
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.12),
+        inset 0 -1px 0 rgba(0,0,0,.35);
       opacity: .9;
     }
+
+    /* side wall (fake thickness) */
+    .thickness{
+      position:absolute;
+      inset:0;
+      border-radius: inherit;
+      pointer-events:none;
+      transform: translateZ(-18px);
+      background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(0,0,0,.40));
+      filter: blur(.1px);
+      opacity: .85;
+    }
+
+    /* glare that follows cursor */
     .glare{
-      content:"";
       position:absolute;
       inset:-2px;
       border-radius: inherit;
       pointer-events:none;
-      background: radial-gradient(500px 280px at var(--gx, 50%) var(--gy, 25%),
-        rgba(255,255,255,.35), transparent 60%);
+      background:
+        radial-gradient(520px 320px at var(--gx, 50%) var(--gy, 20%),
+          rgba(255,255,255,.45), transparent 60%),
+        radial-gradient(900px 520px at 120% -10%,
+          rgba(90,162,255,.22), transparent 55%);
+      mix-blend-mode: screen;
       opacity: .0;
       transition: opacity .18s ease;
-      mix-blend-mode: screen;
     }
-    .tilt:hover .glare{ opacity: .85; }
+    .obj:hover .glare{ opacity: .85; }
 
-    /* ===== HERO ===== */
-    .hero{
-      border-radius: 26px;
-      padding: 30px 26px;
+    /* main surface */
+    .surface{
+      position: relative;
+      border-radius: inherit;
+      overflow: hidden;
+      background: linear-gradient(180deg, var(--glassA), var(--glassB));
+      border: 1px solid var(--stroke2);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
       box-shadow: var(--shadowA);
-      overflow:hidden;
+      transform: translateZ(18px);
     }
 
-    .hero .glare{ opacity: .15; }
-    .hero:hover .glare{ opacity: .95; }
-
-    .hero::before{
+    /* ====== HERO ====== */
+    .hero .surface{
+      background:
+        radial-gradient(900px 420px at 20% 10%, rgba(255,255,255,.10), transparent 60%),
+        radial-gradient(700px 360px at 90% 0%, rgba(255,255,255,.06), transparent 55%),
+        linear-gradient(135deg, rgba(90,162,255,.28), rgba(47,102,255,.18), rgba(255,255,255,.05));
+    }
+    .hero .surface::after{
       content:"";
       position:absolute;
-      inset:-80px -80px auto auto;
-      width: 460px; height: 460px;
+      top:-140px; right:-160px;
+      width: 520px; height: 520px;
       border-radius: 999px;
-      background: radial-gradient(circle at 30% 30%, rgba(255,255,255,.10), rgba(255,255,255,.02) 60%, transparent 70%);
-      transform: translateZ(40px);
+      background: rgba(255,255,255,.06);
+      transform: translateZ(26px);
+      animation: orb 7.5s ease-in-out infinite;
       pointer-events:none;
-      opacity: .9;
+    }
+    @keyframes orb{
+      0%,100%{ transform: translateZ(26px) translate(0,0); }
+      50%{ transform: translateZ(26px) translate(-22px, 16px); }
     }
 
+    .heroInner{ padding: 32px 26px; transform: translateZ(26px); }
     .kicker{
       letter-spacing: .28em;
       text-transform: uppercase;
       font-size: .82rem;
       opacity: .78;
-      transform: translateZ(40px);
     }
     h1{
       margin-top: 10px;
-      font-size: 2.4rem;
+      font-size: 2.55rem;
       letter-spacing: -.02em;
-      line-height: 1.08;
-      transform: translateZ(55px);
-      text-shadow: 0 20px 60px rgba(0,0,0,.35);
+      line-height: 1.06;
+      text-shadow: 0 24px 70px rgba(0,0,0,.45);
     }
     .sub{
       margin-top: 12px;
@@ -169,119 +199,87 @@
       line-height: 1.6;
       opacity: .85;
       max-width: 72ch;
-      transform: translateZ(40px);
     }
 
-    .chips{
-      margin-top: 16px;
-      display:flex;
-      gap: 12px;
-      flex-wrap: wrap;
-      transform: translateZ(45px);
-    }
+    .chips{ margin-top: 16px; display:flex; gap: 12px; flex-wrap: wrap; }
     .chip{
-      display:flex;
-      align-items:center;
-      gap: 8px;
       padding: 10px 14px;
       border-radius: 999px;
       background: rgba(255,255,255,.10);
       border: 1px solid rgba(255,255,255,.18);
-      box-shadow: 0 18px 40px rgba(0,0,0,.22);
-      font-weight: 750;
-      color: rgba(255,255,255,.88);
+      box-shadow: 0 20px 50px rgba(0,0,0,.25);
+      font-weight: 850;
+      color: rgba(255,255,255,.90);
     }
 
-    /* ===== PROGRESS ===== */
-    .progress-wrap{
-      position: sticky;
-      top: 14px;
-      z-index: 50;
-      margin-top: 16px;
-    }
-    .progress{
-      border-radius: 22px;
-      padding: 12px 12px 14px;
-      box-shadow: var(--shadowB);
-    }
-    .steps{
-      display:flex;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
+    /* ====== PROGRESS ====== */
+    .progressWrap{ position: sticky; top: 14px; z-index: 60; margin-top: 18px; }
+    .progress .surface{ box-shadow: var(--shadowB); }
+    .progressInner{ padding: 14px; transform: translateZ(22px); }
+
+    .steps{ display:flex; gap: 10px; flex-wrap: wrap; }
     .step{
-      display:flex;
-      align-items:center;
-      gap: 10px;
-      padding: 11px 14px;
+      display:flex; align-items:center; gap: 10px;
+      padding: 12px 14px;
       border-radius: 16px;
 
-      background: linear-gradient(180deg, rgba(255,255,255,.14), rgba(255,255,255,.08));
-      border: 1px solid rgba(255,255,255,.14);
+      background: linear-gradient(180deg, rgba(255,255,255,.15), rgba(255,255,255,.08));
+      border: 1px solid rgba(255,255,255,.16);
 
       box-shadow:
-        0 18px 40px rgba(0,0,0,.20),
+        0 20px 55px rgba(0,0,0,.22),
         inset 0 1px 0 rgba(255,255,255,.14);
 
-      font-weight: 800;
+      font-weight: 900;
       color: rgba(255,255,255,.78);
-      cursor: default;
       transition: transform .16s ease, box-shadow .16s ease, border-color .16s ease;
     }
     .step:hover{
-      transform: translateY(-2px);
-      box-shadow:
-        0 26px 60px rgba(0,0,0,.26),
-        inset 0 1px 0 rgba(255,255,255,.16);
-      border-color: rgba(255,255,255,.18);
+      transform: translateY(-2px) translateZ(8px);
+      box-shadow: 0 28px 75px rgba(0,0,0,.28), inset 0 1px 0 rgba(255,255,255,.16);
+      border-color: rgba(255,255,255,.20);
     }
     .dot{
-      width: 10px; height: 10px;
-      border-radius: 999px;
-      background: rgba(255,255,255,.38);
+      width: 10px; height: 10px; border-radius: 999px;
+      background: rgba(255,255,255,.35);
       box-shadow: 0 0 0 6px rgba(255,255,255,.06);
     }
     .step.active{
-      color: rgba(255,255,255,.92);
-      border-color: rgba(79,140,255,.55);
-      background: linear-gradient(180deg, rgba(79,140,255,.26), rgba(255,255,255,.10));
+      color: rgba(255,255,255,.94);
+      border-color: rgba(90,162,255,.60);
+      background: linear-gradient(180deg, rgba(90,162,255,.28), rgba(255,255,255,.10));
       box-shadow:
-        0 30px 80px rgba(79,140,255,.20),
-        0 18px 45px rgba(0,0,0,.22),
+        0 34px 95px rgba(90,162,255,.20),
+        0 22px 60px rgba(0,0,0,.26),
         inset 0 1px 0 rgba(255,255,255,.18);
-      transform: translateY(-2px);
+      transform: translateY(-2px) translateZ(10px);
     }
     .step.active .dot{
-      background: var(--primary);
-      box-shadow:
-        0 0 0 6px rgba(79,140,255,.18),
-        0 0 24px rgba(79,140,255,.35);
+      background: var(--accent);
+      box-shadow: 0 0 0 6px rgba(90,162,255,.18), 0 0 26px rgba(90,162,255,.40);
     }
+
     .bar{
       margin-top: 12px;
       height: 10px;
       border-radius: 999px;
       background: rgba(255,255,255,.08);
-      border: 1px solid rgba(255,255,255,.10);
+      border: 1px solid rgba(255,255,255,.12);
       overflow:hidden;
-      box-shadow: inset 0 2px 8px rgba(0,0,0,.25);
+      box-shadow: inset 0 2px 10px rgba(0,0,0,.35);
     }
     .bar > div{
       height:100%;
       width:0%;
       border-radius: 999px;
-      background: linear-gradient(90deg, var(--primary), var(--primary2));
-      box-shadow: 0 0 26px rgba(79,140,255,.35);
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      box-shadow: 0 0 28px rgba(90,162,255,.42);
       transition: width .25s ease;
     }
 
-    /* ===== FORM CARD ===== */
-    .card{
-      margin-top: 16px;
-      border-radius: 26px;
-      box-shadow: var(--shadowA);
-      overflow:hidden;
-    }
+    /* ====== FORM CARD ====== */
+    .card{ margin-top: 18px; }
+    .card .surface{ box-shadow: var(--shadowA); }
 
     .section{
       padding: 24px 22px;
@@ -291,52 +289,37 @@
       transition: opacity 520ms ease, transform 520ms ease;
       background: linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.06));
     }
-    .section:first-child{ border-top: none; }
+    .section:first-child{ border-top:none; }
     .section.in{ opacity: 1; transform: translateY(0); }
 
-    .section-head{
-      display:flex;
-      align-items:center;
-      justify-content: space-between;
-      gap: 14px;
-      margin-bottom: 14px;
+    .sectionHead{
+      display:flex; align-items:center; justify-content: space-between;
+      gap: 14px; margin-bottom: 14px;
     }
-    .section-head h2{
-      display:flex;
-      align-items:center;
-      gap: 10px;
-      font-size: 1.08rem;
-      letter-spacing: -.01em;
+    .sectionHead h2{
+      display:flex; align-items:center; gap: 10px;
+      font-size: 1.10rem; letter-spacing: -.01em;
     }
     .num{
-      width: 34px; height: 34px;
+      width: 36px; height: 36px; border-radius: 12px;
       display:grid; place-items:center;
-      border-radius: 12px;
-
-      background: linear-gradient(180deg, rgba(79,140,255,.26), rgba(255,255,255,.10));
-      border: 1px solid rgba(79,140,255,.40);
-
-      box-shadow:
-        0 20px 45px rgba(79,140,255,.16),
-        inset 0 1px 0 rgba(255,255,255,.16);
-      color: rgba(255,255,255,.92);
-      font-weight: 900;
+      background: linear-gradient(180deg, rgba(90,162,255,.28), rgba(255,255,255,.10));
+      border: 1px solid rgba(90,162,255,.42);
+      box-shadow: 0 22px 55px rgba(90,162,255,.16), inset 0 1px 0 rgba(255,255,255,.16);
+      font-weight: 950;
     }
-    .req{
-      color: rgba(255,255,255,.70);
-      font-size: .95rem;
-    }
+    .req{ color: rgba(255,255,255,.70); font-size: .95rem; }
 
     .grid{ display:grid; grid-template-columns: 1fr; gap: 14px; }
     @media (min-width: 860px){
       .two{ grid-template-columns: 1fr 1fr; }
-      .span-2{ grid-column: 1 / -1; }
+      .span2{ grid-column: 1 / -1; }
     }
 
-    .field label{
+    label{
       display:block;
-      font-weight: 800;
-      color: rgba(255,255,255,.88);
+      font-weight: 900;
+      color: rgba(255,255,255,.90);
       margin-bottom: 8px;
       font-size: .95rem;
     }
@@ -346,38 +329,32 @@
       padding: 13px 14px;
       border-radius: 16px;
       border: 1px solid rgba(255,255,255,.14);
-      background: rgba(10,16,32,.35);
+      background: rgba(6,10,18,.38);
       color: rgba(255,255,255,.92);
       font-size: 1rem;
-
-      box-shadow:
-        inset 0 2px 10px rgba(0,0,0,.35),
-        0 18px 45px rgba(0,0,0,.16);
-
-      transition: transform .15s ease, box-shadow .15s ease, border-color .15s ease;
       backdrop-filter: blur(10px);
       -webkit-backdrop-filter: blur(10px);
-    }
 
-    input::placeholder, textarea::placeholder{
-      color: rgba(255,255,255,.45);
+      box-shadow:
+        inset 0 2px 12px rgba(0,0,0,.45),
+        0 22px 65px rgba(0,0,0,.18);
+
+      transition: transform .15s ease, box-shadow .15s ease, border-color .15s ease;
     }
+    input::placeholder, textarea::placeholder{ color: rgba(255,255,255,.45); }
 
     input:hover, select:hover, textarea:hover{
       transform: translateY(-2px);
-      box-shadow:
-        inset 0 2px 10px rgba(0,0,0,.35),
-        0 28px 70px rgba(0,0,0,.22);
+      box-shadow: inset 0 2px 12px rgba(0,0,0,.45), 0 34px 95px rgba(0,0,0,.24);
       border-color: rgba(255,255,255,.18);
     }
-
     input:focus, select:focus, textarea:focus{
       outline:none;
-      border-color: rgba(79,140,255,.70);
+      border-color: rgba(90,162,255,.75);
       box-shadow:
         0 0 0 7px var(--ring),
-        inset 0 2px 10px rgba(0,0,0,.35),
-        0 36px 90px rgba(79,140,255,.12);
+        inset 0 2px 12px rgba(0,0,0,.45),
+        0 40px 120px rgba(90,162,255,.14);
       transform: translateY(-2px);
     }
 
@@ -390,24 +367,19 @@
 
     .callout{
       border-radius: 18px;
-      border: 1px solid rgba(79,140,255,.35);
-      background: linear-gradient(180deg, rgba(79,140,255,.18), rgba(255,255,255,.07));
+      border: 1px solid rgba(90,162,255,.38);
+      background: linear-gradient(180deg, rgba(90,162,255,.18), rgba(255,255,255,.07));
       padding: 14px 14px;
       margin-bottom: 12px;
-      box-shadow:
-        0 26px 70px rgba(79,140,255,.10),
-        0 18px 55px rgba(0,0,0,.22);
+      box-shadow: 0 30px 90px rgba(90,162,255,.10), 0 22px 65px rgba(0,0,0,.26);
       color: rgba(255,255,255,.88);
       line-height: 1.55;
     }
-    .callout strong{ color: rgba(255,255,255,.95); }
+    .callout strong{ color: rgba(255,255,255,.96); }
 
     .footer{
-      display:flex;
-      align-items:center;
-      justify-content: space-between;
-      gap: 12px;
-      flex-wrap: wrap;
+      display:flex; align-items:center; justify-content: space-between;
+      gap: 12px; flex-wrap: wrap;
       padding: 18px 22px 22px;
       border-top: 1px solid rgba(255,255,255,.10);
       background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.06));
@@ -426,235 +398,218 @@
       border-radius: 999px;
       min-width: 240px;
       font-size: 1rem;
-      font-weight: 900;
-      color: rgba(255,255,255,.95);
-
-      background: linear-gradient(135deg, var(--primary), var(--primary2));
-      box-shadow:
-        0 30px 90px rgba(79,140,255,.18),
-        0 22px 55px rgba(0,0,0,.26);
-
+      font-weight: 950;
+      color: rgba(255,255,255,.96);
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      box-shadow: 0 42px 130px rgba(90,162,255,.20), 0 26px 80px rgba(0,0,0,.32);
       transition: transform .15s ease, box-shadow .15s ease, filter .15s ease;
     }
     .btn:hover{
-      transform: translateY(-2px);
-      box-shadow:
-        0 38px 110px rgba(79,140,255,.22),
-        0 26px 70px rgba(0,0,0,.30);
-      filter: brightness(1.04);
+      transform: translateY(-2px) translateZ(10px);
+      box-shadow: 0 56px 160px rgba(90,162,255,.24), 0 30px 95px rgba(0,0,0,.35);
+      filter: brightness(1.05);
     }
     .btn:active{ transform: translateY(0) scale(.99); }
     .btn[disabled]{ opacity:.7; cursor:not-allowed; transform:none; box-shadow:none; }
 
-    @keyframes enter{
-      from { opacity:0; transform: translateY(10px); }
-      to { opacity:1; transform: translateY(0); }
-    }
-
     @media (max-width: 560px){
-      h1{ font-size: 2rem; }
-      .hero{ padding: 26px 18px; }
+      h1{ font-size: 2.05rem; }
+      .heroInner{ padding: 26px 18px; }
       .section{ padding: 22px 18px; }
       .footer{ padding: 16px 18px 20px; }
       .btn{ width: 100%; min-width: 0; }
+      .floor{ top: 62%; }
     }
 
     @media (prefers-reduced-motion: reduce){
-      .mesh, .stars{ animation:none !important; }
+      .fog{ animation:none !important; }
       *{ transition:none !important; }
-      .progress-wrap{ position: static; }
+      .progressWrap{ position: static; }
       .section{ opacity:1; transform:none; }
     }
   </style>
 </head>
 
 <body>
-  <div class="bg">
-    <div class="mesh"></div>
-    <div class="stars"></div>
+  <div class="stage">
+    <div class="fog"></div>
+    <div class="floor"></div>
   </div>
 
   <div class="container">
     <!-- HERO -->
-    <div class="hero tilt glass glowStroke" data-tilt>
-      <div class="glare"></div>
-      <div class="kicker">INTERNSHIP</div>
-      <h1>AI Developers</h1>
-      <div class="sub">
-        6-month remote internship. Resume required. Short problem-solving answer.
-      </div>
-
-      <div class="chips">
-        <div class="chip">🌍 Remote</div>
-        <div class="chip">🗓️ 6 Months</div>
-        <div class="chip">🧠 Problem Solving</div>
+    <div class="obj hero" data-tilt>
+      <div class="thickness"></div>
+      <div class="surface">
+        <div class="glare"></div>
+        <div class="heroInner">
+          <div class="kicker">INTERNSHIP</div>
+          <h1>AI Developers</h1>
+          <div class="sub">6-month remote internship. Resume required. Short problem-solving answer.</div>
+          <div class="chips">
+            <div class="chip">🌍 Remote</div>
+            <div class="chip">🗓️ 6 Months</div>
+            <div class="chip">🧠 Problem Solving</div>
+          </div>
+        </div>
       </div>
     </div>
 
     <!-- PROGRESS -->
-    <div class="progress-wrap">
-      <div class="progress tilt glass glowStroke" data-tilt>
-        <div class="glare"></div>
-
-        <div class="steps" id="steps">
-          <div class="step active" data-step="0"><div class="dot"></div>Personal</div>
-          <div class="step" data-step="1"><div class="dot"></div>Education</div>
-          <div class="step" data-step="2"><div class="dot"></div>Internship</div>
-          <div class="step" data-step="3"><div class="dot"></div>Challenge</div>
+    <div class="progressWrap">
+      <div class="obj progress" data-tilt>
+        <div class="thickness"></div>
+        <div class="surface">
+          <div class="glare"></div>
+          <div class="progressInner">
+            <div class="steps" id="steps">
+              <div class="step active" data-step="0"><div class="dot"></div>Personal</div>
+              <div class="step" data-step="1"><div class="dot"></div>Education</div>
+              <div class="step" data-step="2"><div class="dot"></div>Internship</div>
+              <div class="step" data-step="3"><div class="dot"></div>Challenge</div>
+            </div>
+            <div class="bar"><div id="barFill"></div></div>
+          </div>
         </div>
-
-        <div class="bar"><div id="barFill"></div></div>
       </div>
     </div>
 
     <!-- FORM -->
-    <div class="card tilt glass glowStroke" data-tilt>
-      <div class="glare"></div>
+    <div class="obj card" data-tilt>
+      <div class="thickness"></div>
+      <div class="surface">
+        <div class="glare"></div>
 
-      <form
-        name="application"
-        method="POST"
-        netlify
-        action="/success.html"
-        enctype="multipart/form-data"
-        id="appForm"
-      >
-        <!-- Personal -->
-        <div class="section" id="sec-personal">
-          <div class="section-head">
-            <h2><span class="num">1</span> Personal</h2>
-            <div class="req">Required</div>
-          </div>
-
-          <div class="grid">
-            <div class="field">
-              <label>Full name *</label>
-              <input type="text" name="full_name" required />
+        <form
+          name="application"
+          method="POST"
+          netlify
+          action="/success.html"
+          enctype="multipart/form-data"
+          id="appForm"
+        >
+          <div class="section" id="sec-personal">
+            <div class="sectionHead">
+              <h2><span class="num">1</span> Personal</h2>
+              <div class="req">Required</div>
             </div>
-
-            <div class="field">
-              <label>Email *</label>
-              <input type="email" name="email" required />
-            </div>
-
-            <div class="field">
-              <label>Location (City, Country) *</label>
-              <input type="text" name="location" placeholder="e.g., Buffalo, USA" required />
-            </div>
-          </div>
-        </div>
-
-        <!-- Education -->
-        <div class="section" id="sec-education">
-          <div class="section-head">
-            <h2><span class="num">2</span> Education</h2>
-            <div class="req">Required</div>
-          </div>
-
-          <div class="grid two">
-            <div class="field">
-              <label>Education level *</label>
-              <select name="education_level" required>
-                <option value="">Select…</option>
-                <option>High School</option>
-                <option>Undergraduate</option>
-                <option>Graduate</option>
-                <option>Other</option>
-              </select>
-            </div>
-
-            <div class="field">
-              <label>University *</label>
-              <input type="text" name="university" required />
-            </div>
-
-            <div class="field">
-              <label>Degree *</label>
-              <input type="text" name="degree" placeholder="BTech, BS, MS…" required />
-            </div>
-
-            <div class="field">
-              <label>Major / Program *</label>
-              <input type="text" name="major" required />
-            </div>
-
-            <div class="field">
-              <label>Graduation date *</label>
-              <input type="month" name="graduation_date" required />
+            <div class="grid">
+              <div>
+                <label>Full name *</label>
+                <input type="text" name="full_name" required />
+              </div>
+              <div>
+                <label>Email *</label>
+                <input type="email" name="email" required />
+              </div>
+              <div>
+                <label>Location (City, Country) *</label>
+                <input type="text" name="location" placeholder="e.g., Buffalo, USA" required />
+              </div>
             </div>
           </div>
-        </div>
 
-        <!-- Internship -->
-        <div class="section" id="sec-internship">
-          <div class="section-head">
-            <h2><span class="num">3</span> Internship</h2>
-            <div class="req">Required</div>
-          </div>
-
-          <div class="grid two">
-            <div class="field">
-              <label>Internship type</label>
-              <input type="text" name="internship_type" value="6 Months — Remote" readonly />
-              <div class="help">Fully remote internship for 6 months.</div>
+          <div class="section" id="sec-education">
+            <div class="sectionHead">
+              <h2><span class="num">2</span> Education</h2>
+              <div class="req">Required</div>
             </div>
-
-            <div class="field">
-              <label>Can you commit for 6 months? *</label>
-              <select name="commitment" required>
-                <option value="">Select…</option>
-                <option>Yes</option>
-                <option>No</option>
-                <option>Not sure</option>
-              </select>
-            </div>
-
-            <div class="field span-2">
-              <label>Upload resume (PDF/DOC) *</label>
-              <input type="file" name="resume" accept=".pdf,.doc,.docx" required />
-              <div class="help">Keep it under ~10MB.</div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Challenge -->
-        <div class="section" id="sec-challenge">
-          <div class="section-head">
-            <h2><span class="num">4</span> Problem Solving</h2>
-            <div class="req">Required</div>
-          </div>
-
-          <div class="callout">
-            <strong>Challenge:</strong> We built an AI feature, but users are confused and not using it.
-            What would you do to fix this?
-          </div>
-
-          <div class="grid">
-            <div class="field">
-              <label>Your answer *</label>
-              <textarea
-                name="challenge_solution"
-                rows="6"
-                required
-                placeholder="Write clear steps: understand users → find confusion → improve → test → measure → iterate."
-              ></textarea>
-              <div class="help">Clear thinking beats buzzwords.</div>
+            <div class="grid two">
+              <div>
+                <label>Education level *</label>
+                <select name="education_level" required>
+                  <option value="">Select…</option>
+                  <option>High School</option>
+                  <option>Undergraduate</option>
+                  <option>Graduate</option>
+                  <option>Other</option>
+                </select>
+              </div>
+              <div>
+                <label>University *</label>
+                <input type="text" name="university" required />
+              </div>
+              <div>
+                <label>Degree *</label>
+                <input type="text" name="degree" placeholder="BTech, BS, MS…" required />
+              </div>
+              <div>
+                <label>Major / Program *</label>
+                <input type="text" name="major" required />
+              </div>
+              <div>
+                <label>Graduation date *</label>
+                <input type="month" name="graduation_date" required />
+              </div>
             </div>
           </div>
-        </div>
 
-        <div class="footer">
-          <div class="footnote">
-            We review applications on a rolling basis. If shortlisted, we’ll contact you by email.
+          <div class="section" id="sec-internship">
+            <div class="sectionHead">
+              <h2><span class="num">3</span> Internship</h2>
+              <div class="req">Required</div>
+            </div>
+            <div class="grid two">
+              <div>
+                <label>Internship type</label>
+                <input type="text" name="internship_type" value="6 Months — Remote" readonly />
+                <div class="help">Fully remote internship for 6 months.</div>
+              </div>
+              <div>
+                <label>Can you commit for 6 months? *</label>
+                <select name="commitment" required>
+                  <option value="">Select…</option>
+                  <option>Yes</option>
+                  <option>No</option>
+                  <option>Not sure</option>
+                </select>
+              </div>
+              <div class="span2">
+                <label>Upload resume (PDF/DOC) *</label>
+                <input type="file" name="resume" accept=".pdf,.doc,.docx" required />
+                <div class="help">Keep it under ~10MB.</div>
+              </div>
+            </div>
           </div>
-          <button type="submit" class="btn" id="submitBtn">Submit application</button>
-        </div>
-      </form>
+
+          <div class="section" id="sec-challenge">
+            <div class="sectionHead">
+              <h2><span class="num">4</span> Problem Solving</h2>
+              <div class="req">Required</div>
+            </div>
+
+            <div class="callout">
+              <strong>Challenge:</strong> We built an AI feature, but users are confused and not using it.
+              What would you do to fix this?
+            </div>
+
+            <div class="grid">
+              <div>
+                <label>Your answer *</label>
+                <textarea
+                  name="challenge_solution"
+                  rows="6"
+                  required
+                  placeholder="Write clear steps: understand users → find confusion → improve → test → measure → iterate."
+                ></textarea>
+                <div class="help">Clear thinking beats buzzwords.</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="footer">
+            <div class="footnote">
+              We review applications on a rolling basis. If shortlisted, we’ll contact you by email.
+            </div>
+            <button type="submit" class="btn" id="submitBtn">Submit application</button>
+          </div>
+        </form>
+      </div>
     </div>
   </div>
 
   <script>
-    // Reveal sections on scroll
+    // Smooth reveal
     const sections = document.querySelectorAll('.section');
     const io = new IntersectionObserver((entries) => {
       entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
@@ -670,18 +625,14 @@
     function updateProgress(){
       const y = window.scrollY + window.innerHeight * 0.35;
       let active = 0;
-
       secEls.forEach((sec, i) => {
         const top = sec.getBoundingClientRect().top + window.scrollY;
         if (y >= top) active = i;
       });
-
       steps.forEach(s => s.classList.remove('active'));
-      const current = steps.find(s => Number(s.dataset.step) === active);
-      if (current) current.classList.add('active');
-
-      const pct = (active / (secEls.length - 1)) * 100;
-      fill.style.width = pct + '%';
+      const cur = steps.find(s => Number(s.dataset.step) === active);
+      if (cur) cur.classList.add('active');
+      fill.style.width = ((active / (secEls.length - 1)) * 100) + '%';
     }
     window.addEventListener('scroll', updateProgress, { passive: true });
     window.addEventListener('load', updateProgress);
@@ -694,63 +645,51 @@
       btn.textContent = 'Submitting…';
     });
 
-    // REAL 3D tilt + glare (this is the "3D" you want)
-    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    // Real 3D tilt + light tracking (stronger than before)
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    function attachTilt(el){
+    function tilt(el){
       const glare = el.querySelector('.glare');
       let raf = null;
 
       const reset = () => {
         el.style.transform = `rotateX(0deg) rotateY(0deg) translateY(0px)`;
-        el.style.boxShadow = '';
-        if (glare) {
-          el.style.setProperty('--gx', '50%');
-          el.style.setProperty('--gy', '25%');
+        if (glare){
+          el.style.setProperty('--gx','50%');
+          el.style.setProperty('--gy','20%');
         }
       };
 
-      const onMove = (e) => {
+      const move = (e) => {
         const r = el.getBoundingClientRect();
         const x = e.clientX - r.left;
         const y = e.clientY - r.top;
-
         const px = x / r.width;
         const py = y / r.height;
 
-        const maxX = 10;   // tilt strength
-        const maxY = 12;
+        // stronger tilt + perspective pop
+        const rx = (py - 0.5) * -14;
+        const ry = (px - 0.5) *  16;
 
-        const rx = (py - 0.5) * -maxX;
-        const ry = (px - 0.5) *  maxY;
-
-        // stronger depth feel
-        const lift = -4;
-
-        // shadow reacts to cursor position
-        const sx = (px - 0.5) * 24;
-        const sy = (py - 0.5) * 24;
+        // depth lift
+        const lift = -6;
 
         if (raf) cancelAnimationFrame(raf);
         raf = requestAnimationFrame(() => {
           el.style.transform = `rotateX(${rx}deg) rotateY(${ry}deg) translateY(${lift}px)`;
-          el.style.boxShadow = `0 ${18 + sy}px ${70}px rgba(0,0,0,.35), ${sx}px ${12 + sy/2}px ${38}px rgba(0,0,0,.22)`;
-
-          if (glare) {
-            el.style.setProperty('--gx', `${px * 100}%`);
-            el.style.setProperty('--gy', `${py * 100}%`);
+          if (glare){
+            el.style.setProperty('--gx', (px * 100) + '%');
+            el.style.setProperty('--gy', (py * 100) + '%');
           }
         });
       };
 
-      el.addEventListener('mousemove', onMove);
+      el.addEventListener('mousemove', move);
       el.addEventListener('mouseleave', reset);
-      el.addEventListener('touchstart', reset, { passive: true });
+      el.addEventListener('touchstart', reset, { passive:true });
     }
 
-    if (!prefersReduced) {
-      document.querySelectorAll('[data-tilt]').forEach(attachTilt);
-    }
+    if (!reduced) document.querySelectorAll('[data-tilt]').forEach(tilt);
   </script>
 </body>
 </html>
