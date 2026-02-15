@@ -10,250 +10,318 @@
     html, body { height: 100%; }
 
     :root{
-      --bg0:#0b1020;
-      --bg1:#0c1638;
-      --bg2:#0b214e;
+      --bg:#070A12;
+      --panel:#0B1022;
+      --panel2:#0A0F1F;
 
-      --text:#0b1220;
-      --muted: rgba(11,18,32,.68);
+      --text:#EAF0FF;
+      --muted: rgba(234,240,255,.72);
+      --muted2: rgba(234,240,255,.52);
 
-      --white: rgba(255,255,255,.92);
-      --white2: rgba(255,255,255,.80);
-      --stroke: rgba(255,255,255,.28);
+      --stroke: rgba(234,240,255,.10);
+      --stroke2: rgba(234,240,255,.16);
 
-      --card: rgba(255,255,255,.86);
-      --card2: rgba(255,255,255,.74);
+      --a:#7C3AED;   /* violet */
+      --b:#06B6D4;   /* cyan */
+      --c:#22C55E;   /* green */
+      --d:#F97316;   /* orange */
 
-      --accent:#2f6bff;
-      --accent2:#00c2ff;
+      --shadow: 0 22px 80px rgba(0,0,0,.65);
+      --shadow2: 0 14px 40px rgba(0,0,0,.40);
+      --r: 22px;
+      --r2: 16px;
 
-      --shadowA: 0 40px 120px rgba(0,0,0,.45);
-      --shadowB: 0 18px 50px rgba(0,0,0,.22);
-      --shadowC: 0 10px 26px rgba(0,0,0,.14);
-
-      --r: 26px;
-      --r2: 18px;
-
-      --max: 1080px;
+      --max: 1060px;
     }
 
     body{
       font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
-      background:
-        radial-gradient(900px 520px at 20% 5%, rgba(47,107,255,.35), transparent 60%),
-        radial-gradient(820px 520px at 88% 10%, rgba(0,194,255,.26), transparent 58%),
-        radial-gradient(900px 620px at 50% 110%, rgba(255,255,255,.10), transparent 60%),
-        linear-gradient(180deg, var(--bg0), var(--bg1) 40%, var(--bg0));
-      padding: 26px 14px 70px;
+      background: var(--bg);
+      color: var(--text);
       overflow-x: hidden;
     }
 
-    .container{ max-width: var(--max); margin: 0 auto; perspective: 1400px; }
-
-    /* ===== Premium “3D” (subtle, clean) ===== */
-    .card3d{
-      position: relative;
-      border-radius: var(--r);
-      transform-style: preserve-3d;
-      will-change: transform;
+    /* ===== Background (Gen-Z AI vibe) ===== */
+    .bg{
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      background:
+        radial-gradient(900px 520px at 18% 15%, rgba(124,58,237,.35), transparent 60%),
+        radial-gradient(780px 520px at 82% 20%, rgba(6,182,212,.28), transparent 60%),
+        radial-gradient(720px 520px at 40% 95%, rgba(34,197,94,.14), transparent 55%),
+        radial-gradient(680px 520px at 95% 95%, rgba(249,115,22,.10), transparent 55%),
+        linear-gradient(180deg, #070A12, #050713 60%, #070A12);
     }
 
-    .depth{
-      position:absolute; inset:0;
-      border-radius: inherit;
-      transform: translateZ(-12px);
-      background: linear-gradient(180deg, rgba(255,255,255,.16), rgba(0,0,0,.30));
-      filter: blur(.2px);
-      opacity: .55;
-      pointer-events:none;
+    .noise{
+      position: fixed; inset: 0; z-index: -1; pointer-events:none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='240' height='240' filter='url(%23n)' opacity='.26'/%3E%3C/svg%3E");
+      mix-blend-mode: overlay;
+      opacity: .18;
     }
 
-    .surface{
-      position: relative;
-      border-radius: inherit;
+    /* animated aura blobs */
+    .blob{
+      position: fixed;
+      width: 520px; height: 520px;
+      border-radius: 999px;
+      filter: blur(44px);
+      opacity: .35;
+      z-index: -1;
+      transform: translate3d(0,0,0);
+      animation: drift 18s ease-in-out infinite;
+    }
+    .blob.one{
+      left: -140px; top: -120px;
+      background: radial-gradient(circle at 30% 30%, rgba(124,58,237,.95), transparent 60%);
+      animation-delay: 0s;
+    }
+    .blob.two{
+      right: -180px; top: 80px;
+      background: radial-gradient(circle at 30% 30%, rgba(6,182,212,.90), transparent 60%);
+      animation-delay: 2s;
+    }
+    .blob.three{
+      left: 18%; bottom: -240px;
+      background: radial-gradient(circle at 30% 30%, rgba(34,197,94,.70), transparent 60%);
+      animation-delay: 4s;
+    }
+    @keyframes drift{
+      0%   { transform: translate3d(0,0,0) scale(1); }
+      50%  { transform: translate3d(40px, -18px, 0) scale(1.05); }
+      100% { transform: translate3d(0,0,0) scale(1); }
+    }
+
+    .container{
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 28px 14px 80px;
+    }
+
+    /* ===== Header ===== */
+    .hero{
+      border-radius: calc(var(--r) + 6px);
+      border: 1px solid var(--stroke);
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02)),
+        radial-gradient(1000px 420px at 10% 0%, rgba(124,58,237,.18), transparent 62%),
+        radial-gradient(900px 420px at 90% 10%, rgba(6,182,212,.14), transparent 62%),
+        rgba(10,15,31,.72);
+      box-shadow: var(--shadow);
       overflow: hidden;
-      transform: translateZ(12px);
-      box-shadow: var(--shadowA);
-      background: linear-gradient(180deg, rgba(255,255,255,.84), rgba(255,255,255,.74));
-      border: 1px solid rgba(255,255,255,.36);
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
+      position: relative;
     }
 
-    .surface::before{
+    .hero::after{
       content:"";
-      position:absolute; inset:0;
-      border-radius: inherit;
-      pointer-events:none;
-      border: 1px solid rgba(255,255,255,.34);
-      box-shadow:
-        inset 0 1px 0 rgba(255,255,255,.55),
-        inset 0 -1px 0 rgba(0,0,0,.10);
-      opacity: .95;
-    }
-
-    .gloss{
       position:absolute; inset:-2px;
-      border-radius: inherit;
+      background:
+        radial-gradient(520px 220px at 25% 20%, rgba(255,255,255,.10), transparent 65%),
+        radial-gradient(520px 220px at 80% 25%, rgba(255,255,255,.06), transparent 65%);
       pointer-events:none;
-      background:
-        radial-gradient(520px 320px at var(--gx, 40%) var(--gy, 15%),
-          rgba(255,255,255,.85), transparent 60%),
-        radial-gradient(900px 520px at 110% -10%,
-          rgba(47,107,255,.20), transparent 55%);
-      mix-blend-mode: screen;
-      opacity: .0;
-      transition: opacity .20s ease;
+      opacity: .9;
     }
-    .card3d:hover .gloss{ opacity: .85; }
 
-    /* ===== Hero ===== */
-    .hero .surface{
-      background:
-        radial-gradient(900px 520px at 15% 0%, rgba(47,107,255,.22), transparent 60%),
-        radial-gradient(820px 520px at 95% 10%, rgba(0,194,255,.16), transparent 58%),
-        linear-gradient(180deg, rgba(255,255,255,.88), rgba(255,255,255,.74));
+    .heroInner{
+      padding: 34px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
     }
-    .heroInner{ padding: 34px 28px; color: var(--text); }
+
     .kicker{
-      letter-spacing: .26em;
+      letter-spacing: .22em;
       text-transform: uppercase;
-      font-size: .82rem;
-      color: rgba(11,18,32,.62);
-      margin-bottom: 10px;
+      font-size: .80rem;
+      color: var(--muted2);
     }
+
     h1{
       font-size: 2.55rem;
-      letter-spacing: -.03em;
+      letter-spacing: -.04em;
       line-height: 1.05;
-      margin-bottom: 10px;
     }
+
     .sub{
-      color: rgba(11,18,32,.70);
+      color: var(--muted);
       font-size: 1.05rem;
       line-height: 1.6;
-      max-width: 70ch;
+      max-width: 75ch;
     }
-    .pills{
+
+    .chips{
+      display:flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 6px;
+    }
+
+    .chip{
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--stroke2);
+      background: rgba(255,255,255,.04);
+      color: rgba(234,240,255,.86);
+      font-weight: 800;
+      transition: transform .18s ease, background .18s ease, border-color .18s ease;
+    }
+
+    .chip:hover{
+      transform: translateY(-2px);
+      background: rgba(255,255,255,.06);
+      border-color: rgba(234,240,255,.22);
+    }
+
+    /* ===== Form shell ===== */
+    .shell{
       margin-top: 18px;
+      border-radius: calc(var(--r) + 6px);
+      border: 1px solid var(--stroke);
+      background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
+      box-shadow: var(--shadow2);
+      overflow: hidden;
+    }
+
+    /* top progress pills */
+    .steps{
       display:flex;
       gap: 10px;
+      padding: 14px 14px 12px;
+      border-bottom: 1px solid rgba(234,240,255,.08);
+      background: rgba(10,15,31,.55);
       flex-wrap: wrap;
+      position: sticky;
+      top: 0;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      z-index: 5;
     }
-    .pill{
+    .step{
+      display:flex; align-items:center; gap: 10px;
+      padding: 10px 12px;
       border-radius: 999px;
-      padding: 10px 14px;
-      background: rgba(255,255,255,.65);
-      border: 1px solid rgba(0,0,0,.08);
-      box-shadow: var(--shadowC);
-      color: rgba(11,18,32,.78);
-      font-weight: 700;
-      transition: transform .18s ease, box-shadow .18s ease;
+      border: 1px solid rgba(234,240,255,.10);
+      background: rgba(255,255,255,.03);
+      color: rgba(234,240,255,.78);
+      font-weight: 900;
+      transition: transform .18s ease, border-color .18s ease, background .18s ease;
     }
-    .pill:hover{ transform: translateY(-2px); box-shadow: var(--shadowB); }
-
-    /* ===== Form ===== */
-    .formCard{ margin-top: 18px; }
+    .step .dot{
+      width: 9px; height: 9px;
+      border-radius: 999px;
+      background: rgba(234,240,255,.26);
+      box-shadow: 0 0 0 4px rgba(234,240,255,.06);
+    }
+    .step.active{
+      border-color: rgba(6,182,212,.35);
+      background: linear-gradient(135deg, rgba(124,58,237,.12), rgba(6,182,212,.10));
+      color: rgba(234,240,255,.92);
+    }
+    .step.active .dot{
+      background: linear-gradient(135deg, var(--a), var(--b));
+      box-shadow: 0 0 0 5px rgba(6,182,212,.12);
+    }
+    .step:hover{
+      transform: translateY(-1px);
+      border-color: rgba(234,240,255,.20);
+      background: rgba(255,255,255,.05);
+    }
 
     .section{
-      padding: 24px 22px;
-      border-top: 1px solid rgba(0,0,0,.06);
-      background: linear-gradient(180deg, rgba(255,255,255,.88), rgba(255,255,255,.76));
+      padding: 22px 18px;
+      background: rgba(11,16,34,.62);
+      border-top: 1px solid rgba(234,240,255,.08);
       opacity: 0;
-      transform: translateY(10px);
+      transform: translateY(12px);
       transition: opacity 520ms ease, transform 520ms ease;
     }
-    .section:first-child{ border-top:none; }
+    .section:first-of-type{ border-top: none; }
     .section.in{ opacity: 1; transform: translateY(0); }
 
     .sectionHead{
-      display:flex;
-      align-items:center;
-      justify-content: space-between;
+      display:flex; align-items:center; justify-content: space-between;
       gap: 12px;
       margin-bottom: 14px;
     }
     .title{
-      display:flex;
-      align-items:center;
-      gap: 10px;
-      font-weight: 900;
-      color: rgba(11,18,32,.92);
-      font-size: 1.06rem;
+      font-weight: 950;
+      letter-spacing: -.01em;
+      display:flex; align-items:center; gap: 10px;
     }
-    .badge{
-      width: 34px; height: 34px;
-      border-radius: 12px;
+    .num{
+      width: 30px; height: 30px;
+      border-radius: 10px;
       display:grid; place-items:center;
-      background: linear-gradient(180deg, rgba(47,107,255,.14), rgba(0,194,255,.10));
-      border: 1px solid rgba(47,107,255,.22);
-      color: rgba(11,18,32,.80);
-      font-weight: 900;
+      background: rgba(255,255,255,.05);
+      border: 1px solid rgba(234,240,255,.12);
+      color: rgba(234,240,255,.90);
+      font-weight: 950;
     }
-    .req{ color: rgba(11,18,32,.55); font-weight: 700; }
+    .required{ color: rgba(234,240,255,.55); font-weight: 800; }
 
     .grid{ display:grid; grid-template-columns: 1fr; gap: 14px; }
-    @media (min-width: 900px){
+    @media(min-width: 900px){
       .two{ grid-template-columns: 1fr 1fr; }
-      .span2{ grid-column: 1 / -1; }
     }
 
     label{
       display:block;
       margin-bottom: 8px;
-      font-weight: 800;
-      color: rgba(11,18,32,.86);
+      font-weight: 900;
+      color: rgba(234,240,255,.92);
       font-size: .95rem;
     }
 
     input, select, textarea{
-      width:100%;
+      width: 100%;
       padding: 13px 14px;
-      border-radius: 16px;
-      border: 1px solid rgba(0,0,0,.10);
-      background: rgba(255,255,255,.72);
-      color: rgba(11,18,32,.90);
+      border-radius: var(--r2);
+      border: 1px solid rgba(234,240,255,.12);
+      background: rgba(255,255,255,.03);
+      color: rgba(234,240,255,.92);
       font-size: 1rem;
-      box-shadow: 0 10px 30px rgba(0,0,0,.08);
-      transition: transform .16s ease, box-shadow .16s ease, border-color .16s ease;
+      outline: none;
+      transition: transform .16s ease, border-color .16s ease, box-shadow .16s ease, background .16s ease;
     }
-    input::placeholder, textarea::placeholder{ color: rgba(11,18,32,.40); }
+    input::placeholder, textarea::placeholder{ color: rgba(234,240,255,.42); }
 
     input:hover, select:hover, textarea:hover{
       transform: translateY(-1px);
-      box-shadow: 0 16px 44px rgba(0,0,0,.12);
-      border-color: rgba(0,0,0,.14);
+      border-color: rgba(234,240,255,.20);
+      background: rgba(255,255,255,.04);
     }
+
     input:focus, select:focus, textarea:focus{
-      outline:none;
-      border-color: rgba(47,107,255,.50);
-      box-shadow: 0 0 0 6px rgba(47,107,255,.14), 0 18px 60px rgba(47,107,255,.12);
-      transform: translateY(-1px);
+      border-color: rgba(6,182,212,.45);
+      box-shadow: 0 0 0 6px rgba(6,182,212,.12);
+      background: rgba(255,255,255,.05);
     }
 
     .callout{
-      border-radius: 18px;
-      padding: 14px 14px;
-      background: linear-gradient(180deg, rgba(47,107,255,.10), rgba(0,194,255,.08));
-      border: 1px solid rgba(47,107,255,.16);
-      color: rgba(11,18,32,.82);
-      line-height: 1.6;
-      box-shadow: 0 16px 55px rgba(47,107,255,.10);
+      border-radius: var(--r2);
+      border: 1px solid rgba(234,240,255,.12);
+      background:
+        linear-gradient(135deg, rgba(124,58,237,.10), rgba(6,182,212,.08)),
+        rgba(255,255,255,.02);
+      padding: 14px;
+      color: rgba(234,240,255,.86);
+      line-height: 1.55;
       margin-bottom: 12px;
     }
-    .callout strong{ color: rgba(11,18,32,.94); }
+    .callout strong{ color: rgba(234,240,255,.96); }
 
     .help{
       margin-top: 8px;
+      color: rgba(234,240,255,.58);
       font-size: .92rem;
-      color: rgba(11,18,32,.58);
       line-height: 1.45;
     }
 
     .footer{
-      padding: 18px 22px 22px;
-      border-top: 1px solid rgba(0,0,0,.06);
-      background: linear-gradient(180deg, rgba(255,255,255,.86), rgba(255,255,255,.76));
+      padding: 16px 18px 20px;
+      border-top: 1px solid rgba(234,240,255,.08);
+      background: rgba(10,15,31,.60);
       display:flex;
       align-items:center;
       justify-content: space-between;
@@ -261,10 +329,10 @@
       flex-wrap: wrap;
     }
     .footnote{
-      color: rgba(11,18,32,.62);
+      color: rgba(234,240,255,.62);
       font-size: .92rem;
-      max-width: 560px;
       line-height: 1.45;
+      max-width: 60ch;
     }
 
     .btn{
@@ -272,255 +340,232 @@
       cursor: pointer;
       padding: 13px 18px;
       border-radius: 999px;
-      min-width: 260px;
       font-size: 1rem;
-      font-weight: 900;
-      color: white;
-      background: linear-gradient(135deg, var(--accent), var(--accent2));
-      box-shadow: 0 28px 90px rgba(47,107,255,.28);
+      font-weight: 950;
+      color: #07101f;
+      background: linear-gradient(135deg, rgba(124,58,237,1), rgba(6,182,212,1));
+      box-shadow: 0 18px 60px rgba(124,58,237,.28);
       transition: transform .16s ease, box-shadow .16s ease, filter .16s ease;
+      min-width: 260px;
       position: relative;
       overflow: hidden;
     }
     .btn::after{
       content:"";
-      position:absolute;
-      inset:-2px;
-      background: radial-gradient(320px 160px at 20% 20%, rgba(255,255,255,.55), transparent 60%);
-      opacity: .38;
-      transform: translateX(-14%);
+      position:absolute; inset:-2px;
+      background: radial-gradient(260px 120px at 25% 25%, rgba(255,255,255,.55), transparent 60%);
+      opacity: .35;
       transition: transform .35s ease, opacity .35s ease;
+      transform: translateX(-14%);
       pointer-events:none;
     }
     .btn:hover{
       transform: translateY(-2px);
-      box-shadow: 0 34px 110px rgba(47,107,255,.32);
+      box-shadow: 0 22px 80px rgba(6,182,212,.22), 0 22px 90px rgba(124,58,237,.22);
       filter: brightness(1.03);
     }
-    .btn:hover::after{ transform: translateX(10%); opacity: .45; }
+    .btn:hover::after{ transform: translateX(10%); opacity: .42; }
     .btn:active{ transform: translateY(0) scale(.99); }
     .btn[disabled]{ opacity:.75; cursor:not-allowed; transform:none; box-shadow:none; }
 
-    @media (max-width: 620px){
-      h1{ font-size: 2.1rem; }
-      .heroInner{ padding: 26px 18px; }
-      .section{ padding: 22px 18px; }
-      .footer{ padding: 16px 18px 20px; }
+    @media(max-width: 640px){
+      h1{ font-size: 2.15rem; }
       .btn{ width: 100%; min-width: 0; }
     }
 
     @media (prefers-reduced-motion: reduce){
-      *{ transition:none !important; }
-      .section{ opacity:1; transform:none; }
+      * { transition: none !important; animation: none !important; }
+      .section{ opacity: 1; transform: none; }
     }
   </style>
 </head>
 
 <body>
+  <div class="bg"></div>
+  <div class="noise"></div>
+  <div class="blob one"></div>
+  <div class="blob two"></div>
+  <div class="blob three"></div>
+
   <div class="container">
+
     <!-- HERO -->
-    <div class="card3d hero" data-tilt>
-      <div class="depth"></div>
-      <div class="surface">
-        <div class="gloss"></div>
-        <div class="heroInner">
-          <div class="kicker">INTERNSHIP</div>
-          <h1>AI Developers</h1>
-          <div class="sub">
-            6-month remote internship. Resume required. Short problem-solving answer.
-          </div>
-          <div class="pills">
-            <div class="pill">Remote</div>
-            <div class="pill">6 Months</div>
-            <div class="pill">Problem Solving</div>
-          </div>
+    <div class="hero">
+      <div class="heroInner">
+        <div class="kicker">INTERNSHIP</div>
+        <h1>AI Developers</h1>
+        <div class="sub">6-month remote internship. Resume required. Short problem-solving answer.</div>
+
+        <div class="chips">
+          <div class="chip">Remote</div>
+          <div class="chip">6 Months</div>
+          <div class="chip">Problem Solving</div>
         </div>
       </div>
     </div>
 
     <!-- FORM -->
-    <div class="card3d formCard" data-tilt style="margin-top:18px;">
-      <div class="depth"></div>
-      <div class="surface">
-        <div class="gloss"></div>
-
-        <form
-          name="application"
-          method="POST"
-          netlify
-          action="/success.html"
-          enctype="multipart/form-data"
-          id="appForm"
-        >
-          <!-- PERSONAL -->
-          <div class="section" id="sec-personal">
-            <div class="sectionHead">
-              <div class="title"><span class="badge">1</span> Personal</div>
-              <div class="req">Required</div>
-            </div>
-
-            <div class="grid">
-              <div>
-                <label>Full name *</label>
-                <input type="text" name="full_name" required />
-              </div>
-              <div>
-                <label>Email *</label>
-                <input type="email" name="email" required />
-              </div>
-              <div>
-                <label>Location (City, Country) *</label>
-                <input type="text" name="location" placeholder="e.g., Buffalo, USA" required />
-              </div>
-            </div>
-          </div>
-
-          <!-- EDUCATION -->
-          <div class="section" id="sec-education">
-            <div class="sectionHead">
-              <div class="title"><span class="badge">2</span> Education</div>
-              <div class="req">Required</div>
-            </div>
-
-            <div class="grid two">
-              <div>
-                <label>Education level *</label>
-                <select name="education_level" required>
-                  <option value="">Select…</option>
-                  <option>High School</option>
-                  <option>Undergraduate</option>
-                  <option>Graduate</option>
-                  <option>Other</option>
-                </select>
-              </div>
-              <div>
-                <label>University *</label>
-                <input type="text" name="university" required />
-              </div>
-              <div>
-                <label>Degree *</label>
-                <input type="text" name="degree" placeholder="BTech, BS, MS…" required />
-              </div>
-              <div>
-                <label>Major / Program *</label>
-                <input type="text" name="major" required />
-              </div>
-              <div>
-                <label>Graduation date *</label>
-                <input type="month" name="graduation_date" required />
-              </div>
-            </div>
-          </div>
-
-          <!-- RESUME (NO RESUME CHIP, ONLY UPLOAD FIELD) -->
-          <div class="section" id="sec-resume">
-            <div class="sectionHead">
-              <div class="title"><span class="badge">3</span> Resume</div>
-              <div class="req">Required</div>
-            </div>
-
-            <div class="grid">
-              <div>
-                <label>Upload resume (PDF/DOC) *</label>
-                <input type="file" name="resume" accept=".pdf,.doc,.docx" required />
-                <div class="help">PDF preferred. Keep it under ~10MB.</div>
-              </div>
-            </div>
-          </div>
-
-          <!-- CHALLENGE -->
-          <div class="section" id="sec-challenge">
-            <div class="sectionHead">
-              <div class="title"><span class="badge">4</span> Problem Solving</div>
-              <div class="req">Required</div>
-            </div>
-
-            <div class="callout">
-              <strong>Challenge:</strong> We built an AI feature, but users are confused and not using it.
-              What would you do to fix this?
-            </div>
-
-            <div class="grid">
-              <div>
-                <label>Your answer *</label>
-                <textarea
-                  name="challenge_solution"
-                  rows="6"
-                  required
-                  placeholder="Write your plan. Keep it practical and clear."
-                ></textarea>
-                <div class="help">We care about thinking and clarity, not buzzwords.</div>
-              </div>
-            </div>
-          </div>
-
-          <div class="footer">
-            <div class="footnote">
-              We review on a rolling basis. If shortlisted, we’ll email you.
-            </div>
-            <button type="submit" class="btn" id="submitBtn">Submit application</button>
-          </div>
-        </form>
+    <div class="shell" style="margin-top:16px;">
+      <div class="steps" id="steps">
+        <div class="step active" data-target="sec-personal"><span class="dot"></span>Personal</div>
+        <div class="step" data-target="sec-education"><span class="dot"></span>Education</div>
+        <div class="step" data-target="sec-resume"><span class="dot"></span>Resume</div>
+        <div class="step" data-target="sec-challenge"><span class="dot"></span>Challenge</div>
       </div>
+
+      <form
+        name="application"
+        method="POST"
+        netlify
+        action="/success.html"
+        enctype="multipart/form-data"
+        id="appForm"
+      >
+        <!-- PERSONAL -->
+        <div class="section" id="sec-personal">
+          <div class="sectionHead">
+            <div class="title"><span class="num">1</span> Personal</div>
+            <div class="required">Required</div>
+          </div>
+
+          <div class="grid">
+            <div>
+              <label>Full name *</label>
+              <input type="text" name="full_name" required />
+            </div>
+            <div>
+              <label>Email *</label>
+              <input type="email" name="email" required />
+            </div>
+            <div>
+              <label>Location (City, Country) *</label>
+              <input type="text" name="location" placeholder="e.g., Buffalo, USA" required />
+            </div>
+          </div>
+        </div>
+
+        <!-- EDUCATION -->
+        <div class="section" id="sec-education">
+          <div class="sectionHead">
+            <div class="title"><span class="num">2</span> Education</div>
+            <div class="required">Required</div>
+          </div>
+
+          <div class="grid two">
+            <div>
+              <label>Education level *</label>
+              <select name="education_level" required>
+                <option value="">Select…</option>
+                <option>High School</option>
+                <option>Undergraduate</option>
+                <option>Graduate</option>
+                <option>Other</option>
+              </select>
+            </div>
+            <div>
+              <label>University *</label>
+              <input type="text" name="university" required />
+            </div>
+            <div>
+              <label>Degree *</label>
+              <input type="text" name="degree" placeholder="BTech, BS, MS…" required />
+            </div>
+            <div>
+              <label>Major / Program *</label>
+              <input type="text" name="major" required />
+            </div>
+            <div>
+              <label>Graduation date *</label>
+              <input type="month" name="graduation_date" required />
+            </div>
+          </div>
+        </div>
+
+        <!-- RESUME -->
+        <div class="section" id="sec-resume">
+          <div class="sectionHead">
+            <div class="title"><span class="num">3</span> Resume</div>
+            <div class="required">Required</div>
+          </div>
+
+          <div class="grid">
+            <div>
+              <label>Upload resume (PDF/DOC) *</label>
+              <input type="file" name="resume" accept=".pdf,.doc,.docx" required />
+              <div class="help">PDF preferred. Keep it reasonably small (Netlify plan limits may apply).</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- CHALLENGE -->
+        <div class="section" id="sec-challenge">
+          <div class="sectionHead">
+            <div class="title"><span class="num">4</span> Problem Solving</div>
+            <div class="required">Required</div>
+          </div>
+
+          <div class="callout">
+            <strong>Challenge:</strong> We built an AI feature, but users are confused and not using it.
+            What would you do to fix this?
+          </div>
+
+          <div class="grid">
+            <div>
+              <label>Your answer *</label>
+              <textarea
+                name="challenge_solution"
+                rows="6"
+                required
+                placeholder="Write your plan. Keep it practical and clear."
+              ></textarea>
+              <div class="help">We care about thinking + clarity, not buzzwords.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="footer">
+          <div class="footnote">We review on a rolling basis. If shortlisted, we’ll contact you by email.</div>
+          <button type="submit" class="btn" id="submitBtn">Submit application</button>
+        </div>
+      </form>
     </div>
   </div>
 
   <script>
-    // reveal sections
+    // reveal sections on scroll
     const sections = document.querySelectorAll('.section');
     const io = new IntersectionObserver((entries) => {
       entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
     }, { threshold: 0.12 });
     sections.forEach(s => io.observe(s));
 
-    // submit UX
-    const form = document.getElementById('appForm');
-    const submitBtn = document.getElementById('submitBtn');
-    form.addEventListener('submit', () => {
-      submitBtn.disabled = true;
-      submitBtn.textContent = 'Submitting…';
+    // sticky step highlight + click to scroll
+    const stepEls = document.querySelectorAll('.step');
+    stepEls.forEach(step => {
+      step.addEventListener('click', () => {
+        const id = step.getAttribute('data-target');
+        document.getElementById(id).scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
     });
 
-    // premium tilt (subtle)
-    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    function tilt(el){
-      const gloss = el.querySelector('.gloss');
-      let raf = null;
+    const stepMap = Array.from(stepEls).map(el => document.getElementById(el.dataset.target));
+    const stepIO = new IntersectionObserver((entries) => {
+      // find the most visible section
+      const visible = entries.filter(e => e.isIntersecting).sort((a,b)=>b.intersectionRatio-a.intersectionRatio)[0];
+      if (!visible) return;
+      const id = visible.target.id;
+      stepEls.forEach(s => s.classList.toggle('active', s.dataset.target === id));
+    }, { threshold: [0.25, 0.35, 0.5, 0.65] });
 
-      const reset = () => {
-        el.style.transform = `rotateX(0deg) rotateY(0deg) translateY(0px)`;
-        if (gloss){
-          el.style.setProperty('--gx','40%');
-          el.style.setProperty('--gy','15%');
-        }
-      };
+    stepMap.forEach(sec => stepIO.observe(sec));
 
-      const move = (e) => {
-        const r = el.getBoundingClientRect();
-        const x = e.clientX - r.left;
-        const y = e.clientY - r.top;
-        const px = x / r.width;
-        const py = y / r.height;
-
-        // subtle angles
-        const rx = (py - 0.5) * -6;
-        const ry = (px - 0.5) *  7;
-        const lift = -4;
-
-        if (raf) cancelAnimationFrame(raf);
-        raf = requestAnimationFrame(() => {
-          el.style.transform = `rotateX(${rx}deg) rotateY(${ry}deg) translateY(${lift}px)`;
-          if (gloss){
-            el.style.setProperty('--gx', (px * 100) + '%');
-            el.style.setProperty('--gy', (py * 100) + '%');
-          }
-        });
-      };
-
-      el.addEventListener('mousemove', move);
-      el.addEventListener('mouseleave', reset);
-    }
-    if (!reduced) document.querySelectorAll('[data-tilt]').forEach(tilt);
+    // submit UX
+    const form = document.getElementById('appForm');
+    const btn = document.getElementById('submitBtn');
+    form.addEventListener('submit', () => {
+      btn.disabled = true;
+      btn.textContent = 'Submitting…';
+    });
   </script>
 </body>
 </html>
