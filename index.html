@@ -16,19 +16,14 @@
       --primary: #2563eb;
       --primary2: #1d4ed8;
       --ring: rgba(37, 99, 235, .16);
-
-      /* 3D shadows */
-      --shadow: 0 18px 55px rgba(15, 23, 42, .10);
-      --shadow2: 0 10px 26px rgba(15, 23, 42, .08);
-
       --radius: 18px;
     }
 
     body{
       font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
       background:
-        radial-gradient(900px 540px at 15% -10%, rgba(37,99,235,.18), transparent 60%),
-        radial-gradient(900px 540px at 95% 0%, rgba(29,78,216,.14), transparent 55%),
+        radial-gradient(900px 540px at 15% -10%, rgba(37,99,235,.20), transparent 60%),
+        radial-gradient(900px 540px at 95% 0%, rgba(29,78,216,.16), transparent 55%),
         var(--bg);
       color: var(--text);
       padding: 24px 16px 40px;
@@ -37,28 +32,26 @@
     .container{
       max-width: 920px;
       margin: 0 auto;
-      perspective: 1200px; /* enables 3D feel */
+      perspective: 1200px; /* enables 3D tilt */
     }
 
-    /* HERO (3D) */
+    /* HERO */
     .hero{
       border-radius: 22px;
       padding: 28px 24px;
       color: #fff;
       position: relative;
       overflow: hidden;
-
-      background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 45%, #0b3aa8 100%);
-
       transform-style: preserve-3d;
+      will-change: transform;
+      background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 45%, #0b3aa8 100%);
       box-shadow:
-        0 26px 70px rgba(0,0,0,.22),
-        0 10px 22px rgba(0,0,0,.12);
+        0 45px 120px rgba(0,0,0,.22),
+        0 20px 55px rgba(0,0,0,.14);
       animation: enter .55s ease both;
     }
 
-    /* layered sheen */
-    .hero:before{
+    .hero::before{
       content:"";
       position:absolute;
       inset:-2px;
@@ -70,8 +63,7 @@
       transform: translateZ(30px);
     }
 
-    /* floating orb */
-    .hero:after{
+    .hero::after{
       content:"";
       position:absolute;
       top:-120px; right:-140px;
@@ -87,6 +79,13 @@
       0%,100% { transform: translateZ(40px) translate(0,0); }
       50% { transform: translateZ(40px) translate(-18px, 14px); }
     }
+
+    /* soft highlight stroke (premium) */
+    .hero::marker{ content:""; }
+
+    .heroStroke, .cardStroke, .progressStroke{ display:none; } /* placeholder */
+
+    .heroGloss, .cardGloss, .progressGloss{ display:none; } /* placeholder */
 
     .kicker{
       position: relative;
@@ -139,7 +138,7 @@
       box-shadow: 0 10px 25px rgba(0,0,0,.12);
     }
 
-    /* Sticky progress (3D glass) */
+    /* Progress */
     .progress-wrap{
       position: sticky;
       top: 14px;
@@ -148,30 +147,22 @@
     }
 
     .progress{
+      position: relative;
       background: rgba(255,255,255,.68);
       border: 1px solid var(--border2);
       border-radius: 16px;
       padding: 12px 14px;
-
       backdrop-filter: blur(14px);
+
       transform-style: preserve-3d;
+      will-change: transform;
 
       box-shadow:
-        0 22px 55px rgba(15,23,42,.12),
-        0 10px 20px rgba(15,23,42,.07);
+        0 30px 70px rgba(15,23,42,.16),
+        0 12px 28px rgba(15,23,42,.10);
+
       animation: enter .55s ease both;
       animation-delay: .06s;
-    }
-
-    /* 3D hover tilt (subtle) */
-    .hero, .progress, .card{
-      transition: transform .18s ease, box-shadow .18s ease;
-    }
-    .hero:hover{
-      transform: rotateX(1.2deg) rotateY(-1.2deg) translateY(-2px);
-    }
-    .progress:hover{
-      transform: rotateX(.8deg) rotateY(1deg) translateY(-1px);
     }
 
     .steps{
@@ -179,37 +170,52 @@
       gap: 10px;
       flex-wrap: wrap;
     }
+
+    /* 3D pills */
     .step{
       display:flex;
       align-items:center;
       gap: 8px;
-      padding: 8px 10px;
-      border-radius: 12px;
+      padding: 10px 12px;
+      border-radius: 14px;
       border: 1px solid rgba(15,23,42,.10);
-      background: rgba(255,255,255,.85);
-      font-weight: 650;
-      font-size: .92rem;
-      color: rgba(11,18,32,.72);
+      background: linear-gradient(180deg, rgba(255,255,255,.95), rgba(255,255,255,.78));
+      font-weight: 750;
+      font-size: .95rem;
+      color: rgba(11,18,32,.70);
+      box-shadow:
+        0 10px 22px rgba(15,23,42,.10),
+        inset 0 1px 0 rgba(255,255,255,.9);
       transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
     }
+
     .dot{
       width: 10px;
       height: 10px;
       border-radius: 999px;
       background: rgba(148,163,184,.9);
     }
+
+    .step:hover{
+      transform: translateY(-2px);
+      box-shadow:
+        0 16px 30px rgba(15,23,42,.14),
+        inset 0 1px 0 rgba(255,255,255,.95);
+    }
+
     .step.active{
       color: rgba(11,18,32,.92);
-      border-color: rgba(37,99,235,.28);
-      box-shadow: 0 0 0 5px var(--ring);
-      transform: translateY(-1px);
+      border-color: rgba(37,99,235,.35);
+      background: linear-gradient(180deg, rgba(37,99,235,.14), rgba(255,255,255,.85));
+      box-shadow:
+        0 18px 34px rgba(37,99,235,.18),
+        inset 0 1px 0 rgba(255,255,255,.95);
+      transform: translateY(-2px);
     }
     .step.active .dot{ background: var(--primary); }
 
     .bar{
       height: 10px;
-      min-width: 160px;
-      max-width: 260px;
       border-radius: 999px;
       background: rgba(148,163,184,.22);
       overflow: hidden;
@@ -224,30 +230,39 @@
       transition: width .25s ease;
     }
 
-    /* FORM CARD (3D depth) */
+    /* Card */
     .card{
+      position: relative;
       margin-top: 14px;
       background: var(--card);
       border: 1px solid var(--border2);
       border-radius: var(--radius);
       overflow: hidden;
+
       transform-style: preserve-3d;
+      will-change: transform;
 
       box-shadow:
-        0 35px 90px rgba(15,23,42,.16),
-        0 18px 40px rgba(15,23,42,.10),
-        inset 0 1px 0 rgba(255,255,255,.7);
+        0 55px 140px rgba(15,23,42,.18),
+        0 22px 60px rgba(15,23,42,.12),
+        inset 0 1px 0 rgba(255,255,255,.8);
 
       animation: enter .55s ease both;
       animation-delay: .12s;
     }
 
-    .card:hover{
-      transform: rotateX(.6deg) rotateY(-.8deg) translateY(-2px);
-      box-shadow:
-        0 42px 110px rgba(15,23,42,.18),
-        0 22px 55px rgba(15,23,42,.12),
-        inset 0 1px 0 rgba(255,255,255,.75);
+    /* highlight stroke overlay */
+    .hero::before, .card::before, .progress::before{
+      /* keep existing hero before as gradient; so only apply to card/progress via separate rule below */
+    }
+    .card::after, .progress::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      border-radius: inherit;
+      pointer-events:none;
+      border: 1px solid rgba(255,255,255,.22);
+      mix-blend-mode: soft-light;
     }
 
     .section{
@@ -256,8 +271,7 @@
       opacity: 0;
       transform: translateY(12px);
       transition: opacity 520ms ease, transform 520ms ease;
-      background:
-        linear-gradient(180deg, rgba(255,255,255,.92), rgba(255,255,255,1));
+      background: linear-gradient(180deg, rgba(255,255,255,.92), rgba(255,255,255,1));
     }
     .section:first-child{ border-top: none; }
     .section.in{ opacity: 1; transform: translateY(0); }
@@ -297,7 +311,6 @@
       grid-template-columns: 1fr;
       gap: 14px;
     }
-
     @media (min-width: 860px){
       .two{ grid-template-columns: 1fr 1fr; }
       .span-2{ grid-column: 1 / -1; }
@@ -329,6 +342,14 @@
       border-color: rgba(37,99,235,.55);
       box-shadow: 0 0 0 6px var(--ring), 0 14px 28px rgba(37,99,235,.10);
       transform: translateY(-1px);
+    }
+
+    /* little lift on hover (adds depth) */
+    input:hover, select:hover, textarea:hover{
+      transform: translateY(-1px);
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.75),
+        0 14px 26px rgba(15,23,42,.08);
     }
 
     .help{
@@ -399,14 +420,12 @@
       .section{ padding: 20px 18px; }
       .footer{ padding: 14px 18px 18px; }
       .btn{ width: 100%; min-width: 0; }
-      .hero:hover, .card:hover, .progress:hover{ transform: none; }
     }
 
     @media (prefers-reduced-motion: reduce){
       *{ animation:none !important; transition:none !important; }
       .section{ opacity: 1; transform:none; }
       .progress-wrap{ position: static; }
-      .hero:hover, .card:hover, .progress:hover{ transform: none; }
     }
   </style>
 </head>
@@ -623,6 +642,30 @@
       btn.disabled = true;
       btn.textContent = 'Submitting…';
     });
+
+    // Real 3D tilt on mouse move (premium)
+    function tilt(el, max=10){
+      if (!el) return;
+
+      el.addEventListener("mousemove", (e) => {
+        const r = el.getBoundingClientRect();
+        const x = e.clientX - r.left;
+        const y = e.clientY - r.top;
+
+        const rx = ((y / r.height) - 0.5) * -max;
+        const ry = ((x / r.width) - 0.5) * max;
+
+        el.style.transform = `rotateX(${rx}deg) rotateY(${ry}deg) translateY(-2px)`;
+      });
+
+      el.addEventListener("mouseleave", () => {
+        el.style.transform = `rotateX(0deg) rotateY(0deg) translateY(0px)`;
+      });
+    }
+
+    tilt(document.querySelector(".hero"), 10);
+    tilt(document.querySelector(".card"), 7);
+    tilt(document.querySelector(".progress"), 6);
   </script>
 </body>
 </html>
