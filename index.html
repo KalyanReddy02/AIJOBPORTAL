@@ -16,8 +16,11 @@
       --primary: #2563eb;
       --primary2: #1d4ed8;
       --ring: rgba(37, 99, 235, .16);
+
+      /* 3D shadows */
       --shadow: 0 18px 55px rgba(15, 23, 42, .10);
       --shadow2: 0 10px 26px rgba(15, 23, 42, .08);
+
       --radius: 18px;
     }
 
@@ -31,46 +34,58 @@
       padding: 24px 16px 40px;
     }
 
-    .container{ max-width: 920px; margin: 0 auto; }
+    .container{
+      max-width: 920px;
+      margin: 0 auto;
+      perspective: 1200px; /* enables 3D feel */
+    }
 
-    /* HERO */
+    /* HERO (3D) */
     .hero{
       border-radius: 22px;
       padding: 28px 24px;
       color: #fff;
-      box-shadow: var(--shadow);
       position: relative;
       overflow: hidden;
+
       background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 45%, #0b3aa8 100%);
+
+      transform-style: preserve-3d;
+      box-shadow:
+        0 26px 70px rgba(0,0,0,.22),
+        0 10px 22px rgba(0,0,0,.12);
       animation: enter .55s ease both;
     }
 
+    /* layered sheen */
     .hero:before{
       content:"";
       position:absolute;
       inset:-2px;
       background:
-        radial-gradient(800px 300px at 20% 10%, rgba(255,255,255,.18), transparent 60%),
-        radial-gradient(700px 260px at 80% 0%, rgba(255,255,255,.12), transparent 55%);
-      opacity: .9;
+        radial-gradient(900px 320px at 18% 10%, rgba(255,255,255,.22), transparent 60%),
+        radial-gradient(700px 280px at 82% 0%, rgba(255,255,255,.14), transparent 55%);
+      opacity: .95;
       pointer-events:none;
+      transform: translateZ(30px);
     }
 
+    /* floating orb */
     .hero:after{
       content:"";
       position:absolute;
       top:-120px; right:-140px;
-      width: 360px; height: 360px;
+      width: 380px; height: 380px;
       border-radius: 999px;
       background: rgba(255,255,255,.12);
-      transform: rotate(10deg);
       pointer-events:none;
+      transform: translateZ(40px);
       animation: float 8s ease-in-out infinite;
     }
 
     @keyframes float{
-      0%,100% { transform: translate(0,0) rotate(10deg); }
-      50% { transform: translate(-18px, 14px) rotate(10deg); }
+      0%,100% { transform: translateZ(40px) translate(0,0); }
+      50% { transform: translateZ(40px) translate(-18px, 14px); }
     }
 
     .kicker{
@@ -80,6 +95,7 @@
       text-transform: uppercase;
       opacity: .88;
       margin-bottom: 10px;
+      transform: translateZ(35px);
     }
 
     h1{
@@ -87,6 +103,8 @@
       font-size: 2.2rem;
       letter-spacing: -.02em;
       line-height: 1.12;
+      transform: translateZ(45px);
+      text-shadow: 0 10px 30px rgba(0,0,0,.20);
     }
 
     .sub{
@@ -96,6 +114,7 @@
       opacity: .92;
       line-height: 1.55;
       max-width: 70ch;
+      transform: translateZ(35px);
     }
 
     .chips{
@@ -104,21 +123,23 @@
       gap: 10px;
       flex-wrap: wrap;
       margin-top: 14px;
+      transform: translateZ(35px);
     }
     .chip{
       padding: 8px 12px;
       border-radius: 999px;
       background: rgba(255,255,255,.14);
-      border: 1px solid rgba(255,255,255,.24);
+      border: 1px solid rgba(255,255,255,.26);
       backdrop-filter: blur(10px);
       font-weight: 650;
       font-size: .92rem;
       display:flex;
       align-items:center;
       gap: 8px;
+      box-shadow: 0 10px 25px rgba(0,0,0,.12);
     }
 
-    /* Sticky progress */
+    /* Sticky progress (3D glass) */
     .progress-wrap{
       position: sticky;
       top: 14px;
@@ -127,18 +148,30 @@
     }
 
     .progress{
-      background: rgba(255,255,255,.78);
+      background: rgba(255,255,255,.68);
       border: 1px solid var(--border2);
       border-radius: 16px;
-      box-shadow: var(--shadow2);
       padding: 12px 14px;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap: 12px;
-      backdrop-filter: blur(10px);
+
+      backdrop-filter: blur(14px);
+      transform-style: preserve-3d;
+
+      box-shadow:
+        0 22px 55px rgba(15,23,42,.12),
+        0 10px 20px rgba(15,23,42,.07);
       animation: enter .55s ease both;
       animation-delay: .06s;
+    }
+
+    /* 3D hover tilt (subtle) */
+    .hero, .progress, .card{
+      transition: transform .18s ease, box-shadow .18s ease;
+    }
+    .hero:hover{
+      transform: rotateX(1.2deg) rotateY(-1.2deg) translateY(-2px);
+    }
+    .progress:hover{
+      transform: rotateX(.8deg) rotateY(1deg) translateY(-1px);
     }
 
     .steps{
@@ -177,10 +210,11 @@
       height: 10px;
       min-width: 160px;
       max-width: 260px;
-      flex: 1;
       border-radius: 999px;
       background: rgba(148,163,184,.22);
       overflow: hidden;
+      margin-top: 10px;
+      transform: translateZ(10px);
     }
     .bar > div{
       height: 100%;
@@ -190,16 +224,30 @@
       transition: width .25s ease;
     }
 
-    /* FORM CARD */
+    /* FORM CARD (3D depth) */
     .card{
       margin-top: 14px;
       background: var(--card);
       border: 1px solid var(--border2);
       border-radius: var(--radius);
-      box-shadow: var(--shadow);
       overflow: hidden;
+      transform-style: preserve-3d;
+
+      box-shadow:
+        0 35px 90px rgba(15,23,42,.16),
+        0 18px 40px rgba(15,23,42,.10),
+        inset 0 1px 0 rgba(255,255,255,.7);
+
       animation: enter .55s ease both;
       animation-delay: .12s;
+    }
+
+    .card:hover{
+      transform: rotateX(.6deg) rotateY(-.8deg) translateY(-2px);
+      box-shadow:
+        0 42px 110px rgba(15,23,42,.18),
+        0 22px 55px rgba(15,23,42,.12),
+        inset 0 1px 0 rgba(255,255,255,.75);
     }
 
     .section{
@@ -208,6 +256,8 @@
       opacity: 0;
       transform: translateY(12px);
       transition: opacity 520ms ease, transform 520ms ease;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.92), rgba(255,255,255,1));
     }
     .section:first-child{ border-top: none; }
     .section.in{ opacity: 1; transform: translateY(0); }
@@ -235,6 +285,7 @@
       color: var(--primary);
       font-weight: 800;
       font-size: .95rem;
+      box-shadow: 0 10px 22px rgba(37,99,235,.10);
     }
     .req{
       font-size: .92rem;
@@ -269,13 +320,14 @@
       color: var(--text);
       font-size: 1rem;
       transition: border-color .16s ease, box-shadow .16s ease, transform .16s ease;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.7);
     }
     input::placeholder, textarea::placeholder{ color: rgba(11,18,32,.42); }
 
     input:focus, select:focus, textarea:focus{
       outline: none;
       border-color: rgba(37,99,235,.55);
-      box-shadow: 0 0 0 6px var(--ring);
+      box-shadow: 0 0 0 6px var(--ring), 0 14px 28px rgba(37,99,235,.10);
       transform: translateY(-1px);
     }
 
@@ -294,6 +346,7 @@
       margin-bottom: 12px;
       line-height: 1.5;
       color: rgba(11,18,32,.86);
+      box-shadow: 0 18px 40px rgba(37,99,235,.08);
     }
     .callout strong{ color: rgba(11,18,32,.92); }
 
@@ -323,13 +376,13 @@
       font-weight: 750;
       font-size: 1rem;
       cursor: pointer;
-      box-shadow: 0 14px 28px rgba(37,99,235,.18);
+      box-shadow: 0 18px 40px rgba(37,99,235,.22);
       transition: transform .14s ease, box-shadow .14s ease, filter .14s ease;
       min-width: 230px;
     }
     .btn:hover{
-      transform: translateY(-1px);
-      box-shadow: 0 18px 34px rgba(37,99,235,.22);
+      transform: translateY(-2px);
+      box-shadow: 0 26px 60px rgba(37,99,235,.26);
       filter: brightness(1.02);
     }
     .btn:active{ transform: translateY(0) scale(.99); }
@@ -346,12 +399,14 @@
       .section{ padding: 20px 18px; }
       .footer{ padding: 14px 18px 18px; }
       .btn{ width: 100%; min-width: 0; }
+      .hero:hover, .card:hover, .progress:hover{ transform: none; }
     }
 
     @media (prefers-reduced-motion: reduce){
       *{ animation:none !important; transition:none !important; }
       .section{ opacity: 1; transform:none; }
       .progress-wrap{ position: static; }
+      .hero:hover, .card:hover, .progress:hover{ transform: none; }
     }
   </style>
 </head>
@@ -365,7 +420,6 @@
         6-month remote internship. Resume required. Short problem-solving answer.
       </div>
 
-      <!-- Resume chip removed -->
       <div class="chips">
         <div class="chip">🌍 Remote</div>
         <div class="chip">🗓️ 6 Months</div>
@@ -419,7 +473,7 @@
           </div>
         </div>
 
-        <!-- Education (GPA removed) -->
+        <!-- Education -->
         <div class="section" id="sec-education">
           <div class="section-head">
             <h2><span class="num">2</span> Education</h2>
@@ -460,7 +514,7 @@
           </div>
         </div>
 
-        <!-- Internship (Portfolio removed) -->
+        <!-- Internship -->
         <div class="section" id="sec-internship">
           <div class="section-head">
             <h2><span class="num">3</span> Internship</h2>
@@ -492,7 +546,7 @@
           </div>
         </div>
 
-        <!-- Challenge (Skills/Hobbies removed) -->
+        <!-- Challenge -->
         <div class="section" id="sec-challenge">
           <div class="section-head">
             <h2><span class="num">4</span> Problem Solving</h2>
