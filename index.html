@@ -3,14 +3,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AI Developers — 6-Month Remote Internship</title>
+  <title>AI Developer Internship | Start2Solve</title>
 
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
     html, body { height: 100%; }
 
     :root{
-      /* ===== 2026 Premium AI palette (CEO-safe + genz clean) ===== */
       --bg: #050816;
       --panel: rgba(18, 22, 38, 0.65);
       --panel2: rgba(18, 22, 38, 0.85);
@@ -22,9 +21,9 @@
       --stroke: rgba(255,255,255,.08);
       --stroke2: rgba(255,255,255,.14);
 
-      --primary: #6366F1;   /* indigo */
-      --secondary: #06B6D4; /* cyan */
-      --accent: #8B5CF6;    /* electric violet */
+      --primary: #6366F1;
+      --secondary: #06B6D4;
+      --accent: #8B5CF6;
 
       --r: 22px;
       --r2: 16px;
@@ -42,7 +41,6 @@
       overflow-x: hidden;
     }
 
-    /* ===== Background ===== */
     .bg {
       position: fixed; inset: 0; z-index: -4;
       background:
@@ -63,6 +61,7 @@
       animation: gridFloat 12s ease-in-out infinite;
       transform: translateZ(0);
     }
+
     @keyframes gridFloat{
       0% { transform: translateY(0); }
       50% { transform: translateY(12px); }
@@ -88,6 +87,7 @@
     .a1{ left:-190px; top:-190px; background: radial-gradient(circle at 30% 30%, rgba(99,102,241,.95), transparent 55%); }
     .a2{ right:-210px; top: 80px; background: radial-gradient(circle at 30% 30%, rgba(6,182,212,.90), transparent 55%); animation-delay: 2s; }
     .a3{ left: 24%; bottom:-280px; background: radial-gradient(circle at 30% 30%, rgba(139,92,246,.70), transparent 58%); animation-delay: 4s; }
+
     @keyframes aura{
       0% { transform: translate3d(0,0,0) scale(1); }
       50% { transform: translate3d(34px,-20px,0) scale(1.05); }
@@ -100,7 +100,6 @@
       padding: 28px 14px 80px;
     }
 
-    /* ===== Hero ===== */
     .hero{
       border-radius: calc(var(--r) + 10px);
       border: 1px solid var(--stroke);
@@ -112,14 +111,57 @@
       box-shadow: var(--shadowA);
       overflow:hidden;
       position: relative;
+      margin-bottom: 18px;
     }
+
     .hero::before{
       content:"";
       position:absolute; inset:-2px;
       background: radial-gradient(520px 220px at 20% 15%, rgba(255,255,255,.14), transparent 60%);
       opacity:.75; pointer-events:none;
     }
-    .heroInner{ padding: 34px 24px; display:flex; flex-direction: column; gap: 12px; }
+
+    .heroInner{
+      padding: 34px 24px;
+      display:flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      margin-bottom: 4px;
+    }
+
+    .brand img{
+      width: 52px;
+      height: 52px;
+      border-radius: 14px;
+      object-fit: cover;
+      border: 1px solid rgba(255,255,255,.12);
+      box-shadow: 0 10px 26px rgba(0,0,0,.28);
+      background: rgba(255,255,255,.04);
+    }
+
+    .brand-text{
+      display:flex;
+      flex-direction:column;
+      gap: 2px;
+    }
+
+    .brand-name{
+      font-size: 1.05rem;
+      font-weight: 900;
+      color: rgba(248,250,255,.94);
+      letter-spacing: -.01em;
+    }
+
+    .brand-site{
+      font-size: .9rem;
+      color: var(--muted2);
+    }
 
     .kicker{
       letter-spacing: .22em;
@@ -127,10 +169,27 @@
       font-size: .80rem;
       color: var(--muted2);
     }
-    h1{ font-size: 2.7rem; letter-spacing: -.04em; line-height: 1.03; }
-    .sub{ color: var(--muted); font-size: 1.05rem; line-height: 1.65; max-width: 80ch; }
 
-    .chips{ display:flex; flex-wrap: wrap; gap: 10px; margin-top: 6px; }
+    h1{
+      font-size: 2.7rem;
+      letter-spacing: -.04em;
+      line-height: 1.03;
+    }
+
+    .sub{
+      color: var(--muted);
+      font-size: 1.05rem;
+      line-height: 1.65;
+      max-width: 80ch;
+    }
+
+    .chips{
+      display:flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 6px;
+    }
+
     .chip{
       padding: 9px 14px;
       border-radius: 999px;
@@ -140,30 +199,41 @@
       color: rgba(248,250,255,.86);
       transition: transform .16s ease, background .16s ease, border-color .16s ease;
     }
-    .chip:hover{ transform: translateY(-2px); background: rgba(255,255,255,.06); border-color: rgba(255,255,255,.22); }
 
-    /* ===== Main card: premium depth + LIGHT TRACKING (not tilt) ===== */
+    .chip:hover{
+      transform: translateY(-2px);
+      background: rgba(255,255,255,.06);
+      border-color: rgba(255,255,255,.22);
+    }
+
+    .info-card,
     .card{
-      margin-top: 18px;
       border-radius: 28px;
       border: 1px solid rgba(255,255,255,.08);
-
       background:
         linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02)),
         rgba(18,22,38,.65);
-
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
-
       box-shadow:
         0 0 0 1px rgba(255,255,255,.04) inset,
         0 40px 100px rgba(0,0,0,.55),
         0 20px 50px rgba(0,0,0,.35);
-
       overflow:hidden;
       position: relative;
       transition: transform .28s ease, box-shadow .28s ease, border-color .28s ease;
     }
+
+    .info-card{
+      margin-bottom: 18px;
+      padding: 22px 20px;
+    }
+
+    .card{
+      margin-top: 18px;
+    }
+
+    .info-card:hover,
     .card:hover{
       transform: translateY(-5px);
       border-color: rgba(255,255,255,.14);
@@ -173,7 +243,7 @@
         0 22px 60px rgba(0,0,0,.38);
     }
 
-    /* AI glow wash */
+    .info-card::after,
     .card::after{
       content:"";
       position:absolute; inset:-1px;
@@ -186,37 +256,43 @@
       mix-blend-mode: screen;
     }
 
-    /* Light tracking (real 2026 depth) */
-    .card::before{
-      content:"";
-      position:absolute;
-      inset:-1px;
-      border-radius:inherit;
-      background:
-        radial-gradient(
-          600px circle at var(--x,50%) var(--y,50%),
-          rgba(255,255,255,.12),
-          transparent 60%
-        );
-      opacity:.55;
-      pointer-events:none;
-      transition: opacity .25s ease;
+    .info-card h2{
+      font-size: 1.2rem;
+      margin-bottom: 14px;
+      position: relative;
+      z-index: 1;
     }
-    .card:hover::before{ opacity:.70; }
 
-    /* Steps */
+    .info-card ul{
+      padding-left: 20px;
+      color: rgba(248,250,255,.76);
+      line-height: 1.7;
+      position: relative;
+      z-index: 1;
+    }
+
+    .info-card li{
+      margin-bottom: 8px;
+    }
+
     .steps{
-      display:flex; gap: 10px;
+      display:flex;
+      gap: 10px;
       padding: 14px 14px 12px;
       border-bottom: 1px solid rgba(255,255,255,.08);
       background: rgba(10,12,24,.45);
       backdrop-filter: blur(10px);
       -webkit-backdrop-filter: blur(10px);
-      position: sticky; top: 0; z-index: 5;
+      position: sticky;
+      top: 0;
+      z-index: 5;
       flex-wrap: wrap;
     }
+
     .step{
-      display:flex; align-items:center; gap: 10px;
+      display:flex;
+      align-items:center;
+      gap: 10px;
       padding: 10px 12px;
       border-radius: 999px;
       border: 1px solid rgba(255,255,255,.12);
@@ -227,23 +303,32 @@
       transition: transform .14s ease, border-color .14s ease, background .14s ease;
       user-select: none;
     }
+
     .step .dot{
-      width: 9px; height: 9px; border-radius: 999px;
+      width: 9px;
+      height: 9px;
+      border-radius: 999px;
       background: rgba(255,255,255,.25);
       box-shadow: 0 0 0 5px rgba(255,255,255,.06);
     }
+
     .step.active{
       border-color: rgba(6,182,212,.40);
       background: linear-gradient(135deg, rgba(99,102,241,.14), rgba(6,182,212,.10));
       color: rgba(248,250,255,.94);
     }
+
     .step.active .dot{
       background: linear-gradient(135deg, var(--primary), var(--secondary));
       box-shadow: 0 0 0 6px rgba(6,182,212,.12);
     }
-    .step:hover{ transform: translateY(-1px); border-color: rgba(255,255,255,.20); background: rgba(255,255,255,.05); }
 
-    /* Sections animation */
+    .step:hover{
+      transform: translateY(-1px);
+      border-color: rgba(255,255,255,.20);
+      background: rgba(255,255,255,.05);
+    }
+
     .section{
       padding: 22px 18px;
       border-top: 1px solid rgba(255,255,255,.08);
@@ -253,31 +338,60 @@
       transition: opacity 520ms ease, transform 520ms ease;
       position: relative;
     }
-    .section:first-of-type{ border-top: none; }
-    .section.in{ opacity: 1; transform: translateY(0); }
+
+    .section:first-of-type{
+      border-top: none;
+    }
+
+    .section.in{
+      opacity: 1;
+      transform: translateY(0);
+    }
 
     .sectionHead{
-      display:flex; align-items:center; justify-content: space-between;
+      display:flex;
+      align-items:center;
+      justify-content: space-between;
       gap: 12px;
       margin-bottom: 14px;
     }
+
     .title{
-      display:flex; align-items:center; gap: 10px;
+      display:flex;
+      align-items:center;
+      gap: 10px;
       font-weight: 950;
       letter-spacing: -.01em;
       font-size: 1.1rem;
     }
+
     .num{
-      width: 30px; height: 30px; border-radius: 11px;
-      display:grid; place-items:center;
+      width: 30px;
+      height: 30px;
+      border-radius: 11px;
+      display:grid;
+      place-items:center;
       background: rgba(255,255,255,.05);
       border: 1px solid rgba(255,255,255,.14);
       font-weight: 950;
     }
-    .req{ color: rgba(248,250,255,.54); font-weight: 900; }
 
-    .grid2{ display:grid; grid-template-columns: 1fr; gap: 14px; }
-    @media(min-width: 900px){ .two{ grid-template-columns: 1fr 1fr; } }
+    .req{
+      color: rgba(248,250,255,.54);
+      font-weight: 900;
+    }
+
+    .grid2{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap: 14px;
+    }
+
+    @media(min-width: 900px){
+      .two{
+        grid-template-columns: 1fr 1fr;
+      }
+    }
 
     label{
       display:block;
@@ -298,13 +412,17 @@
       outline: none;
       transition: transform .14s ease, border-color .14s ease, box-shadow .14s ease, background .14s ease;
     }
-    input::placeholder, textarea::placeholder{ color: rgba(248,250,255,.42); }
+
+    input::placeholder, textarea::placeholder{
+      color: rgba(248,250,255,.42);
+    }
 
     input:hover, select:hover, textarea:hover{
       transform: translateY(-1px);
       border-color: rgba(255,255,255,.20);
       background: rgba(255,255,255,.04);
     }
+
     input:focus, select:focus, textarea:focus{
       border-color: rgba(6,182,212,.48);
       box-shadow: 0 0 0 6px rgba(6,182,212,.12);
@@ -322,7 +440,10 @@
       line-height: 1.6;
       margin-bottom: 12px;
     }
-    .callout strong{ color: rgba(248,250,255,.98); }
+
+    .callout strong{
+      color: rgba(248,250,255,.98);
+    }
 
     .help{
       margin-top: 8px;
@@ -341,6 +462,7 @@
       gap: 12px;
       flex-wrap: wrap;
     }
+
     .footnote{
       color: rgba(248,250,255,.62);
       font-size: .92rem;
@@ -348,7 +470,6 @@
       max-width: 60ch;
     }
 
-    /* Button: premium glow (no cheesy shine) */
     .btn{
       border: none;
       cursor: pointer;
@@ -364,6 +485,7 @@
       transition: transform .22s ease, box-shadow .22s ease, filter .22s ease;
       min-width: 260px;
     }
+
     .btn:hover{
       transform: translateY(-3px);
       box-shadow:
@@ -371,19 +493,39 @@
         0 14px 40px rgba(6,182,212,.35);
       filter: brightness(1.03);
     }
-    .btn:active{ transform: translateY(-1px) scale(.99); }
-    .btn[disabled]{ opacity:.8; cursor:not-allowed; transform:none; box-shadow:none; }
+
+    .btn:active{
+      transform: translateY(-1px) scale(.99);
+    }
+
+    .btn[disabled]{
+      opacity:.8;
+      cursor:not-allowed;
+      transform:none;
+      box-shadow:none;
+    }
 
     @media(max-width: 640px){
-      h1{ font-size: 2.2rem; }
-      .btn{ width: 100%; min-width: 0; }
+      h1{
+        font-size: 2.2rem;
+      }
+
+      .btn{
+        width: 100%;
+        min-width: 0;
+      }
+
+      .brand img{
+        width: 46px;
+        height: 46px;
+      }
     }
 
     @media (prefers-reduced-motion: reduce){
       * { transition: none !important; animation: none !important; }
       .section{ opacity: 1; transform: none; }
       .grid{ animation: none; }
-      .card{ transform:none !important; }
+      .card, .info-card{ transform:none !important; }
     }
   </style>
 </head>
@@ -401,6 +543,14 @@
   <div class="wrap">
     <div class="hero">
       <div class="heroInner">
+        <div class="brand">
+          <img src="logo.jpeg" alt="Start2Solve Logo">
+          <div class="brand-text">
+            <div class="brand-name">Start2Solve</div>
+            <div class="brand-site">start2solve.com</div>
+          </div>
+        </div>
+
         <div class="kicker">PAID - INTERNSHIP</div>
         <h1>AI Developers</h1>
         <div class="sub">6-month remote internship. Resume required. Short problem-solving answer.</div>
@@ -408,9 +558,45 @@
         <div class="chips">
           <div class="chip">Remote</div>
           <div class="chip">6 Months</div>
+          <div class="chip">Paid</div>
           <div class="chip">Problem Solving</div>
         </div>
       </div>
+    </div>
+
+    <div class="info-card">
+      <h2>Job Description</h2>
+      <ul>
+        <li>Work on real AI products and features with our engineering team.</li>
+        <li>Design and build solutions using AI tools, APIs, and automation.</li>
+        <li>Experiment with LLMs and modern AI technologies.</li>
+        <li>Explore different approaches to solve real user problems.</li>
+        <li>Collaborate with the team to improve AI systems and workflows.</li>
+        <li>Continuously improve features based on user feedback.</li>
+      </ul>
+    </div>
+
+    <div class="info-card">
+      <h2>What We’re Looking For</h2>
+      <ul>
+        <li>Strong problem-solving mindset and curiosity to explore multiple solutions.</li>
+        <li>Interest in Artificial Intelligence, automation, and modern AI tools.</li>
+        <li>Ability to think independently and propose practical ideas.</li>
+        <li>Basic programming knowledge (Python, JavaScript, or similar).</li>
+        <li>Comfort experimenting with APIs, LLMs, and new technologies.</li>
+        <li>Good communication and ability to explain ideas clearly.</li>
+        <li>Motivation to learn fast and work on real AI products.</li>
+      </ul>
+    </div>
+
+    <div class="info-card">
+      <h2>Selection Process</h2>
+      <ul>
+        <li>Step 1 — Submit the application form.</li>
+        <li>Step 2 — Our team reviews your application.</li>
+        <li>Step 3 — Shortlisted candidates will be contacted for a short interview.</li>
+        <li>Step 4 — Selected candidates receive the internship offer.</li>
+      </ul>
     </div>
 
     <div class="card" id="mainCard">
@@ -499,7 +685,7 @@
             <div>
               <label>Upload resume (PDF/DOC) *</label>
               <input type="file" name="resume" accept=".pdf,.doc,.docx" required />
-              <div class="help">PDF preferred. Keep it (1 Page resume).</div>
+              <div class="help">PDF preferred. Keep it to 1 page.</div>
             </div>
           </div>
         </div>
@@ -530,7 +716,7 @@
         </div>
 
         <div class="footer">
-          <div class="footnote">We review applications on a rolling basis. If shortlisted, we’ll contact you by email.</div>
+          <div class="footnote">Applications are reviewed on a rolling basis. If shortlisted, we’ll contact you by email.</div>
           <button type="submit" class="btn" id="submitBtn">Submit application</button>
         </div>
       </form>
@@ -538,14 +724,12 @@
   </div>
 
   <script>
-    // Reveal on scroll
     const sections = document.querySelectorAll('.section');
     const revealIO = new IntersectionObserver((entries) => {
       entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
     }, { threshold: 0.12 });
     sections.forEach(s => revealIO.observe(s));
 
-    // Step click scroll + active highlight
     const stepEls = document.querySelectorAll('.step');
     stepEls.forEach(step => {
       step.addEventListener('click', () => {
@@ -565,7 +749,6 @@
     }, { threshold: [0.25, 0.35, 0.5, 0.65] });
     stepTargets.forEach(sec => stepIO.observe(sec));
 
-    // Light tracking on the main card (premium 3D depth without tilt)
     const card = document.getElementById('mainCard');
     card.addEventListener('mousemove', (e) => {
       const rect = card.getBoundingClientRect();
@@ -575,7 +758,6 @@
       card.style.setProperty('--y', `${y}%`);
     });
 
-    // Submit UX
     const form = document.getElementById('appForm');
     const btn = document.getElementById('submitBtn');
     form.addEventListener('submit', () => {
