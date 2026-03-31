@@ -151,9 +151,10 @@ body::after {
   gap: 0;
 }
 .hero-banner {
-  display: block; height: 54px; width: auto;
-  margin-bottom: 36px; border-radius: 12px;
-  filter: drop-shadow(0 0 16px rgba(62,207,178,.35));
+  display: block; height: auto; width: min(100%, 420px);
+  margin-bottom: 32px; border-radius: 16px;
+  filter: drop-shadow(0 0 20px rgba(62,207,178,.4));
+  box-shadow: 0 8px 32px rgba(0,0,0,.4);
 }
 .hero-kicker {
   display: inline-flex; align-items: center; gap: 10px;
@@ -403,7 +404,7 @@ body::after {
 
 /* form sections */
 .fsec {
-  padding: 36px 36px 32px;
+  padding: 28px 36px 26px;
   border-bottom: 1px solid var(--tborder);
   opacity: 0; transform: translateY(20px);
   transition: opacity .55s ease, transform .55s ease;
@@ -413,7 +414,7 @@ body::after {
 
 .shead {
   display: flex; align-items: center; justify-content: space-between;
-  margin-bottom: 28px;
+  margin-bottom: 20px;
 }
 .stitle {
   display: flex; align-items: center; gap: 14px;
@@ -439,8 +440,9 @@ body::after {
 }
 
 /* fields */
-.fgrid { display: grid; gap: 20px; }
+.fgrid { display: grid; gap: 18px; }
 .g2 { grid-template-columns: 1fr 1fr; }
+.fg3 { grid-template-columns: 1fr 1fr 1fr; }
 .field { display: flex; flex-direction: column; gap: 9px; }
 label {
   font-family: 'Orbitron', sans-serif;
@@ -541,6 +543,7 @@ input[type="file"]::file-selector-button:hover {
   .hero-robot { display: none; }
   .info-row { grid-template-columns: 1fr; }
   .fgrid.g2 { grid-template-columns: 1fr; }
+  .fgrid.fg3 { grid-template-columns: 1fr 1fr; }
 }
 @media (max-width: 660px) {
   .page { padding: 24px 16px 80px; }
@@ -549,6 +552,8 @@ input[type="file"]::file-selector-button:hover {
   .fsec { padding: 24px 20px 22px; }
   .ffooter { flex-direction: column; align-items: stretch; }
   .sbtn { justify-content: center; }
+  .fgrid.g2 { grid-template-columns: 1fr; }
+  .fgrid.fg3 { grid-template-columns: 1fr; }
 }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { transition: none !important; animation: none !important; }
@@ -672,7 +677,7 @@ input[type="file"]::file-selector-button:hover {
           <div class="stitle"><div class="sn">1</div>PERSONAL</div>
           <span class="sbadge">REQUIRED</span>
         </div>
-        <div class="fgrid g2">
+        <div class="fgrid fg3">
           <div class="field">
             <label>FULL NAME *</label>
             <input type="text" name="full_name" placeholder="Your full name" required/>
@@ -681,7 +686,7 @@ input[type="file"]::file-selector-button:hover {
             <label>EMAIL ADDRESS *</label>
             <input type="email" name="email" placeholder="you@example.com" required/>
           </div>
-          <div class="field" style="grid-column:span 2">
+          <div class="field">
             <label>LOCATION (CITY, STATE) *</label>
             <input type="text" name="location" placeholder="e.g., Tirupati, Andhra Pradesh" required/>
           </div>
@@ -718,7 +723,35 @@ input[type="file"]::file-selector-button:hover {
           </div>
           <div class="field">
             <label>GRADUATION DATE *</label>
-            <input type="month" name="graduation_date" required/>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+              <select name="graduation_month" required>
+                <option value="">Month…</option>
+                <option value="01">January</option>
+                <option value="02">February</option>
+                <option value="03">March</option>
+                <option value="04">April</option>
+                <option value="05">May</option>
+                <option value="06">June</option>
+                <option value="07">July</option>
+                <option value="08">August</option>
+                <option value="09">September</option>
+                <option value="10">October</option>
+                <option value="11">November</option>
+                <option value="12">December</option>
+              </select>
+              <select name="graduation_year" required>
+                <option value="">Year…</option>
+                <option>2024</option>
+                <option>2025</option>
+                <option>2026</option>
+                <option>2027</option>
+                <option>2028</option>
+                <option>2029</option>
+                <option>2030</option>
+                <option>2031</option>
+                <option>2032</option>
+              </select>
+            </div>
           </div>
         </div>
       </div>
@@ -993,26 +1026,36 @@ input[type="file"]::file-selector-button:hover {
 const tabs = document.querySelectorAll('.ftab');
 const secs = document.querySelectorAll('.fsec');
 
+// Reveal sections on scroll
 const revealIO = new IntersectionObserver(
   es => es.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); }),
-  { threshold: .08 }
+  { threshold: .06 }
 );
 secs.forEach(s => revealIO.observe(s));
 
+// Click tab → scroll to section + immediately set active
 tabs.forEach(t => t.addEventListener('click', () => {
+  // set active immediately on click
+  tabs.forEach(x => x.classList.remove('on'));
+  t.classList.add('on');
   document.getElementById(t.dataset.t)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }));
 
-const activeIO = new IntersectionObserver(
-  es => es.forEach(e => {
-    if (e.isIntersecting) {
-      const id = e.target.id;
-      tabs.forEach(t => t.classList.toggle('on', t.dataset.t === id));
-    }
-  }),
-  { threshold: .4 }
-);
-secs.forEach(s => activeIO.observe(s));
+// Update active tab on scroll using scroll position (reliable)
+function updateActiveTab() {
+  const navH = 68 + 58; // nav + tabs sticky height
+  let active = null;
+  secs.forEach(s => {
+    const rect = s.getBoundingClientRect();
+    if (rect.top <= navH + 60) active = s.id;
+  });
+  if (active) {
+    tabs.forEach(t => t.classList.toggle('on', t.dataset.t === active));
+  }
+}
+window.addEventListener('scroll', updateActiveTab, { passive: true });
+// init
+setTimeout(updateActiveTab, 100);
 
 document.getElementById('appForm').addEventListener('submit', () => {
   const b = document.getElementById('subBtn');
