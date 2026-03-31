@@ -346,9 +346,9 @@ body::after {
   border-radius: 28px;
   border: 1px solid var(--tborder2);
   background: var(--bg2);
-  overflow: hidden;
   box-shadow: 0 48px 120px rgba(0,0,0,.55), 0 0 80px rgba(62,207,178,.04);
   position: relative;
+  padding-bottom: 4px;
 }
 /* animated scan bar */
 .fcard::before {
@@ -368,11 +368,17 @@ body::after {
 .ftabs {
   display: flex; overflow-x: auto; scrollbar-width: none;
   border-bottom: 1px solid var(--tborder);
-  background: rgba(18,19,25,.75);
-  backdrop-filter: blur(12px);
+  border-radius: 28px 28px 0 0;
+  background: rgba(18,19,25,.92);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
   position: sticky; top: 68px; z-index: 10;
 }
 .ftabs::-webkit-scrollbar { display: none; }
+/* equalise tab widths on desktop */
+@media (min-width: 601px) {
+  .ftab { flex: 1; justify-content: center; }
+}
 .ftab {
   display: flex; align-items: center; gap: 10px;
   padding: 16px 26px;
@@ -404,12 +410,17 @@ body::after {
 
 /* form sections */
 .fsec {
-  padding: 28px 36px 26px;
-  border-bottom: 1px solid var(--tborder);
-  opacity: 0; transform: translateY(20px);
-  transition: opacity .55s ease, transform .55s ease;
+  padding: 24px 24px 22px;
+  margin: 14px 14px 0 14px;
+  border-radius: 16px;
+  border: 1px solid rgba(62,207,178,0.20);
+  background: #242830;
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity .5s ease, transform .5s ease;
+  scroll-margin-top: 140px;
 }
-.fsec:last-of-type { border-bottom: none; }
+.fsec:last-of-type { margin-bottom: 0; }
 .fsec.in { opacity: 1; transform: none; }
 
 .shead {
@@ -440,10 +451,10 @@ body::after {
 }
 
 /* fields */
-.fgrid { display: grid; gap: 18px; }
+.fgrid { display: grid; gap: 14px; }
 .g2 { grid-template-columns: 1fr 1fr; }
 .fg3 { grid-template-columns: 1fr 1fr 1fr; }
-.field { display: flex; flex-direction: column; gap: 9px; }
+.field { display: flex; flex-direction: column; gap: 7px; }
 label {
   font-family: 'Orbitron', sans-serif;
   font-size: .63rem; font-weight: 700; letter-spacing: .1em;
@@ -505,9 +516,11 @@ input[type="file"]::file-selector-button:hover {
 
 /* form footer */
 .ffooter {
-  padding: 26px 36px 32px;
-  border-top: 1px solid var(--tborder);
-  background: rgba(14,16,24,.65);
+  padding: 20px 24px 24px;
+  margin: 14px 14px 14px 14px;
+  border-radius: 16px;
+  border: 1px solid rgba(62,207,178,0.20);
+  background: #242830;
   display: flex; align-items: center; justify-content: space-between;
   gap: 20px; flex-wrap: wrap;
 }
@@ -538,23 +551,74 @@ input[type="file"]::file-selector-button:hover {
 .sbtn:hover .sarrow { transform: translateX(5px); }
 
 /* ─── RESPONSIVE ─── */
-@media (max-width: 1000px) {
-  .hero { grid-template-columns: 1fr; }
-  .hero-robot { display: none; }
-  .info-row { grid-template-columns: 1fr; }
-  .fgrid.g2 { grid-template-columns: 1fr; }
-  .fgrid.fg3 { grid-template-columns: 1fr 1fr; }
+
+/* Tablet landscape / small laptop (max 1100px) */
+@media (max-width: 1100px) {
+  .page { padding: 36px 24px 100px; }
+  .hero { grid-template-columns: 1fr 380px; min-height: 460px; }
+  .hero-content { padding: 40px 40px 44px; }
+  .nav-inner { padding: 0 24px; }
 }
-@media (max-width: 660px) {
-  .page { padding: 24px 16px 80px; }
-  .hero-content { padding: 32px 24px 36px; }
-  .hero-title { font-size: 1.9rem; }
-  .fsec { padding: 24px 20px 22px; }
-  .ffooter { flex-direction: column; align-items: stretch; }
-  .sbtn { justify-content: center; }
+
+/* Tablet portrait (max 900px) — hide robot, stack info cards */
+@media (max-width: 900px) {
+  .hero { grid-template-columns: 1fr; min-height: auto; }
+  .hero-robot { display: none; }
+  .hero-content { padding: 36px 32px 40px; }
+  .hero-banner { width: min(100%, 340px); }
+  .hero-title { font-size: clamp(1.8rem, 5vw, 2.6rem); }
+  .info-row { grid-template-columns: 1fr; gap: 16px; }
+  .fgrid.g2 { grid-template-columns: 1fr 1fr; }
+  .fgrid.fg3 { grid-template-columns: 1fr 1fr; }
+  .fsec { padding: 20px 20px 18px; margin: 12px 12px 0 12px; }
+  .ffooter { padding: 16px 20px 20px; margin: 12px 12px 12px 12px; }
+}
+
+/* Large mobile (max 600px) */
+@media (max-width: 600px) {
+  .page { padding: 20px 14px 80px; }
+  .hero-content { padding: 28px 20px 32px; }
+  .hero-banner { width: 100%; margin-bottom: 24px; }
+  .hero-kicker { font-size: .6rem; padding: 6px 14px; margin-bottom: 16px; }
+  .hero-title { font-size: clamp(1.6rem, 7vw, 2rem); margin-bottom: 14px; }
+  .hero-desc { font-size: .95rem; margin-bottom: 14px; }
+  .hero-link { margin-bottom: 20px; }
+  .chips { gap: 8px; }
+  .chip { padding: 7px 14px; font-size: .8rem; }
+  .hero { border-radius: 18px; margin-bottom: 16px; }
+  .info-row { gap: 14px; margin-bottom: 16px; }
+  .icard { border-radius: 16px; padding: 22px 18px 24px; }
+  .icard-head { margin-bottom: 16px; }
+  .icard li { font-size: .88rem; padding: 7px 0; }
+  .fcard { border-radius: 18px; }
+  .ftab { padding: 13px 16px; font-size: .6rem; gap: 7px; }
+  .ftab-n { width: 22px; height: 22px; font-size: .68rem; }
+  .fsec { padding: 16px 14px 14px; margin: 10px 10px 0 10px; }
+  .ffooter { padding: 14px 14px 18px; margin: 10px 10px 10px 10px; flex-direction: column; align-items: stretch; gap: 14px; }
+  .sn { width: 32px; height: 32px; font-size: .8rem; }
+  .stitle { font-size: .78rem; gap: 10px; }
+  .fgrid { gap: 12px; }
   .fgrid.g2 { grid-template-columns: 1fr; }
   .fgrid.fg3 { grid-template-columns: 1fr; }
+  input, select, textarea { padding: 13px 14px; font-size: .9rem; border-radius: 11px; }
+  label { font-size: .6rem; }
+  .cbox { padding: 16px 18px; font-size: .9rem; margin-bottom: 16px; }
+  .shead { margin-bottom: 16px; }
+  .sbtn { justify-content: center; padding: 14px 28px; font-size: .72rem; }
+  .ffnote { font-size: .82rem; }
+  .nav-inner { padding: 0 16px; }
+  .nav-badge { padding: 6px 14px; font-size: .62rem; }
+  .nav-logo img { height: 34px; }
 }
+
+/* Very small mobile (max 380px) */
+@media (max-width: 380px) {
+  .hero-title { font-size: 1.5rem; }
+  .ftab { padding: 12px 12px; font-size: .58rem; }
+  .chips { gap: 6px; }
+  .chip { padding: 6px 12px; font-size: .78rem; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { transition: none !important; animation: none !important; }
   .fsec { opacity: 1 !important; transform: none !important; }
@@ -618,7 +682,7 @@ input[type="file"]::file-selector-button:hover {
     <div class="hero-robot">
       <div class="robot-wrap">
         <div style="position:relative">
-          <canvas id="roboCanvas" width="400" height="440"></canvas>
+          <canvas id="roboCanvas" width="400" height="440" style="max-width:100%;height:auto"></canvas>
           <div class="robot-scanline"></div>
         </div>
         <div class="robot-floor"></div>
@@ -698,8 +762,8 @@ input[type="file"]::file-selector-button:hover {
           <div class="stitle"><div class="sn">2</div>EDUCATION</div>
           <span class="sbadge">REQUIRED</span>
         </div>
-        <div class="fgrid g2">
-          <div class="field">
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px">
+          <div class="field" style="grid-column:span 1">
             <label>EDUCATION LEVEL *</label>
             <select name="education_level" required>
               <option value="">Select level…</option>
@@ -709,7 +773,7 @@ input[type="file"]::file-selector-button:hover {
               <option>Other</option>
             </select>
           </div>
-          <div class="field">
+          <div class="field" style="grid-column:span 2">
             <label>UNIVERSITY *</label>
             <input type="text" name="university" placeholder="Your university" required/>
           </div>
@@ -723,7 +787,7 @@ input[type="file"]::file-selector-button:hover {
           </div>
           <div class="field">
             <label>GRADUATION DATE *</label>
-            <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
               <select name="graduation_month" required>
                 <option value="">Month…</option>
                 <option value="01">January</option>
@@ -1026,19 +1090,24 @@ input[type="file"]::file-selector-button:hover {
 const tabs = document.querySelectorAll('.ftab');
 const secs = document.querySelectorAll('.fsec');
 
-// Reveal sections on scroll
+// Reveal sections - show all immediately + animate as they enter viewport
 const revealIO = new IntersectionObserver(
   es => es.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); }),
-  { threshold: .06 }
+  { threshold: 0, rootMargin: '0px 0px -20px 0px' }
 );
 secs.forEach(s => revealIO.observe(s));
+// Also reveal any already in view immediately
+setTimeout(() => secs.forEach(s => {
+  const r = s.getBoundingClientRect();
+  if (r.top < window.innerHeight) s.classList.add('in');
+}), 50);
 
 // Click tab → scroll to section + immediately set active
 tabs.forEach(t => t.addEventListener('click', () => {
-  // set active immediately on click
   tabs.forEach(x => x.classList.remove('on'));
   t.classList.add('on');
-  document.getElementById(t.dataset.t)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  const target = document.getElementById(t.dataset.t);
+  if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }));
 
 // Update active tab on scroll using scroll position (reliable)
