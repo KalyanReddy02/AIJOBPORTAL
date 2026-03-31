@@ -152,14 +152,16 @@ body::after {
 }
 .hero-banner {
   display: block;
-  width: 280px;
-  height: 72px;
+  width: 120px;
+  height: 120px;
   object-fit: cover;
-  margin-bottom: 28px;
-  border-radius: 12px;
-  filter: drop-shadow(0 0 12px rgba(62,207,178,.35));
+  border-radius: 18px;
+  border: 1px solid rgba(62,207,178,.25);
+  filter: drop-shadow(0 0 12px rgba(62,207,178,.3));
   box-shadow: 0 4px 20px rgba(0,0,0,.4);
+  transition: transform .2s;
 }
+.hero-banner:hover { transform: translateY(-2px); }
 .hero-kicker {
   display: inline-flex; align-items: center; gap: 10px;
   margin-bottom: 24px; width: fit-content;
@@ -569,7 +571,7 @@ input[type="file"]::file-selector-button:hover {
   .hero { grid-template-columns: 1fr; min-height: auto; }
   .hero-robot { display: none; }
   .hero-content { padding: 36px 32px 40px; }
-  .hero-banner { width: 240px; height: 62px; }
+  .hero-banner { width: 100px; height: 100px; }
   .hero-title { font-size: clamp(1.8rem, 5vw, 2.6rem); }
   .info-row { grid-template-columns: 1fr; gap: 16px; }
   .fgrid.g2 { grid-template-columns: 1fr 1fr; }
@@ -582,7 +584,7 @@ input[type="file"]::file-selector-button:hover {
 @media (max-width: 600px) {
   .page { padding: 20px 14px 80px; }
   .hero-content { padding: 28px 20px 32px; }
-  .hero-banner { width: 200px; height: 52px; margin-bottom: 20px; }
+  .hero-banner { width: 80px; height: 80px; border-radius: 14px; }
   .hero-kicker { font-size: .6rem; padding: 6px 14px; margin-bottom: 16px; }
   .hero-title { font-size: clamp(1.6rem, 7vw, 2rem); margin-bottom: 14px; }
   .hero-desc { font-size: .95rem; margin-bottom: 14px; }
@@ -655,17 +657,22 @@ input[type="file"]::file-selector-button:hover {
   <!-- ═══ HERO ═══ -->
   <div class="hero">
     <div class="hero-content">
-      <a href="https://start2solve.com" target="_blank" rel="noopener">
-        <img class="hero-banner" src="start2solve-banner.jpeg" alt="Start2Solve" onerror="this.style.display='none'">
-      </a>
-      <div class="hero-kicker">
-        <span class="kicker-dot"></span>
-        PAID INTERNSHIP — OPEN NOW
+      <!-- top row: title left, banner square right -->
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:20px;margin-bottom:20px">
+        <div>
+          <div class="hero-kicker" style="margin-bottom:16px">
+            <span class="kicker-dot"></span>
+            PAID INTERNSHIP — OPEN NOW
+          </div>
+          <h1 class="hero-title" style="margin-bottom:0">
+            <span class="title-top">AI Developer</span>
+            <span class="title-bot">INTERNSHIP</span>
+          </h1>
+        </div>
+        <a href="https://start2solve.com" target="_blank" rel="noopener" style="flex-shrink:0">
+          <img class="hero-banner" src="start2solve-banner.jpeg" alt="Start2Solve" onerror="this.style.display='none'">
+        </a>
       </div>
-      <h1 class="hero-title">
-        <span class="title-top">AI Developer</span>
-        <span class="title-bot">INTERNSHIP</span>
-      </h1>
       <p class="hero-desc">
         6-month remote internship at Start2Solve. Work alongside our engineering team
         on live AI features — not toy projects. Resume + one real-world problem-solving answer required.
