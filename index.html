@@ -71,7 +71,7 @@ body::after {
 /* ─── NAV ─── */
 .nav {
   position: sticky; top: 0; z-index: 200;
-  height: 76px;
+  height: 82px;
   background: rgba(24,25,31,.92);
   backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);
@@ -88,8 +88,12 @@ body::after {
   text-decoration: none;
 }
 .nav-logo img {
-  height: 52px; width: auto; border-radius: 12px;
-  filter: drop-shadow(0 0 10px rgba(62,207,178,.5));
+  height: 58px;
+  width: 200px;
+  object-fit: cover;
+  border-radius: 12px;
+  filter: drop-shadow(0 0 14px rgba(62,207,178,.6)) brightness(1.15);
+  box-shadow: 0 0 20px rgba(62,207,178,.2);
 }
 .nav-badge {
   display: flex; align-items: center; gap: 8px;
@@ -378,7 +382,7 @@ body::after {
   background: rgba(18,19,25,.92);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  position: sticky; top: 76px; z-index: 10;
+  position: sticky; top: 82px; z-index: 10;
 }
 .ftabs::-webkit-scrollbar { display: none; }
 /* equalise tab widths on desktop */
@@ -614,7 +618,7 @@ input[type="file"]::file-selector-button:hover {
   .ffnote { font-size: .82rem; }
   .nav-inner { padding: 0 16px; }
   .nav-badge { padding: 6px 14px; font-size: .62rem; }
-  .nav-logo img { height: 44px; }
+  .nav-logo img { height: 48px; width: 160px; }
 }
 
 /* Very small mobile (max 380px) */
